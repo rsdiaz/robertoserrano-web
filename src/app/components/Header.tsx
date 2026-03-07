@@ -26,7 +26,7 @@ function ThemeToggle({ theme, setTheme }: { theme: string | undefined; setTheme:
 						exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
 						transition={{ duration: 0.25, ease: 'easeOut' }}
 					>
-						<Sun className="h-4 w-4 text-background" />
+						<Sun className="!size-5 text-background" />
 					</motion.span>
 				) : (
 					<motion.span
@@ -36,7 +36,7 @@ function ThemeToggle({ theme, setTheme }: { theme: string | undefined; setTheme:
 						exit={{ rotate: -90, opacity: 0, scale: 0.8 }}
 						transition={{ duration: 0.25, ease: 'easeOut' }}
 					>
-						<Moon className="h-4 w-4 text-background" />
+						<Moon className="!size-5 text-background" />
 					</motion.span>
 				)}
 			</AnimatePresence>
@@ -91,7 +91,7 @@ export default function Header() {
 							<Link
 								key={item.name}
 								href={item.href}
-								className={`inline-flex items-center h-10 text-sm font-medium transition-smooth hover:opacity-80 ${
+								className={`inline-flex items-center h-10 font-medium transition-smooth hover:opacity-80 ${
 									isActive(item.href)
 										? 'text-background underline decoration-accent underline-offset-6'
 										: 'text-background/70 hover:text-background'
