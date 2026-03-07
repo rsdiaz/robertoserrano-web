@@ -15,7 +15,7 @@ function ThemeToggle({ theme, setTheme }: { theme: string | undefined; setTheme:
 			variant="ghost"
 			size="sm"
 			onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-			className="w-9 h-9 p-0 flex items-center justify-center rounded-full text-background hover:bg-background/10 hover:text-background focus-visible:ring-background/40"
+			className="w-9 h-9 p-0 flex items-center justify-center rounded-full text-background hover:bg-accent/20 hover:text-background focus-visible:ring-background/40"
 		>
 			<AnimatePresence mode="wait" initial={false}>
 				{theme === 'dark' ? (
@@ -60,9 +60,9 @@ export default function Header() {
 	}, [])
 
 	const navigation = [
-		{ name: 'Inicio', href: '/' },
-		{ name: 'Blog', href: '/blog' },
-		{ name: 'Sobre mí', href: '/sobre-mi' },
+		{ name: 'Home', href: '/' },
+		// { name: 'Blog', href: '/blog' },
+		// { name: 'Sobre mí', href: '/sobre-mi' },
 	]
 
 	const isActive = (href: string) => {

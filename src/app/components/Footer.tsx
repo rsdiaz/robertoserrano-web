@@ -26,10 +26,10 @@ const Footer = () => {
 	}
 
 	const quickLinks = [
-		{ name: 'Sobre mí', href: '/sobre-mi' },
+		{ name: 'Home', href: '/' },
 		/* { name: 'Proyectos', href: '/proyectos' }, */
-		{ name: 'Blog', href: '/blog' },
-		{ name: 'Contacto', href: '/contacto' },
+		/* 		{ name: 'Blog', href: '/blog' },
+		{ name: 'Contacto', href: '/contacto' }, */
 	]
 
 	return (
@@ -39,19 +39,22 @@ const Footer = () => {
 					{/* Brand Section */}
 					<div className="space-y-4">
 						<Link href="/" className="flex items-center space-x-2">
-							<Code2 className="h-6 w-6 text-primary" />
-							<span className="text-lg font-bold text-gradient">Roberto Serrano</span>
+							<Code2 />
+							<span className="text-lg font-bold">Roberto Serrano - Software Enginner</span>
 						</Link>
 						<p className="text-muted-foreground max-w-xs">{getRandomPhrase()}</p>
 					</div>
 
 					{/* Quick Links */}
 					<div className="space-y-4">
-						<h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Navegación</h3>
+						<h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Navegación</h3>
 						<ul className="space-y-2">
 							{quickLinks.map(link => (
 								<li key={link.name}>
-									<Link href={link.href} className="text-muted-foreground hover:text-accent transition-smooth">
+									<Link
+										href={link.href}
+										className="font-semibold text-muted-foreground hover:text-accent transition-smooth"
+									>
 										{link.name}
 									</Link>
 								</li>
@@ -61,10 +64,10 @@ const Footer = () => {
 
 					{/* Social Links */}
 					<div className="space-y-4">
-						<h3 className="text-sm font-semibold text-foreground uppercase tracking-wider">Conecta conmigo</h3>
+						<h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Conecta conmigo</h3>
 						<div className="flex space-x-2">
 							{socialLinks.map(social => (
-								<Button key={social.label} variant="ghost" size="sm" className="w-9 h-9 p-0" asChild>
+								<Button key={social.label} variant="ghost" size="sm" className="w-9 h-9 p-0 rounded-full" asChild>
 									<a
 										href={social.href}
 										target="_blank"
@@ -72,7 +75,7 @@ const Footer = () => {
 										aria-label={social.label}
 										className="hover:text-accent transition-smooth"
 									>
-										<social.icon className="h-4 w-4" />
+										<social.icon className="!size-5" />
 									</a>
 								</Button>
 							))}

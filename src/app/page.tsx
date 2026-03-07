@@ -1,10 +1,13 @@
+import { motion } from 'motion/react'
 import { Button } from '@/app/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
 import { Badge } from '@/app/components/ui/badge'
 import { ArrowRight, Code2, Zap, Users, BookOpen } from 'lucide-react'
 import HeroBg from './public/hero-bg.jpg'
 import Link from 'next/link'
+
 import { getLatestPosts } from '@/app/lib/blog-posts'
+import Hero from './components/Hero'
 
 export default function Home() {
 	const features = [
@@ -31,48 +34,10 @@ export default function Home() {
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
-			<section
-				className="relative min-h-screen flex items-center justify-center overflow-hidden"
-				style={{
-					backgroundImage: `url(${HeroBg.src})`,
-					backgroundSize: 'cover',
-					backgroundPosition: 'center',
-					backgroundAttachment: 'fixed',
-				}}
-			>
-				<div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-
-				<div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-					<div className="max-w-4xl mx-auto space-y-8">
-						<Badge variant="secondary" className="mb-4">
-							👋 ¡Hola! Soy Roberto Serrano
-						</Badge>
-
-						<h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-							Construyo <span className="text-gradient">software útil</span> que resuelve problemas reales
-						</h1>
-
-						<p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-							Full stack de ideas → código → soluciones digitales. Escalables, usables y con cariño dev. 💻
-						</p>
-
-						<div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-							<Button size="lg" className="shadow-glow" asChild>
-								<Link href="/projects">
-									Ver mis artículos
-									<ArrowRight className="ml-2 h-4 w-4" />
-								</Link>
-							</Button>
-							<Button variant="outline" size="lg" asChild>
-								<Link href="/contact">Trabajemos juntos</Link>
-							</Button>
-						</div>
-					</div>
-				</div>
-			</section>
+			<Hero />
 
 			{/* Features Section */}
-			<section className="py-24 bg-muted/30">
+			{/* <section className="py-24 bg-muted/30">
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="text-center mb-16">
 						<h2 className="text-3xl sm:text-4xl font-bold mb-4">¿Por qué elegir mi trabajo?</h2>
@@ -97,7 +62,7 @@ export default function Home() {
 						))}
 					</div>
 				</div>
-			</section>
+			</section> */}
 
 			{/* Recent Projects */}
 			{/* <section className="py-24">
@@ -145,7 +110,7 @@ export default function Home() {
 			</section> */}
 
 			{/* Recent Blog Posts */}
-			<section className="py-24 bg-muted/30">
+			{/* <section className="py-24 bg-muted/30">
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex justify-between items-end mb-16">
 						<div>
@@ -187,7 +152,7 @@ export default function Home() {
 						))}
 					</div>
 				</div>
-			</section>
+			</section> */}
 		</div>
 	)
 }
