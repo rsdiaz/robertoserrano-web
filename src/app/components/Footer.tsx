@@ -40,7 +40,7 @@ const Footer = () => {
 					<div className="space-y-4">
 						<Link href="/" className="flex items-center space-x-2">
 							<Code2 />
-							<span className="text-lg font-bold">Roberto Serrano - Software Enginner</span>
+							<span className="text-lg font-bold">Roberto Serrano - Software Engineer</span>
 						</Link>
 						<p className="text-muted-foreground max-w-xs">{getRandomPhrase()}</p>
 					</div>

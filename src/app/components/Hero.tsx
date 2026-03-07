@@ -81,7 +81,7 @@ export default function Hero() {
 					>
 						Soy Roberto Serrano
 						<br />
-						<span className="font-light text-5xl text-gradient">Software Enginner</span>
+						<span className="font-light text-5xl text-gradient">Software Engineer</span>
 					</motion.h1>
 
 					<motion.div

@@ -1,5 +1,5 @@
 const siteMetadata = {
-	title: 'Roberto Serrano Díaz-Grande | Desarrollador Full-Stack',
+	title: 'Roberto Serrano Díaz-Grande | Software Engineer',
 	description:
 		'Bienvenido a mi sitio web personal donde comparto artículos sobre desarrollo web, programación y tecnología.',
 	siteUrl: process.env.NODE_ENV === 'production' ? 'https://robertoserrano.pro' : 'http://localhost:3000',
