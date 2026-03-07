@@ -1,16 +1,16 @@
-import { motion } from 'motion/react'
-import { Button } from '@/app/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
-import { Badge } from '@/app/components/ui/badge'
-import { ArrowRight, Code2, Zap, Users, BookOpen } from 'lucide-react'
-import HeroBg from './public/hero-bg.jpg'
-import Link from 'next/link'
+// mport { motion } from 'motion/react'
+// import { Button } from '@/app/components/ui/button'
+// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
+// import { Badge } from '@/app/components/ui/badge'
+// import { Code2, Zap, Users } from 'lucide-react'
+// import HeroBg from './public/hero-bg.jpg'
+// import Link from 'next/link'
 
-import { getLatestPosts } from '@/app/lib/blog-posts'
+// import { getLatestPosts } from '@/app/lib/blog-posts'
 import Hero from './components/Hero'
 
 export default function Home() {
-	const features = [
+	/* const features = [
 		{
 			icon: Code2,
 			title: 'Desarrollo Full-Stack',
@@ -29,7 +29,7 @@ export default function Home() {
 		},
 	]
 
-	const recentPosts = getLatestPosts(2)
+	const recentPosts = getLatestPosts(2) */
 
 	return (
 		<div className="min-h-screen">

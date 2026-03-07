@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Github, Linkedin, Twitter, Mail, Code2 } from 'lucide-react'
+import { Github, Linkedin, Code2 } from 'lucide-react'
 import { Button } from './ui/button'
 
 const Footer = () => {
@@ -7,9 +7,9 @@ const Footer = () => {
 
 	const socialLinks = [
 		{ icon: Github, href: 'https://github.com/rsdiaz', label: 'GitHub' },
-		{ icon: Linkedin, href: 'https://linkedin.com/in/roberto-serrano', label: 'LinkedIn' },
-		{ icon: Twitter, href: 'https://twitter.com/roberto_dev', label: 'Twitter' },
-		{ icon: Mail, href: 'mailto:roberto@serrano.dev', label: 'Email' },
+		{ icon: Linkedin, href: 'https://www.linkedin.com/in/roberto-serrano-diaz-grande', label: 'LinkedIn' },
+		/* { icon: Twitter, href: 'https://twitter.com/roberto_dev', label: 'Twitter' }, */
+		/* { icon: Mail, href: 'mailto:roberto@serrano.dev', label: 'Email' }, */
 	]
 
 	const footerPhrases = [

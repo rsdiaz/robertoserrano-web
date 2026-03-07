@@ -4,7 +4,7 @@ import Footer from './components/Footer'
 import { ThemeProvider } from 'next-themes'
 import Header from './components/Header'
 import siteMetadata from '@/data/siteMetadata'
-import { Toast } from '@radix-ui/react-toast'
+// import { Toast } from '@radix-ui/react-toast'
 import { Toaster } from './components/ui/toaster'
 
 export const metadata: Metadata = {

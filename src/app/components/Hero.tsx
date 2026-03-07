@@ -207,7 +207,7 @@ export default function Hero() {
 						transition={{ duration: 0.6, delay: 1.2 }}
 						className="flex gap-4"
 					>
-						<a href="https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fes.linkedin.com%2Fpub%2Fdir%2FRoberto%2FSerrano%2Fes-0-Espa%25C3%25B1a&ved=0CBsQ3YkBahcKEwjowv2Fto6TAxUAAAAAHQAAAAAQHQ&opi=89978449">
+						<a href="https://www.linkedin.com/in/roberto-serrano-diaz-grande" target="_blank" rel="noopener noreferrer">
 							<Button size="lg" className="font-display font-semibold bg-primary hover:bg-primary/90">
 								<Linkedin className="!size-5" />
 								Contacto
