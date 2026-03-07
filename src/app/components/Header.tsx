@@ -74,7 +74,9 @@ export default function Header() {
 	if (!mounted) return null
 
 	return (
-		<header className={`fixed top-0 w-full z-50 transition-smooth ${isScrolled ? 'p-2' : 'bg-transparent'}`}>
+		<header
+			className={`fixed top-0 w-full z-50 transition-smooth ${isScrolled ? 'backdrop-blur-md bg-background/40 pt-2 pl-2 pr-2' : 'backdrop-blur-md bg-background/40'}`}
+		>
 			<nav className="container mx-auto mt-6 px-4 sm:px-6 lg:px-8 rounded-4xl bg-foreground text-background">
 				<div className="flex h-16 items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
 					<Link
