@@ -99,7 +99,7 @@ export default function Hero() {
 								ease: 'easeInOut',
 							},
 						}}
-						className="relative mt-6 mb-16 h-[280px] w-[280px] md:h-[400px] md:w-[400px]"
+						className="relative mt-6 mb-16 h-[240px] w-[240px] md:h-[400px] md:w-[400px]"
 					>
 						<div className="absolute inset-0 rounded-full bg-gradient-to-br from-muted via-card to-secondary/30 backdrop-blur-sm" />
 
@@ -129,7 +129,7 @@ export default function Hero() {
 						/>
 
 						<div className="absolute inset-0 flex items-center justify-center">
-							<div className="relative flex h-[240px] w-[240px] items-center justify-center md:h-[340px] md:w-[340px]">
+							<div className="relative flex h-[140px] w-[140px] items-center justify-center md:h-[340px] md:w-[340px]">
 								<motion.div
 									animate={{
 										scale: [1, 1.04, 1],
