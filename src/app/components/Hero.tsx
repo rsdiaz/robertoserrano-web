@@ -3,9 +3,7 @@
 import { motion } from 'motion/react'
 import { Button } from './ui/button'
 import { Linkedin } from 'lucide-react'
-
-const profileBlobPath =
-	'M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.6,81.4,29.2,73.1,42.8C64.8,56.4,53.8,69,40.1,76.4C26.4,83.8,10,86,-6.5,85.1C-23,84.2,-46,80.2,-62.3,70.1C-78.6,60,-88.2,43.8,-91.7,26.3C-95.2,8.8,-92.6,-10,-84.8,-25.5C-77,-41,-64,-53.2,-49.3,-60.2C-34.6,-67.2,-18.3,-69,0,-69C18.3,-69,30.6,-83.6,44.7,-76.4Z'
+import Image from 'next/image'
 
 const skills = [
 	{
@@ -52,7 +50,7 @@ const skills = [
 	},
 	{
 		label: 'AI Generative',
-		mobilePosition: { bottom: '12%', right: '-10%' },
+		mobilePosition: { bottom: '0%', right: '-8%' },
 		desktopPosition: { bottom: '0%', right: '-24%' },
 		delay: 0.7,
 	},
@@ -60,15 +58,16 @@ const skills = [
 
 export default function Hero() {
 	return (
-		<section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-secondary/20 to-background">
+		<section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-secondary/20 to-background">
 			<div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_oklch(0.45_0.15_285_/_0.05),transparent_50%)]" />
-			<div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10">
+
+			<div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
 				<div className="flex flex-col items-center justify-center text-center">
 					<motion.span
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
-						className="text-accent font-display text-sm md:text-base font-semibold mb-4 tracking-wider bg-accent/10 rounded-full px-3.5 py-1"
+						className="mb-4 rounded-full bg-accent/10 px-3.5 py-1 text-sm font-semibold tracking-wider text-accent md:text-base"
 					>
 						Hello
 					</motion.span>
@@ -77,76 +76,89 @@ export default function Hero() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.1 }}
-						className="mt-8 font-bold text-4xl md:text-7xl lg:text-8xl text-foreground mb-12"
+						className="mt-8 mb-12 text-4xl font-bold text-foreground md:text-7xl lg:text-8xl"
 					>
 						Soy Roberto Serrano
 						<br />
-						<span className="font-light text-2xl text-gradient lg:text-5xl">Software Engineer</span>
+						<span className="text-gradient text-2xl font-light lg:text-5xl">Software Engineer</span>
 					</motion.h1>
 
 					<motion.div
 						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.6, delay: 0.2 }}
-						className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] mb-16"
+						animate={{
+							opacity: 1,
+							scale: 1,
+							y: [0, -8, 0],
+						}}
+						transition={{
+							opacity: { duration: 0.6, delay: 0.2 },
+							scale: { duration: 0.6, delay: 0.2 },
+							y: {
+								duration: 4,
+								repeat: Infinity,
+								ease: 'easeInOut',
+							},
+						}}
+						className="relative mt-6 mb-16 h-[280px] w-[280px] md:h-[400px] md:w-[400px]"
 					>
 						<div className="absolute inset-0 rounded-full bg-gradient-to-br from-muted via-card to-secondary/30 backdrop-blur-sm" />
 
 						<div className="absolute inset-0 flex items-center justify-center">
-							<div className="w-[240px] h-[240px] md:w-[340px] md:h-[340px] rounded-full bg-gradient-to-br from-muted-foreground/10 to-muted-foreground/5 flex items-center justify-center overflow-hidden">
-								<motion.svg
-									className="w-full h-full"
-									viewBox="0 0 200 200"
-									xmlns="http://www.w3.org/2000/svg"
-									role="img"
-									aria-label="Foto de perfil de Roberto Serrano con efecto orgánico"
-								>
-									<defs>
-										<clipPath id="hero-profile-blob">
-											<path d={profileBlobPath} transform="translate(100 100) scale(1.02)" />
-										</clipPath>
-										<linearGradient id="hero-profile-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-											<stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.9" />
-											<stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.9" />
-										</linearGradient>
-										<radialGradient id="hero-profile-overlay" cx="50%" cy="35%" r="75%">
-											<stop offset="0%" stopColor="white" stopOpacity="0.2" />
-											<stop offset="60%" stopColor="transparent" stopOpacity="0" />
-											<stop offset="100%" stopColor="hsl(var(--foreground))" stopOpacity="0.2" />
-										</radialGradient>
-										<filter id="hero-profile-glow" x="-35%" y="-35%" width="170%" height="170%">
-											<feGaussianBlur stdDeviation="6" result="blur" />
-											<feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.35 0" />
-										</filter>
-									</defs>
+							<motion.div
+								animate={{
+									scale: [1, 1.08, 1],
+									opacity: [0.2, 0.38, 0.2],
+								}}
+								transition={{
+									duration: 3.5,
+									repeat: Infinity,
+									ease: 'easeInOut',
+								}}
+								className="absolute h-[210px] w-[210px] rounded-full bg-accent/20 blur-3xl md:h-[300px] md:w-[300px]"
+							/>
+						</div>
 
-									<path
-										d={profileBlobPath}
-										transform="translate(100 100) scale(1.08)"
-										fill="hsl(var(--accent) / 0.6)"
-										filter="url(#hero-profile-glow)"
+						<motion.div
+							animate={{ rotate: 360 }}
+							transition={{
+								duration: 30,
+								repeat: Infinity,
+								ease: 'linear',
+							}}
+							className="absolute inset-[7%] rounded-full border border-accent/15 border-dashed"
+						/>
+
+						<div className="absolute inset-0 flex items-center justify-center">
+							<div className="relative flex h-[240px] w-[240px] items-center justify-center md:h-[340px] md:w-[340px]">
+								<motion.div
+									animate={{
+										scale: [1, 1.04, 1],
+										rotate: [0, 3, 0],
+										borderRadius: [
+											'42% 58% 55% 45% / 40% 42% 58% 60%',
+											'58% 42% 48% 52% / 44% 58% 42% 56%',
+											'42% 58% 55% 45% / 40% 42% 58% 60%',
+										],
+									}}
+									transition={{
+										duration: 8,
+										repeat: Infinity,
+										ease: 'easeInOut',
+									}}
+									className="absolute inset-0 bg-gradient-to-br from-accent/20 via-primary/10 to-accent/5 blur-sm"
+								/>
+
+								<div className="absolute inset-6 rounded-full bg-accent/20 blur-2xl" />
+
+								<div className="relative z-10 h-[210px] w-[210px] overflow-hidden rounded-full border-[3px] border-accent/20 shadow-2xl md:h-[290px] md:w-[290px]">
+									<Image
+										width={200}
+										height={200}
+										src="/static/profile.png"
+										alt="Foto de perfil de Roberto Serrano"
+										className="h-full w-full object-cover object-center grayscale contrast-110 brightness-105"
 									/>
-
-									<image
-										href="/static/profile.png"
-										x="0"
-										y="0"
-										width="200"
-										height="200"
-										preserveAspectRatio="xMidYMid slice"
-										clipPath="url(#hero-profile-blob)"
-									/>
-
-									<path d={profileBlobPath} transform="translate(100 100)" fill="url(#hero-profile-overlay)" />
-
-									<path
-										d={profileBlobPath}
-										transform="translate(100 100)"
-										fill="none"
-										stroke="url(#hero-profile-stroke)"
-										strokeWidth="3"
-									/>
-								</motion.svg>
+								</div>
 							</div>
 						</div>
 
@@ -155,22 +167,34 @@ export default function Hero() {
 								<motion.div
 									key={`mobile-${index}`}
 									initial={{ opacity: 0, scale: 0 }}
-									animate={{ opacity: 1, scale: 1 }}
+									animate={{
+										opacity: 1,
+										scale: 1,
+										y: [0, index % 2 === 0 ? -4 : 4, 0],
+									}}
 									transition={{
-										duration: 0.4,
-										delay: 0.5 + skill.delay,
-										type: 'spring',
-										stiffness: 200,
+										opacity: {
+											duration: 0.4,
+											delay: 0.5 + skill.delay,
+										},
+										scale: {
+											duration: 0.4,
+											delay: 0.5 + skill.delay,
+											type: 'spring',
+											stiffness: 200,
+										},
+										y: {
+											duration: 3 + index * 0.2,
+											repeat: Infinity,
+											ease: 'easeInOut',
+											delay: index * 0.12,
+										},
 									}}
 									className="absolute"
 									style={skill.mobilePosition}
 								>
-									<div
-										className={`bg-card border border-border px-3 py-1.5 rounded-full shadow-lg dark:bg-card/90 dark:border-border/80 whitespace-nowrap`}
-									>
-										<span className={'text-xs font-display font-medium text-blue-700 dark:text-blue-200'}>
-											{skill.label}
-										</span>
+									<div className="whitespace-nowrap rounded-full border border-border/60 bg-background/80 px-3 py-1.5 shadow-lg backdrop-blur-md">
+										<span className="text-xs font-medium text-foreground/90">{skill.label}</span>
 									</div>
 								</motion.div>
 							))}
@@ -181,20 +205,34 @@ export default function Hero() {
 								<motion.div
 									key={`desktop-${index}`}
 									initial={{ opacity: 0, scale: 0 }}
-									animate={{ opacity: 1, scale: 1 }}
+									animate={{
+										opacity: 1,
+										scale: 1,
+										y: [0, index % 2 === 0 ? -6 : 6, 0],
+									}}
 									transition={{
-										duration: 0.4,
-										delay: 0.5 + skill.delay,
-										type: 'spring',
-										stiffness: 200,
+										opacity: {
+											duration: 0.4,
+											delay: 0.5 + skill.delay,
+										},
+										scale: {
+											duration: 0.4,
+											delay: 0.5 + skill.delay,
+											type: 'spring',
+											stiffness: 200,
+										},
+										y: {
+											duration: 3.2 + index * 0.2,
+											repeat: Infinity,
+											ease: 'easeInOut',
+											delay: index * 0.15,
+										},
 									}}
 									className="absolute"
 									style={skill.desktopPosition}
 								>
-									<div
-										className={`bg-white border border-border px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 dark:bg-card/90 dark:border-border/80 whitespace-nowrap`}
-									>
-										<span className={`text-sm font-display font-medium`}>{skill.label}</span>
+									<div className="whitespace-nowrap rounded-full border border-border/60 bg-background/80 px-4 py-2 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+										<span className="text-sm font-medium text-foreground/90">{skill.label}</span>
 									</div>
 								</motion.div>
 							))}
@@ -208,7 +246,7 @@ export default function Hero() {
 						className="flex gap-4"
 					>
 						<a href="https://www.linkedin.com/in/roberto-serrano-diaz-grande" target="_blank" rel="noopener noreferrer">
-							<Button size="lg" className="font-display font-semibold bg-primary hover:bg-primary/90">
+							<Button size="lg" className="font-semibold bg-primary hover:bg-primary/90">
 								<Linkedin className="!size-5" />
 								Contacto
 							</Button>
