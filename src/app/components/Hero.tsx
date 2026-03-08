@@ -61,7 +61,7 @@ export default function Hero() {
 		<section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-secondary/20 to-background">
 			<div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_oklch(0.45_0.15_285_/_0.05),transparent_50%)]" />
 
-			<div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
+			<div className="container relative z-10 mt-16 mx-auto max-w-7xl px-4 md:px-6">
 				<div className="flex flex-col items-center justify-center text-center">
 					<motion.span
 						initial={{ opacity: 0, y: -20 }}
@@ -99,7 +99,7 @@ export default function Hero() {
 								ease: 'easeInOut',
 							},
 						}}
-						className="relative mt-6 mb-16 h-[240px] w-[240px] md:h-[400px] md:w-[400px]"
+						className="relative mt-6 mb-16 h-[280px] w-[280px] md:h-[400px] md:w-[400px]"
 					>
 						<div className="absolute inset-0 rounded-full bg-gradient-to-br from-muted via-card to-secondary/30 backdrop-blur-sm" />
 
@@ -129,7 +129,7 @@ export default function Hero() {
 						/>
 
 						<div className="absolute inset-0 flex items-center justify-center">
-							<div className="relative flex h-[140px] w-[140px] items-center justify-center md:h-[340px] md:w-[340px]">
+							<div className="relative flex h-[240px] w-[240px] items-center justify-center md:h-[340px] md:w-[340px]">
 								<motion.div
 									animate={{
 										scale: [1, 1.04, 1],
