@@ -67,7 +67,7 @@ export default function Hero() {
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
-						className="mb-4 rounded-full bg-accent/10 px-3.5 py-1 text-sm font-semibold tracking-wider text-accent md:text-base"
+						className="rounded-full bg-accent/10 px-3.5 py-1 text-sm font-semibold tracking-wider text-accent md:text-base"
 					>
 						Hello
 					</motion.span>
@@ -76,11 +76,11 @@ export default function Hero() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.1 }}
-						className="mt-8 mb-12 text-4xl font-bold text-foreground md:text-7xl lg:text-8xl"
+						className="mt-2 mb-12 text-2xl font-bold text-foreground md:text-7xl lg:text-8xl"
 					>
 						Soy Roberto Serrano
 						<br />
-						<span className="text-gradient text-2xl font-light lg:text-5xl">Software Engineer</span>
+						<span className="text-gradient text-xl font-light lg:text-5xl">Software Engineer</span>
 					</motion.h1>
 
 					<motion.div
