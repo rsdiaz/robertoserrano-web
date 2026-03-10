@@ -1,4 +1,5 @@
 const siteMetadata = {
+	portfolioTitle: 'Roberto Serrano',
 	title: 'Roberto Serrano Díaz-Grande | Software Engineer',
 	description:
 		'Bienvenido a mi sitio web personal donde comparto artículos sobre desarrollo web, programación y tecnología.',

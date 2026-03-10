@@ -8,6 +8,7 @@ import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
+import siteMetadata from '@/data/siteMetadata'
 
 function ThemeToggle({ theme, setTheme }: { theme: string | undefined; setTheme: (v: string) => void }) {
 	return (
@@ -78,13 +79,13 @@ export default function Header() {
 			className={`fixed top-0 w-full z-50 transition-smooth ${isScrolled ? 'backdrop-blur-md bg-background/40 pt-2 pl-2 pr-2' : 'backdrop-blur-md bg-background/40'}`}
 		>
 			<nav className="container mx-auto mt-6 px-4 sm:px-6 lg:px-8 rounded-4xl bg-foreground text-background">
-				<div className="flex h-16 items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
+				<div className="flex h-12 items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] md:items-center">
 					<Link
 						href="/"
 						className="flex items-center space-x-2 hover:opacity-80 transition-smooth md:justify-self-start"
 					>
 						<Code2 className="h-8 w-8 text-background" />
-						<span className="text-xl font-bold text-background">Roberto Serrano</span>
+						<span className="text-xl font-bold text-background">{siteMetadata.portfolioTitle}</span>
 					</Link>
 
 					{/* Desktop Navigation */}
