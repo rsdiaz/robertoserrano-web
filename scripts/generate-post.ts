@@ -64,7 +64,7 @@ No text, no letters, no words. Professional, clean design. 16:9 ratio.`
 		n: 1,
 	})
 
-	const imageUrl = imageResponse.data[0].url!
+	const imageUrl = (imageResponse.data && imageResponse.data[0].url) || ''
 	console.log(`☁️  Subiendo imagen a Cloudinary...`)
 
 	const uploadResult = await cloudinary.uploader.upload(imageUrl, {

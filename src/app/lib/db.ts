@@ -1,15 +1,52 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, Db } from 'mongodb'
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/'
-const client = new MongoClient(uri)
-const dbName = 'blog'
+// Patrón oficial MongoDB para Next.js:
+// Cachear la promesa del cliente en globalThis para sobrevivir hot-reloads en dev
+// y reutilizar conexiones entre invocaciones warm en producción (serverless).
+declare global {
+	var _mongoClientPromise: Promise<MongoClient> | undefined
+}
 
-let isConnected = false
+function buildMongoUri(): string {
+	const rawUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/'
+	const password = process.env.MONGODB_PASSWORD
 
-export async function db() {
-	if (!isConnected) {
-		await client.connect()
-		isConnected = true
+	if (rawUri.includes('<db_password>')) {
+		if (!password) {
+			throw new Error('Falta MONGODB_PASSWORD en .env.local para conectar con Atlas')
+		}
+		return rawUri.replace('<db_password>', encodeURIComponent(password))
 	}
+
+	return rawUri
+}
+
+function createClientPromise(): Promise<MongoClient> {
+	const uri = buildMongoUri()
+
+	const client = new MongoClient(uri, {
+		// Serverless: pool pequeño, Next.js puede levantar múltiples instancias.
+		// Cada instancia × maxPoolSize × nodos Atlas = conexiones totales en servidor.
+		maxPoolSize: 5,
+		// Liberar conexiones inactivas antes de que Atlas las cierre por timeout (10 min).
+		maxIdleTimeMS: 60_000,
+		// Fallo rápido si Atlas no responde en 10 s.
+		connectTimeoutMS: 10_000,
+		// Tiempo máximo para seleccionar un servidor del replica set.
+		serverSelectionTimeoutMS: 10_000,
+	})
+
+	return client.connect()
+}
+
+// En dev, preservar la promesa entre hot-reloads para no abrir conexiones extra.
+// En prod, el módulo se evalúa una vez por instancia serverless.
+const clientPromise: Promise<MongoClient> =
+	globalThis._mongoClientPromise ?? (globalThis._mongoClientPromise = createClientPromise())
+
+const dbName = process.env.MONGODB_DB_NAME || 'blog'
+
+export async function db(): Promise<Db> {
+	const client = await clientPromise
 	return client.db(dbName)
 }
