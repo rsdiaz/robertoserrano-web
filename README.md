@@ -73,3 +73,44 @@ npm run lint              #ESLint check
 ```
 
 ## 🐳 Docker
+```bash
+docker build -t robertoserrano-web:latest .
+```
+
+```bash
+docker run -d -p 3000:3000 \
+  -e MONGODB_URI="mongodb://..." \
+  robertoserrano-web:latest
+```
+
+## 🚀 Deploy
+GitHub Actions
+
+Push a main branch para trigger automático:
+
+- Build Docker image
+- Push a GHCR
+- Deploy automático a VPS
+- Variables de entorno en production
+
+Set en secrets de GitHub Actions:
+
+- VPS_HOST
+- VPS_USER
+- VPS_SSH_KEY
+- MONGODB_URI
+
+## 📝 Escribir un nuevo post
+1 - Crea archivo .mdx en blog-posts
+
+2 - Añade frontmatter:
+```bash
+---
+title: "Mi primer post"
+date: 2026-03-05
+excerpt: "Resumen del post"
+tags: ["nextjs", "typescript"]
+featured: true
+---
+```
+

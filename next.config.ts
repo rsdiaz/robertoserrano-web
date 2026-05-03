@@ -1,5 +1,4 @@
 import type { NextConfig } from 'next'
-import { withContentlayer } from 'next-contentlayer2'
 import bundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundleAnalyzer = bundleAnalyzer({
@@ -19,5 +18,4 @@ const nextConfig: NextConfig = {
 	},
 }
 
-const plugins = [withContentlayer, withBundleAnalyzer]
-export default plugins.reduce((acc, next) => next(acc), nextConfig)
+export default withBundleAnalyzer(nextConfig)

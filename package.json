@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "build:content": "contentlayer2 build",
+    "dev": "npm run build:content && next dev --turbopack",
+    "build": "npm run build:content && next build --turbopack",
+    "build:content": "node scripts/build-content.mjs",
     "start": "next start",
     "lint": "eslint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "post:generate": "node --env-file=.env.local --import tsx scripts/generate-post.ts"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.5.2",
@@ -26,6 +27,7 @@
     "next": "15.5.2",
     "next-contentlayer2": "^0.5.8",
     "next-themes": "^0.4.6",
+    "openai": "^6.35.0",
     "pliny": "^0.4.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -48,12 +50,14 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cloudinary": "^2.10.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

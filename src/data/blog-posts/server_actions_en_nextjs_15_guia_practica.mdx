@@ -1,0 +1,126 @@
+---
+title: 'Server Actions en Next.js 15: guía práctica'
+excerpt: 'Descubre cómo las Server Actions en Next.js 15 transforman la interacción entre cliente y servidor para optimizar el rendimiento y simplificar el código.'
+date: 2026-05-03
+category: 'Frontend'
+tags: ["nextjs", "server-actions", "react", "typescript"]
+featured: true
+author: 'Roberto Serrano'
+image:
+    url: 'https://res.cloudinary.com/rserrano/image/upload/v1777808824/blog-posts/ilustracion-de-server-actions-en-nextjs-15.png'
+    alt: 'Ilustración de Server Actions en Next.js 15'
+---
+
+## Introducción a las Server Actions 🤔
+
+Con la llegada de Next.js 15, las Server Actions han cambiado la forma en que las aplicaciones manejan la comunicación entre el cliente y el servidor. Estas acciones ofrecen una manera más eficiente y directa de realizar operaciones del lado del servidor desde nuestros componentes de React. En este artículo, profundizaremos en el "por qué" y el "cómo" de las Server Actions, proporcionando ejemplos prácticos para implementarlas en tus proyectos.
+
+## ¿Por qué usar Server Actions? 🚀
+
+### Ventajas de las Server Actions
+
+Las Server Actions en Next.js 15 permiten ejecutar lógica del lado del servidor directamente desde los componentes de React. Esto es especialmente beneficioso para operaciones que requieren interacción con bases de datos o servicios externos, ya que:
+
+1. **Rendimiento Mejorado**: Al ejecutar estas acciones en el servidor, se reduce la carga en el cliente, mejorando el tiempo de respuesta.
+2. **Seguridad**: Mantener la lógica sensible en el servidor protege mejor los datos sensibles.
+3. **Simplificación del Código**: Evita tener que escribir APIs REST o GraphQL para cada operación, reduciendo la complejidad del código.
+
+## Cómo funcionan las Server Actions 💡
+
+### Implementación básica
+
+Para implementar Server Actions en Next.js 15, necesitas definirlas en tus componentes. Aquí tienes un ejemplo básico:
+
+```typescript
+// app/actions.ts
+'use server';
+
+export async function obtenerDatosUsuario(userId: string) {
+    // Lógica para obtener datos del usuario desde la base de datos
+    const response = await fetch(`https://api.example.com/user/${userId}`, {
+        next: { revalidate: 60 },
+    });
+    const data = await response.json();
+    return data;
+}
+```
+
+### Uso en componentes de React
+
+Una vez definida la Server Action, puedes usarla en tus componentes de React de la siguiente manera:
+
+```typescript
+// app/page.tsx
+
+import React, { useState } from 'react';
+import { obtenerDatosUsuario } from './actions';
+
+const UserProfile = () => {
+    const [userData, setUserData] = useState(null);
+
+    const handleFetchUser = async () => {
+        try {
+            const data = await obtenerDatosUsuario('1234');
+            setUserData(data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    return (
+        <div>
+            <h1>Perfil de Usuario</h1>
+            <button onClick={handleFetchUser}>Cargar Datos de Usuario</button>
+            {userData && <pre>{JSON.stringify(userData, null, 2)}</pre>}
+        </div>
+    );
+};
+
+export default UserProfile;
+```
+
+## Consideraciones de Seguridad ⚡
+
+### Validación y Autenticación
+
+Aunque las Server Actions se ejecutan en el servidor, es crucial implementar medidas de seguridad como la validación de entrada y la autenticación del usuario. Esto asegura que las acciones solo sean accesibles por usuarios autorizados y con datos válidos.
+
+```typescript
+// app/actions.ts
+'use server';
+
+import { auth } from '@/lib/auth';
+
+export async function actualizarPerfilUsuario(
+    userId: string,
+    nuevosDatos: { nombre: string; bio: string }
+) {
+    const session = await auth();
+    if (!session || session.user.id !== userId) {
+        throw new Error('No autorizado');
+    }
+
+    // Lógica para actualizar el perfil del usuario
+    const response = await fetch(`https://api.example.com/user/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevosDatos),
+    });
+
+    return response.json();
+}
+```
+
+## Despliegue y Rendimiento 🛠️
+
+### Optimización del Despliegue
+
+Una vez que las Server Actions están implementadas, es importante considerar cómo se despliegan. Asegúrate de que tu infraestructura de servidor esté optimizada para manejar la carga de trabajo adicional que puede surgir al mover más lógica al servidor.
+
+### Beneficios de CDN y Caching
+
+El uso de redes de entrega de contenido (CDN) y caching puede mejorar significativamente el rendimiento de las Server Actions al reducir la latencia y acelerar las respuestas.
+
+## Conclusión 🎯
+
+Las Server Actions en Next.js 15 son una herramienta poderosa para mejorar la eficiencia y la seguridad de tus aplicaciones web. Al mover la lógica crítica al servidor, puedes crear aplicaciones más rápidas y seguras, al mismo tiempo que simplificas tu código. Espero que esta guía te ayude a integrar Server Actions de manera efectiva en tus proyectos. ¡Felices codificaciones!

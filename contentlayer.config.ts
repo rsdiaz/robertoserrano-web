@@ -20,7 +20,7 @@ import rehypeCitation from 'rehype-citation'
 import rehypePrismPlus from 'rehype-prism-plus'
 import rehypePresetMinify from 'rehype-preset-minify'
 
-const root = process.cwd()
+const root = process.env.INIT_CWD ?? process.env.npm_config_local_prefix ?? process.cwd()
 
 const computedFields: ComputedFields = {
 	id: {
@@ -68,10 +68,10 @@ export const Project = defineDocumentType(() => ({
 }))
 
 export default makeSource({
-	contentDirPath: 'src/data',
+	contentDirPath: path.join(root, 'src/data'),
 	documentTypes: [Project, BlogPost],
 	mdx: {
-		cwd: process.cwd(),
+		cwd: root,
 		remarkPlugins: [remarkGfm, remarkMath, remarkAlert, remarkExtractFrontmatter, remarkCodeTitles, remarkImgToJsx],
 		rehypePlugins: [
 			rehypeSlug,
