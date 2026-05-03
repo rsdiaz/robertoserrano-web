@@ -63,7 +63,7 @@ export default function Header() {
 	const navigation = [
 		{ name: 'Home', href: '/' },
 		{ name: 'Blog', href: '/blog' },
-		// { name: 'Sobre mí', href: '/sobre-mi' },
+		{ name: 'Contacto', href: '/contacto' },
 	]
 
 	const isActive = (href: string) => {

@@ -1,3 +1,6 @@
+'use client'
+
+import { motion } from 'motion/react'
 import ContactWithMe from '../components/ContactWhitMe'
 import ContactInfo from './components/ContactInfo'
 import CollaborationTypes from './components/CollaborationTypes'
@@ -5,30 +8,74 @@ import ContactForm from './components/ContactForm'
 
 const Contact = () => {
 	return (
-		<div className="min-h-screen pt-34 pb-16">
+		<div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-background via-secondary/20 to-background pt-64 pb-16">
+			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_hsl(var(--accent)/0.14),_transparent_45%)]" />
+			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_75%_35%,_hsl(var(--primary)/0.12),_transparent_40%)]" />
+
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
-				<div className="text-center mb-16">
-					<h1 className="text-4xl sm:text-5xl font-bold mb-6">
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.55, ease: 'easeOut' }}
+					className="mb-16 text-center"
+				>
+					<motion.span
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.45, delay: 0.05, ease: 'easeOut' }}
+						className="inline-flex rounded-full border border-accent/20 bg-accent/8 px-3.5 py-1 text-sm font-semibold tracking-wide text-accent"
+					>
+						Contacto
+					</motion.span>
+
+					<motion.h1
+						initial={{ opacity: 0, y: 24 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.55, delay: 0.12, ease: 'easeOut' }}
+						className="mt-4 text-4xl font-bold sm:text-5xl"
+					>
 						Hablemos de tu <span className="text-gradient"> próximo proyecto</span> 🚀
-					</h1>
-					<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+					</motion.h1>
+
+					<motion.p
+						initial={{ opacity: 0, y: 24 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.55, delay: 0.2, ease: 'easeOut' }}
+						className="mx-auto mt-6 max-w-3xl text-xl text-muted-foreground"
+					>
 						¿Tienes una idea innovadora? ¿Necesitas ayuda con un proyecto existente? Estoy aquí para convertir tus ideas
 						en soluciones digitales.
-					</p>
-				</div>
+					</motion.p>
+				</motion.div>
 
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.55, delay: 0.08, ease: 'easeOut' }}
+					className="grid grid-cols-1 gap-12 lg:grid-cols-3"
+				>
 					{/* Contact Form */}
-					<div className="lg:col-span-2">
+					<motion.div
+						initial={{ opacity: 0, y: 22 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.55, delay: 0.16, ease: 'easeOut' }}
+						className="lg:col-span-2"
+					>
 						<ContactForm />
-					</div>
-					<div className="space-y-8">
+					</motion.div>
+
+					<motion.div
+						initial={{ opacity: 0, y: 22 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.55, delay: 0.24, ease: 'easeOut' }}
+						className="space-y-8"
+					>
 						<ContactInfo />
 						<ContactWithMe />
 						<CollaborationTypes />
-					</div>
-				</div>
+					</motion.div>
+				</motion.div>
 
 				{/* FAQ Section */}
 				{/* <section className="mt-20 pt-12 border-t border-border">

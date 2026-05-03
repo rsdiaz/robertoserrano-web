@@ -89,7 +89,7 @@ export default function Home() {
 				</div>
 			</section> */}
 
-			{/* Recent Posts Section */}
+			{/* Last Posts Section */}
 			<section className="py-24">
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 					<motion.div
