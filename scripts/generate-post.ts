@@ -52,9 +52,12 @@ image:
 async function generateImage(title: string, altText: string): Promise<string> {
 	console.log(`🎨 Generando imagen con DALL-E 3...`)
 
-	const imagePrompt = `Minimalist tech blog cover image for an article titled "${title}". 
-Abstract, modern, dark background with subtle code or tech elements. 
-No text, no letters, no words. Professional, clean design. 16:9 ratio.`
+	const imagePrompt = `Minimalist space-themed illustration inspired by "${title}", dark navy blue gradient background with smooth abstract shapes.
+Small glowing stars scattered across the scene, stylized planets partially visible in the corners, and bright shooting comets with soft glow trails.
+Clean vector illustration style, modern and friendly tech branding aesthetic.
+Soft lighting, subtle gradients, rounded shapes, high contrast but elegant.
+No text, no letters, no words.
+High resolution, 16:9 aspect ratio.`
 
 	const imageResponse = await client.images.generate({
 		model: 'dall-e-3',

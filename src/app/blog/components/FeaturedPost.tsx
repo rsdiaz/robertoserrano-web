@@ -90,11 +90,11 @@ export function FeaturedPost() {
 									</div>
 
 									<div className="flex justify-between items-center">
-										{post.slug && data.find(item => item.slug === post.slug) && (
+										{/* {post.slug && data.find(item => item.slug === post.slug) && (
 											<span className="text-sm text-muted-foreground">
 												{data.find(item => item.slug === post.slug)?.views.toLocaleString() || 0} visualizaciones
 											</span>
-										)}
+										)} */}
 										{/* <span className="text-sm text-muted-foreground">
 												{post.views.toLocaleString()} visualizaciones
 											</span> */}
