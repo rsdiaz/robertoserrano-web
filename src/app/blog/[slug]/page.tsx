@@ -4,7 +4,7 @@ import { Button } from '@/app/components/ui/button'
 import { Card, CardContent } from '@/app/components/ui/card'
 import { Separator } from '@/app/components/ui/separator'
 import { allBlogPosts } from 'contentlayer/generated'
-import { Bookmark, Calendar, Clock, Eye, Heart, Share2, Tag } from 'lucide-react'
+import { Bookmark, Calendar, Clock, Heart, Share2, Tag } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
@@ -12,8 +12,20 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import BackNavigation from './components/BackNavigation'
 import PostSidebar from './components/PostSidebar'
+import ViewCounter from './components/ViewCounter'
 // import Comments from './components/Comments'
 import siteMetadata from '@/data/siteMetadata'
+import { db } from '@/app/lib/db'
+
+async function getPostViews(slug: string): Promise<number> {
+	try {
+		const database = await db()
+		const post = await database.collection('blog_stats').findOne({ slug }, { projection: { _id: 0, views: 1 } })
+		return post?.views ?? 0
+	} catch {
+		return 0
+	}
+}
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	const { slug } = await props.params
@@ -39,6 +51,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
 	const { slug } = await props.params
 	const post = allBlogPosts.find(p => p.slug === slug)
+	const initialViews = await getPostViews(slug)
 
 	if (!post) {
 		return notFound()
@@ -88,8 +101,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 										{post?.readingTime.text}
 									</span>
 									<span className="flex items-center">
-										<Eye className="h-4 w-4 mr-1" />
-										{/* {post.views.toLocaleString()} views */}
+										<ViewCounter slug={slug} initialViews={initialViews} />
 									</span>
 								</div>
 							</div>

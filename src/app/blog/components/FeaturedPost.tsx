@@ -15,8 +15,9 @@ export function FeaturedPost() {
 
 	const fetchPostViews = async (slug: string) => {
 		const res = await fetch(`/api/views/${slug}`)
-		const result = await res.json()
-		return result[0]
+		if (!res.ok) return { slug, views: 0 }
+		const result = (await res.json()) as { slug: string; views: number }
+		return { slug, views: result.views ?? 0 }
 	}
 
 	useEffect(() => {
@@ -26,8 +27,6 @@ export function FeaturedPost() {
 		}
 		if (featuredPosts.length) loadViews()
 	}, [featuredPosts])
-
-	console.log(data)
 
 	return (
 		<>
@@ -90,14 +89,9 @@ export function FeaturedPost() {
 									</div>
 
 									<div className="flex justify-between items-center">
-										{/* {post.slug && data.find(item => item.slug === post.slug) && (
-											<span className="text-sm text-muted-foreground">
-												{data.find(item => item.slug === post.slug)?.views.toLocaleString() || 0} visualizaciones
-											</span>
-										)} */}
-										{/* <span className="text-sm text-muted-foreground">
-												{post.views.toLocaleString()} visualizaciones
-											</span> */}
+										<span className="text-sm text-muted-foreground">
+											{data.find(item => item.slug === post.slug)?.views.toLocaleString('es-ES') || 0} visualizaciones
+										</span>
 										<Button variant="outline" size="sm" asChild>
 											<Link href={`/blog/${post.slug}`}>Leer más</Link>
 										</Button>

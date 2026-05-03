@@ -39,14 +39,24 @@ function createClientPromise(): Promise<MongoClient> {
 	return client.connect()
 }
 
-// En dev, preservar la promesa entre hot-reloads para no abrir conexiones extra.
-// En prod, el módulo se evalúa una vez por instancia serverless.
-const clientPromise: Promise<MongoClient> =
-	globalThis._mongoClientPromise ?? (globalThis._mongoClientPromise = createClientPromise())
-
 const dbName = process.env.MONGODB_DB_NAME || 'blog'
 
+function getClientPromise(): Promise<MongoClient> {
+	if (!globalThis._mongoClientPromise) {
+		const promise = createClientPromise()
+
+		// Si la conexión falla, limpiar la caché para que el siguiente request reintente.
+		promise.catch(() => {
+			globalThis._mongoClientPromise = undefined
+		})
+
+		globalThis._mongoClientPromise = promise
+	}
+
+	return globalThis._mongoClientPromise
+}
+
 export async function db(): Promise<Db> {
-	const client = await clientPromise
+	const client = await getClientPromise()
 	return client.db(dbName)
 }
