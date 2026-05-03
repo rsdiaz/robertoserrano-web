@@ -39,6 +39,7 @@ export const BlogPost = defineDocumentType(() => ({
 		category: { type: 'string', required: false },
 		tags: { type: 'list', of: { type: 'string' }, required: false },
 		featured: { type: 'boolean', required: false },
+		draft: { type: 'boolean', required: false },
 		author: { type: 'string', required: false },
 		image: { type: 'json', required: false },
 	},
