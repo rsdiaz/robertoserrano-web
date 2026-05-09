@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Calendar, Clock, Filter, Search } from 'lucide-react'
@@ -14,8 +14,12 @@ import { motion } from 'motion/react'
 export default function BlogPageContent() {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedCategory, setSelectedCategory] = useState('all')
+	const sortedPosts = useMemo(
+		() => [...allBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+		[],
+	)
 
-	const filteredPosts = allBlogPosts.filter(post => {
+	const filteredPosts = sortedPosts.filter(post => {
 		const matchesSearch =
 			post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -26,7 +30,7 @@ export default function BlogPageContent() {
 		return matchesSearch && matchesCategory
 	})
 
-	const categories = allBlogPosts.reduce(
+	const categories = sortedPosts.reduce(
 		(acc, post) => {
 			const category = post.category || 'General'
 			const existingCategory = acc.find(cat => cat.id === category)
@@ -37,7 +41,7 @@ export default function BlogPageContent() {
 			}
 			return acc
 		},
-		[{ id: 'all', label: 'Todas', count: allBlogPosts.length }] as { id: string; label: string; count: number }[],
+		[{ id: 'all', label: 'Todas', count: sortedPosts.length }] as { id: string; label: string; count: number }[],
 	)
 
 	return (

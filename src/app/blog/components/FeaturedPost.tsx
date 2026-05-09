@@ -11,7 +11,10 @@ import Link from 'next/link'
 import { motion } from 'motion/react'
 
 export function FeaturedPost() {
-	const featuredPosts = useMemo(() => allBlogPosts.filter(Boolean), [])
+	const featuredPosts = useMemo(
+		() => [...allBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+		[],
+	)
 	const [data, setData] = useState<{ slug: string; views: number }[]>([])
 
 	const fetchPostViews = async (slug: string) => {
