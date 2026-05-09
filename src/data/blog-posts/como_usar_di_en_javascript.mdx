@@ -1,0 +1,157 @@
+---
+title: 'Cómo usar inyección de dependencias en JavaScript'
+excerpt: 'Aprende a aplicar inyección de dependencias en JavaScript y Node.js para desacoplar servicios, mejorar pruebas y mantener un backend más limpio.'
+date: 2026-05-09
+category: 'Backend'
+tags: ['desarrollo', 'nodejs']
+featured: true
+author: 'Roberto Serrano'
+image:
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1778315169/blog-posts/javascript_zjcmqq.png'
+  alt: 'Diagrama de inyeccion de dependencias en JavaScript y Node.js'
+---
+
+La inyección de dependencias es una técnica muy útil cuando un proyecto JavaScript empieza a crecer y deja de ser trivial. Si trabajas con servicios, adaptadores, repositorios o integraciones externas en Node.js, introducir DI desde el principio te ayuda a reducir acoplamiento y a probar cada pieza de forma aislada.
+
+## 🤔 ¿Por qué usar inyección de dependencias en JavaScript y Node.js?
+
+La inyección de dependencias (DI) es un patrón de diseño que nos permite escribir código más limpio, modular y fácil de probar. En aplicaciones NodeJS, donde la modularidad y la capacidad de mantenimiento son cruciales, DI puede ser una herramienta poderosa.
+
+### Beneficios de la inyección de dependencias
+
+1. **Desacoplamiento**: Las clases y módulos no necesitan crear sus propias dependencias; se les proporcionan externamente.
+2. **Testabilidad**: Facilita la creación de pruebas unitarias al permitir la inyección de mocks o stubs.
+3. **Mantenimiento**: Facilita la gestión de dependencias y mejora la legibilidad del código.
+
+## 🚀 Implementación básica de inyección de dependencias
+
+Aunque NodeJS no tiene un sistema de inyección de dependencias incorporado como otros lenguajes (por ejemplo, Spring en Java), podemos implementar DI utilizando librerías como `inversify`, `awilix`, o simplemente usando el patrón de diseño manualmente.
+
+### Ejemplo básico con un contenedor manual
+
+Comencemos con un ejemplo sin librerías externas para entender los fundamentos.
+
+#### Creando un contenedor simple
+
+Un contenedor es un objeto que almacena y resuelve dependencias.
+
+```javascript
+class Container {
+	constructor() {
+		this.services = {}
+	}
+
+	register(name, definition, dependencies) {
+		this.services[name] = { definition, dependencies }
+	}
+
+	get(name) {
+		const service = this.services[name]
+
+		if (!service) {
+			throw new Error(`Service not found: ${name}`)
+		}
+
+		const dependencies = service.dependencies.map(dep => this.get(dep))
+		return service.definition(...dependencies)
+	}
+}
+```
+
+#### Registro de servicios
+
+Registremos un par de servicios para ilustrar cómo funciona este contenedor.
+
+```javascript
+const container = new Container()
+
+const loggerService = () => {
+	return {
+		log: message => console.log(`Log: ${message}`),
+	}
+}
+
+const userService = logger => {
+	return {
+		createUser: name => {
+			logger.log(`Creating user: ${name}`)
+			return { id: Date.now(), name }
+		},
+	}
+}
+
+container.register('logger', loggerService, [])
+container.register('userService', userService, ['logger'])
+```
+
+#### Resolución y uso de servicios
+
+Ahora podemos obtener e interactuar con estos servicios a través del contenedor.
+
+```javascript
+const userServiceInstance = container.get('userService')
+const user = userServiceInstance.createUser('Roberto')
+console.log(user)
+```
+
+## 🛠️ Usando librerías de inyección de dependencias
+
+Para simplificar el trabajo y evitar reinventar la rueda, podemos usar librerías como `inversify` o `awilix`. Estas librerías proporcionan características avanzadas que facilitan la DI en aplicaciones NodeJS.
+
+### Ejemplo con Awilix
+
+Awilix es una librería popular para DI en NodeJS que ofrece un contenedor de inyección de dependencias muy flexible.
+
+#### Instalación de Awilix
+
+Primero, necesitas instalar Awilix:
+
+```bash
+npm install awilix
+```
+
+#### Configuración del contenedor con Awilix
+
+Definamos un contenedor y registremos los mismos servicios que antes, pero utilizando Awilix.
+
+```javascript
+const { createContainer, asClass, asFunction } = require('awilix')
+
+// Crear el contenedor
+const container = createContainer()
+
+// Definir las clases y funciones de servicios
+class LoggerService {
+	log(message) {
+		console.log(`Log: ${message}`)
+	}
+}
+
+class UserService {
+	constructor({ loggerService }) {
+		this.logger = loggerService
+	}
+
+	createUser(name) {
+		this.logger.log(`Creating user: ${name}`)
+		return { id: Date.now(), name }
+	}
+}
+
+// Registrar los servicios en el contenedor
+container.register({
+	loggerService: asClass(LoggerService).singleton(),
+	userService: asClass(UserService).singleton(),
+})
+
+// Obtener e interactuar con los servicios
+const userServiceInstance = container.resolve('userService')
+const user = userServiceInstance.createUser('Roberto')
+console.log(user)
+```
+
+## 💡 Conclusión
+
+La inyección de dependencias permite un código más limpio, modular y fácil de mantener en NodeJS. Aunque podemos implementarlo manualmente, el uso de librerías como Awilix simplifica el proceso, proporcionando un entorno robusto para manejar dependencias complejas. Esto no solo mejora la estructura del código, sino que también facilita las pruebas y el mantenimiento a largo plazo.
+
+Espero que este artículo te haya proporcionado una comprensión clara de cómo implementar y utilizar la inyección de dependencias en tus proyectos de NodeJS. Como siempre, experimenta y adapta estas técnicas a las necesidades específicas de tus aplicaciones.
