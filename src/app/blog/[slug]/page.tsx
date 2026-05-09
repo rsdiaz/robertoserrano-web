@@ -4,7 +4,7 @@ import { Button } from '@/app/components/ui/button'
 import { Card, CardContent } from '@/app/components/ui/card'
 import { Separator } from '@/app/components/ui/separator'
 import { allBlogPosts } from 'contentlayer/generated'
-import { Bookmark, Calendar, Clock, Heart, Share2, Tag } from 'lucide-react'
+import { Bookmark, Calendar, Clock, Heart, Tag } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
@@ -13,6 +13,7 @@ import { notFound } from 'next/navigation'
 import BackNavigation from './components/BackNavigation'
 import PostSidebar from './components/PostSidebar'
 import ViewCounter from './components/ViewCounter'
+import { SharePost } from './components/SharePost'
 // import Comments from './components/Comments'
 import siteMetadata from '@/data/siteMetadata'
 import { db } from '@/app/lib/db'
@@ -136,10 +137,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 										<Bookmark className="h-4 w-4 mr-2" />
 										Guardar
 									</Button>
-									<Button variant="outline" size="sm">
-										<Share2 className="h-4 w-4 mr-2" />
-										Compartir
-									</Button>
+									<SharePost title={post?.title ?? ''} slug={slug} baseUrl={siteMetadata.siteUrl} />
 								</div>
 							</div>
 						</header>
