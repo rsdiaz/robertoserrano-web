@@ -3,13 +3,14 @@ title: 'Despliegue de aplicaciones Nodejs con PM2'
 excerpt: 'PM2 es una herramienta de gestión de procesos para Node.js con características como recarga sin tiempo de inactividad y balanceo de carga.'
 date: 2024-04-15
 category: 'Backend'
-tags: ["NodeJS"]
+tags: ['NodeJS']
 featured: true
 author: 'Roberto Serrano'
 image:
-    url: 'https://res.cloudinary.com/rserrano/image/upload/v1777833759/image-106-1024x576.png_e5qfof.webp'
-    alt: El logotipo completo de Astro
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1777833759/image-106-1024x576.png_e5qfof.webp'
+  alt: El logotipo completo de Astro
 ---
+
 ## 🤔 ¿Qué es PM2?
 
 PM2 es una herramienta de gestión de procesos para Node.js que ofrece características como recarga sin tiempo de inactividad y balanceo de carga, entre otras.
@@ -25,6 +26,7 @@ PM2 es una herramienta de gestión de procesos para Node.js que ofrece caracter�
 - Integraciones con herramientas de DevOps como Docker y Kubernetes
 
 #### Ventajas de Usar PM2
+
 - Gestión de procesos automatizada para una disponibilidad continua
 - Recarga sin tiempo de inactividad (zero-downtime reload)
 - Balanceo de carga para un mejor rendimiento
@@ -90,46 +92,48 @@ Ejemplo de fichero:
 
 ```javascript
 module.exports = {
-  apps: [{
-    name: 'mi-aplicacion-node',
-    script: 'app.js',
-    instances: 'max',
-    autorestart: true,
-    watch: false,
-    max_memory_restart: '1G',
-    env: {
-      NODE_ENV: 'development'
-    },
-    env_production: {
-      NODE_ENV: 'production'
-    }
-  }],
+	apps: [
+		{
+			name: 'mi-aplicacion-node',
+			script: 'app.js',
+			instances: 'max',
+			autorestart: true,
+			watch: false,
+			max_memory_restart: '1G',
+			env: {
+				NODE_ENV: 'development',
+			},
+			env_production: {
+				NODE_ENV: 'production',
+			},
+		},
+	],
 
-  deploy: {
-    production: {
-      user: 'username',
-      host: ['192.168.0.1'],
-      ref: 'origin/main',
-      repo: 'git@github.com:usuario/repositorio.git',
-      path: '/var/www/mi-aplicacion-node',
-      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
-      env: {
-        NODE_ENV: 'production'
-      }
-    },
-    development: {
-      user: 'username',
-      host: ['192.168.0.2'],
-      ref: 'origin/dev',
-      repo: 'git@github.com:usuario/repositorio.git',
-      path: '/var/www/mi-aplicacion-node-dev',
-      'post-deploy': 'npm install y pm2 reload ecosystem.config.js --env development',
-      env: {
-        NODE_ENV: 'development'
-      }
-    }
-  }
-};
+	deploy: {
+		production: {
+			user: 'username',
+			host: ['192.168.0.1'],
+			ref: 'origin/main',
+			repo: 'git@github.com:usuario/repositorio.git',
+			path: '/var/www/mi-aplicacion-node',
+			'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
+			env: {
+				NODE_ENV: 'production',
+			},
+		},
+		development: {
+			user: 'username',
+			host: ['192.168.0.2'],
+			ref: 'origin/dev',
+			repo: 'git@github.com:usuario/repositorio.git',
+			path: '/var/www/mi-aplicacion-node-dev',
+			'post-deploy': 'npm install y pm2 reload ecosystem.config.js --env development',
+			env: {
+				NODE_ENV: 'development',
+			},
+		},
+	},
+}
 ```
 
 ## 💻 Comandos de Despliegue
@@ -137,6 +141,7 @@ module.exports = {
 Utilizando pm2 deploy, puedes automatizar todo el ciclo de despliegue:
 
 - **Despliegue**:
+
 ```sh
 # Preparar el entorno de producción
 pm2 deploy production setup
@@ -181,4 +186,5 @@ Te animo a integrar PM2 en tus proyectos y a explorar cómo puede mejorar la dis
 ¿Tienes experiencias con PM2 que te gustaría compartir? ¡Deja tus comentarios abajo y hablemos!
 
 #### Enlaces relacionados:
+
 [PM2](https://pm2.keymetrics.io/)

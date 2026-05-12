@@ -3,12 +3,12 @@ title: 'Cómo usar React Server Components en Next.js 15'
 excerpt: 'Descubre cómo integrar React Server Components en Next.js 15 para mejorar el rendimiento de tus aplicaciones web.'
 date: 2026-05-03
 category: 'Frontend'
-tags: ["React", "Next.js", "RSC"]
+tags: ['React', 'Next.js', 'RSC']
 featured: true
 author: 'Roberto Serrano'
 image:
-    url: 'https://res.cloudinary.com/rserrano/image/upload/v1777832622/que-es-nextjs-y-para-que-sirve-1-1697560678_pyznuk.jpg'
-    alt: 'Ilustración de React Server Components en Next.js'
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1777832622/que-es-nextjs-y-para-que-sirve-1-1697560678_pyznuk.jpg'
+  alt: 'Ilustración de React Server Components en Next.js'
 ---
 
 ## 🤔 ¿Qué son los React Server Components?
@@ -33,6 +33,7 @@ bash
 npm install next@latest react@latest react-dom@latest
 o
 yarn add next@latest react@latest react-dom@latest
+
 ### Configuración inicial
 
 Next.js 15 no requiere configuración especial para habilitar React Server Components. Simplemente crea tus componentes como de costumbre, pero con un enfoque en qué lógica debería ejecutarse en el servidor.
@@ -46,23 +47,23 @@ Un componente del servidor es solo un componente de React que se define para eje
 ```jsx
 // components/ServerComponent.jsx
 
-import React from 'react';
+import React from 'react'
 
 export default function ServerComponent() {
-  // Este código se ejecutará en el servidor
-  const data = fetchDataFromAPI(); // Supongamos que esta función obtiene datos de una API
+	// Este código se ejecutará en el servidor
+	const data = fetchDataFromAPI() // Supongamos que esta función obtiene datos de una API
 
-  return (
-    <div>
-      <h1>Datos desde el servidor</h1>
-      <p>{data}</p>
-    </div>
-  );
+	return (
+		<div>
+			<h1>Datos desde el servidor</h1>
+			<p>{data}</p>
+		</div>
+	)
 }
 
 // Función simulada para obtener datos
 function fetchDataFromAPI() {
-  return "Este es un dato del servidor";
+	return 'Este es un dato del servidor'
 }
 ```
 
@@ -73,16 +74,16 @@ Para usar un componente del servidor en una página Next.js, simplemente importa
 ```jsx
 // pages/index.jsx
 
-import React from 'react';
-import ServerComponent from '../components/ServerComponent';
+import React from 'react'
+import ServerComponent from '../components/ServerComponent'
 
 export default function Home() {
-  return (
-    <div>
-      <h1>Bienvenido a mi página con RSC</h1>
-      <ServerComponent />
-    </div>
-  );
+	return (
+		<div>
+			<h1>Bienvenido a mi página con RSC</h1>
+			<ServerComponent />
+		</div>
+	)
 }
 ```
 
@@ -103,18 +104,18 @@ Los componentes del servidor y del cliente pueden comunicarse a través de props
 React Server Components funcionan muy bien con el nuevo `Suspense` de React. Puedes usarlo para manejar la carga de componentes del servidor de manera más elegante:
 
 ```jsx
-import React, { Suspense } from 'react';
-import ServerComponent from '../components/ServerComponent';
+import React, { Suspense } from 'react'
+import ServerComponent from '../components/ServerComponent'
 
 export default function Home() {
-  return (
-    <div>
-      <h1>Bienvenido a mi página con RSC y Suspense</h1>
-      <Suspense fallback={<div>Cargando...</div>}>
-        <ServerComponent />
-      </Suspense>
-    </div>
-  );
+	return (
+		<div>
+			<h1>Bienvenido a mi página con RSC y Suspense</h1>
+			<Suspense fallback={<div>Cargando...</div>}>
+				<ServerComponent />
+			</Suspense>
+		</div>
+	)
 }
 ```
 

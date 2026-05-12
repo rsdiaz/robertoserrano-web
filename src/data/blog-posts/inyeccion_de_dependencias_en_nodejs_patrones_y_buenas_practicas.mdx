@@ -3,12 +3,12 @@ title: 'Inyección de dependencias en Node.js: patrones y buenas prácticas'
 excerpt: 'Descubre cómo la inyección de dependencias puede mejorar la arquitectura de tus aplicaciones Node.js y facilitar su mantenimiento.'
 date: 2026-05-03
 category: 'Backend'
-tags: ["nodejs", "dependencias", "arquitectura", "typescript", "solid"]
+tags: ['nodejs', 'dependencias', 'arquitectura', 'typescript', 'solid']
 featured: true
 author: 'Roberto Serrano'
 image:
-    url: 'https://res.cloudinary.com/rserrano/image/upload/v1777832814/nodejs_gydans.png'
-    alt: 'concepto de inyección de dependencias en Node.js'
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1777832814/nodejs_gydans.png'
+  alt: 'concepto de inyección de dependencias en Node.js'
 ---
 
 ## 🤔 ¿Por qué usar inyección de dependencias?
@@ -37,10 +37,10 @@ Asegúrate de habilitar el soporte para decoradores y metadatos en tu archivo `t
 
 ```json
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+	}
 }
 ```
 
@@ -55,7 +55,7 @@ Primero, definimos una interfaz para nuestro servicio de notificación.
 ```typescript
 // INotificationService.ts
 export interface INotificationService {
-    sendMessage(message: string): void;
+	sendMessage(message: string): void
 }
 ```
 
@@ -65,14 +65,14 @@ Ahora, creamos una implementación concreta de esta interfaz.
 
 ```typescript
 // EmailNotificationService.ts
-import { injectable } from 'inversify';
-import "reflect-metadata";
+import { injectable } from 'inversify'
+import 'reflect-metadata'
 
 @injectable()
 export class EmailNotificationService implements INotificationService {
-    sendMessage(message: string): void {
-        console.log(`Sending email with message: ${message}`);
-    }
+	sendMessage(message: string): void {
+		console.log(`Sending email with message: ${message}`)
+	}
 }
 ```
 
@@ -82,14 +82,14 @@ Creamos un contenedor de DI que gestionará nuestras dependencias.
 
 ```typescript
 // container.ts
-import { Container } from 'inversify';
-import { INotificationService } from './INotificationService';
-import { EmailNotificationService } from './EmailNotificationService';
+import { Container } from 'inversify'
+import { INotificationService } from './INotificationService'
+import { EmailNotificationService } from './EmailNotificationService'
 
-const container = new Container();
-container.bind<INotificationService>('INotificationService').to(EmailNotificationService);
+const container = new Container()
+container.bind<INotificationService>('INotificationService').to(EmailNotificationService)
 
-export { container };
+export { container }
 ```
 
 #### Inyección de dependencias en una clase
@@ -98,27 +98,25 @@ Finalmente, inyectamos nuestro servicio de notificación en una clase.
 
 ```typescript
 // App.ts
-import { inject, injectable } from 'inversify';
-import { INotificationService } from './INotificationService';
-import { container } from './container';
+import { inject, injectable } from 'inversify'
+import { INotificationService } from './INotificationService'
+import { container } from './container'
 
 @injectable()
 class App {
-    private _notificationService: INotificationService;
+	private _notificationService: INotificationService
 
-    constructor(
-        @inject('INotificationService') notificationService: INotificationService
-    ) {
-        this._notificationService = notificationService;
-    }
+	constructor(@inject('INotificationService') notificationService: INotificationService) {
+		this._notificationService = notificationService
+	}
 
-    public run(): void {
-        this._notificationService.sendMessage('Hello, World!');
-    }
+	public run(): void {
+		this._notificationService.sendMessage('Hello, World!')
+	}
 }
 
-const app = container.resolve(App);
-app.run();
+const app = container.resolve(App)
+app.run()
 ```
 
 ## 💡 Buenas prácticas al usar DI

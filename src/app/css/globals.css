@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 @custom-variant dark (&:where(.dark, .dark *));
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
@@ -6,211 +6,213 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
-    /* Modern Professional Portfolio Colors */
-    --background: 0 0% 99%;
-    --foreground: 215 25% 15%;
+	:root {
+		/* Modern Professional Portfolio Colors */
+		--background: 0 0% 99%;
+		--foreground: 215 25% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+		--card: 0 0% 100%;
+		--card-foreground: 215 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 215 25% 15%;
 
-    /* Deep professional blue */
-    --primary: 217 91% 35%;
-    --primary-foreground: 0 0% 100%;
+		/* Deep professional blue */
+		--primary: 217 91% 35%;
+		--primary-foreground: 0 0% 100%;
 
-    /* Subtle gray */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 215 25% 15%;
+		/* Subtle gray */
+		--secondary: 220 14% 96%;
+		--secondary-foreground: 215 25% 15%;
 
-    /* Muted backgrounds */
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 13% 47%;
+		/* Muted backgrounds */
+		--muted: 220 14% 96%;
+		--muted-foreground: 215 13% 47%;
 
-    /* Vibrant accent - electric blue */
-    --accent: 212 100% 50%;
-    --accent-foreground: 0 0% 100%;
+		/* Vibrant accent - electric blue */
+		--accent: 212 100% 50%;
+		--accent-foreground: 0 0% 100%;
 
-    --accent-green: 006363;
+		--accent-green: 006363;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 35%;
+		--border: 220 13% 91%;
+		--input: 220 13% 91%;
+		--ring: 217 91% 35%;
 
-    --radius: 0.5rem;
+		--radius: 0.5rem;
 
-    /* Portfolio Design System */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
-    --shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0.1);
-    --shadow-glow: 0 0 30px hsl(var(--accent) / 0.15);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		/* Portfolio Design System */
+		--gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+		--gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+		--shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0.1);
+		--shadow-glow: 0 0 30px hsl(var(--accent) / 0.15);
+		--transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: 0 0% 98%;
+		--sidebar-background: 0 0% 98%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+		--sidebar-foreground: 240 5.3% 26.1%;
 
-    --sidebar-primary: 240 5.9% 10%;
+		--sidebar-primary: 240 5.9% 10%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+		--sidebar-primary-foreground: 0 0% 98%;
 
-    --sidebar-accent: 240 4.8% 95.9%;
+		--sidebar-accent: 240 4.8% 95.9%;
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+		--sidebar-accent-foreground: 240 5.9% 10%;
 
-    --sidebar-border: 220 13% 91%;
+		--sidebar-border: 220 13% 91%;
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+		--sidebar-ring: 217.2 91.2% 59.8%;
+	}
 
-  .dark {
-    /* Dark mode - Professional night theme */
-    --background: 223 52% 11%;
-    --foreground: 213 31% 91%;
+	.dark {
+		/* Dark mode - Professional night theme */
+		--background: 223 52% 11%;
+		--foreground: 213 31% 91%;
 
-    --card: 215 28% 10%;
-    --card-foreground: 213 31% 91%;
+		--card: 215 28% 10%;
+		--card-foreground: 213 31% 91%;
 
-    --popover: 215 28% 10%;
-    --popover-foreground: 213 31% 91%;
+		--popover: 215 28% 10%;
+		--popover-foreground: 213 31% 91%;
 
-    --primary: 212 100% 50%;
-    --primary-foreground: 215 28% 8%;
+		--primary: 212 100% 50%;
+		--primary-foreground: 215 28% 8%;
 
-    --secondary: 215 25% 15%;
-    --secondary-foreground: 213 31% 91%;
+		--secondary: 215 25% 15%;
+		--secondary-foreground: 213 31% 91%;
 
-    --muted: 215 25% 15%;
-    --muted-foreground: 217 10% 65%;
+		--muted: 215 25% 15%;
+		--muted-foreground: 217 10% 65%;
 
-    --accent: 212 100% 50%;
-    --accent-foreground: 213 31% 91%;
+		--accent: 212 100% 50%;
+		--accent-foreground: 213 31% 91%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 213 31% 91%;
+		--destructive: 0 75% 55%;
+		--destructive-foreground: 213 31% 91%;
 
-    --border: 215 25% 18%;
-    --input: 215 25% 18%;
-    --ring: 212 100% 50%;
+		--border: 215 25% 18%;
+		--input: 215 25% 18%;
+		--ring: 212 100% 50%;
 
-    /* Dark mode gradients and shadows */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
-    --shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0.0);
-    --shadow-glow: 0 0 30px hsl(var(--accent) / 0.3);
+		/* Dark mode gradients and shadows */
+		--gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+		--gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+		--shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0);
+		--shadow-glow: 0 0 30px hsl(var(--accent) / 0.3);
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 212 100% 50%;
-    --sidebar-primary-foreground: 215 28% 8%;
-    --sidebar-accent: 215 25% 15%;
-    --sidebar-accent-foreground: 213 31% 91%;
-    --sidebar-border: 215 25% 18%;
-    --sidebar-ring: 212 100% 50%;
-  }
+		--sidebar-background: 240 5.9% 10%;
+		--sidebar-foreground: 240 4.8% 95.9%;
+		--sidebar-primary: 212 100% 50%;
+		--sidebar-primary-foreground: 215 28% 8%;
+		--sidebar-accent: 215 25% 15%;
+		--sidebar-accent-foreground: 213 31% 91%;
+		--sidebar-border: 215 25% 18%;
+		--sidebar-ring: 212 100% 50%;
+	}
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+	* {
+		@apply border-border;
+	}
 
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-  }
+	body {
+		@apply bg-background text-foreground font-sans antialiased;
+	}
 }
 
 @theme {
-  /* Colores base */
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
+	/* Colores base */
+	--color-background: hsl(var(--background));
+	--color-foreground: hsl(var(--foreground));
 
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+	--color-card: hsl(var(--card));
+	--color-card-foreground: hsl(var(--card-foreground));
 
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
+	--color-popover: hsl(var(--popover));
+	--color-popover-foreground: hsl(var(--popover-foreground));
 
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
+	--color-primary: hsl(var(--primary));
+	--color-primary-foreground: hsl(var(--primary-foreground));
 
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
+	--color-secondary: hsl(var(--secondary));
+	--color-secondary-foreground: hsl(var(--secondary-foreground));
 
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
+	--color-muted: hsl(var(--muted));
+	--color-muted-foreground: hsl(var(--muted-foreground));
 
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
+	--color-accent: hsl(var(--accent));
+	--color-accent-foreground: hsl(var(--accent-foreground));
 
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
+	--color-destructive: hsl(var(--destructive));
+	--color-destructive-foreground: hsl(var(--destructive-foreground));
 
-  /* Tokens usados por utilidades: border, input, ring */
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
+	/* Tokens usados por utilidades: border, input, ring */
+	--color-border: hsl(var(--border));
+	--color-input: hsl(var(--input));
+	--color-ring: hsl(var(--ring));
 
-  /* Radio del tema (por si usas rounded-[var(--radius)] o theme(--radius)) */
-  --radius: var(--radius);
+	/* Radio del tema (por si usas rounded-[var(--radius)] o theme(--radius)) */
+	--radius: var(--radius);
 
-  /* Opcional: tokens del sidebar si los usarás con bg-sidebar-*, text-sidebar-*, etc. */
-  --color-sidebar-background: hsl(var(--sidebar-background));
-  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
-  --color-sidebar-primary: hsl(var(--sidebar-primary));
-  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
-  --color-sidebar-accent: hsl(var(--sidebar-accent));
-  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
-  --color-sidebar-border: hsl(var(--sidebar-border));
-  --color-sidebar-ring: hsl(var(--sidebar-ring));
+	/* Opcional: tokens del sidebar si los usarás con bg-sidebar-*, text-sidebar-*, etc. */
+	--color-sidebar-background: hsl(var(--sidebar-background));
+	--color-sidebar-foreground: hsl(var(--sidebar-foreground));
+	--color-sidebar-primary: hsl(var(--sidebar-primary));
+	--color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+	--color-sidebar-accent: hsl(var(--sidebar-accent));
+	--color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+	--color-sidebar-border: hsl(var(--sidebar-border));
+	--color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  /* Opcional: fuente por defecto si usas font-sans */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+	/* Opcional: fuente por defecto si usas font-sans */
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
 }
 
 @layer utilities {
-  /* Hero gradient background */
-  .gradient-hero {
-    background: var(--gradient-primary);
-  }
-  
-  /* Elegant shadows */
-  .shadow-elegant {
-    box-shadow: var(--shadow-elegant);
-  }
-  
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
-  }
-  
-  /* Smooth transitions */
-  .transition-smooth {
-    transition: var(--transition-smooth);
-  }
-  
-  /* Glass effect */
-  .glass {
-    @apply bg-card/80 backdrop-blur-sm border border-border/50;
-  }
-  
-  /* Text gradient */
-  .text-gradient {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+	/* Hero gradient background */
+	.gradient-hero {
+		background: var(--gradient-primary);
+	}
+
+	/* Elegant shadows */
+	.shadow-elegant {
+		box-shadow: var(--shadow-elegant);
+	}
+
+	.shadow-glow {
+		box-shadow: var(--shadow-glow);
+	}
+
+	/* Smooth transitions */
+	.transition-smooth {
+		transition: var(--transition-smooth);
+	}
+
+	/* Glass effect */
+	.glass {
+		@apply bg-card/80 backdrop-blur-sm border border-border/50;
+	}
+
+	/* Text gradient */
+	.text-gradient {
+		background: var(--gradient-primary);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
 }
 
 @utility shadow-glow {
-  box-shadow: var(--shadow-glow);
+	box-shadow: var(--shadow-glow);
 }
 
 @utility shadow-elegant {
-    box-shadow: var(--shadow-elegant);
+	box-shadow: var(--shadow-elegant);
 }
