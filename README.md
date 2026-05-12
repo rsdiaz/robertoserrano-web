@@ -64,6 +64,7 @@ src/
 ```
 
 ## 🔧 Comandos disponibles
+
 ```bash
 npm run dev               #Dev server con Turbopack
 npm run build             # Build para producción
@@ -73,6 +74,7 @@ npm run lint              #ESLint check
 ```
 
 ## 🐳 Docker
+
 ```bash
 docker build -t robertoserrano-web:latest .
 ```
@@ -84,6 +86,7 @@ docker run -d -p 3000:3000 \
 ```
 
 ## 🚀 Deploy
+
 GitHub Actions
 
 Push a main branch para trigger automático:
@@ -101,9 +104,11 @@ Set en secrets de GitHub Actions:
 - MONGODB_URI
 
 ## 📝 Escribir un nuevo post
+
 1 - Crea archivo .mdx en blog-posts
 
 2 - Añade frontmatter:
+
 ```bash
 ---
 title: "Mi primer post"
@@ -113,4 +118,3 @@ tags: ["nextjs", "typescript"]
 featured: true
 ---
 ```
-
