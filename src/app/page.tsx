@@ -90,18 +90,25 @@ export default function Home() {
 			</section> */}
 
 			{/* Last Posts Section */}
-			<section className="py-24">
-				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<section className="relative overflow-hidden py-24">
+				<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,_hsl(var(--accent)/0.1),_transparent_42%)]" />
+				<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_30%,_hsl(var(--primary)/0.08),_transparent_45%)]" />
+				<div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6 }}
 						viewport={{ once: true }}
-						className="flex items-center justify-between mb-12"
+						className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-12"
 					>
-						<div>
-							<h2 className="text-3xl sm:text-4xl font-bold">Últimos Artículos</h2>
-							<p className="text-muted-foreground mt-2">Aprende sobre desarrollo web, DevOps y tecnologías modernas</p>
+						<div className="max-w-2xl">
+							<span className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+								Editorial
+							</span>
+							<h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">Últimos Artículos</h2>
+							<p className="text-muted-foreground mt-3 text-base sm:text-lg">
+								Aprende sobre desarrollo web, DevOps y tecnologías modernas con un enfoque práctico.
+							</p>
 						</div>
 						<Link href="/blog">
 							<Button variant="outline" className="gap-2 hidden sm:flex">
@@ -125,16 +132,16 @@ export default function Home() {
 									viewport={{ once: true }}
 								>
 									<Link href={`/blog/${post.slug}`}>
-										<Card className="group h-full border-border/50 hover:border-accent/30 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+										<Card className="group h-full border-border/50 hover:border-accent/30 hover:shadow-elegant transition-all duration-300 cursor-pointer overflow-hidden">
 											<div className="flex h-full">
 												{/* Imagen */}
-												<div className="relative w-2/5 flex-shrink-0 overflow-hidden">
+												<div className="relative w-[45%] flex-shrink-0 overflow-hidden">
 													{post.image?.url ? (
 														<Image
 															src={post.image.url}
 															alt={post.image.alt ?? post.title}
 															fill
-															className="object-cover group-hover:scale-105 transition-transform duration-500"
+															className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
 														/>
 													) : (
 														<div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-muted flex items-center justify-center">
@@ -143,21 +150,21 @@ export default function Home() {
 													)}
 													{/* Category badge */}
 													{post.category && (
-														<span className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-2.5 py-1 rounded-full border border-border/50">
+														<span className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm text-foreground text-[10px] font-semibold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border border-border/50">
 															{post.category}
 														</span>
 													)}
 												</div>
 
 												{/* Contenido */}
-												<div className="flex flex-col justify-between p-5 w-3/5">
+												<div className="flex flex-col justify-between p-5 w-[55%]">
 													<div className="space-y-3">
 														{/* Meta */}
-														<div className="flex items-center gap-3 text-xs text-muted-foreground">
+														<div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80">
 															<span>
 																{new Date(post.date).toLocaleDateString('es-ES', {
 																	year: 'numeric',
-																	month: 'long',
+																	month: 'short',
 																	day: 'numeric',
 																})}
 															</span>
@@ -173,7 +180,7 @@ export default function Home() {
 														</div>
 
 														{/* Título */}
-														<h3 className="font-bold text-base leading-snug line-clamp-2 group-hover:text-accent transition-colors duration-300">
+														<h3 className="font-bold text-base leading-snug tracking-tight line-clamp-2 group-hover:text-accent transition-colors duration-300">
 															{post.title}
 														</h3>
 
@@ -279,23 +286,35 @@ export default function Home() {
 			</section> */}
 
 			{/* CTA Section */}
-			<section className="py-24">
-				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<section className="relative overflow-hidden py-24">
+				<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,_hsl(var(--accent)/0.12),_transparent_50%)]" />
+				<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_60%,_hsl(var(--primary)/0.1),_transparent_52%)]" />
+				<div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6 }}
 						viewport={{ once: true }}
-						className="text-center max-w-2xl mx-auto"
+						className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center"
 					>
-						<h2 className="text-3xl sm:text-4xl font-bold mb-4">¿Listo para trabajar juntos?</h2>
-						<p className="text-lg text-muted-foreground mb-8">
-							Tengo experiencia resolviendo retos reales. Cuéntame tu idea y exploraremos cómo puedo ayudarte a llevarla
-							a producción.
-						</p>
-						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Link href="/contacto">
-								<Button size="lg" className="font-semibold bg-primary hover:bg-primary/90 gap-2">
+						<div className="space-y-5">
+							<span className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+								Disponible para nuevos proyectos
+							</span>
+							<h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+								¿Listo para <span className="text-gradient">trabajar juntos</span>?
+							</h2>
+							<p className="text-lg text-muted-foreground max-w-xl">
+								Diseñemos y lancemos una solución que convierta tu idea en resultados reales, medibles y escalables.
+							</p>
+						</div>
+
+						<div className="flex flex-col gap-4 sm:flex-row md:flex-col md:items-start">
+							<Link href="/contacto" className="w-full md:w-auto">
+								<Button
+									size="lg"
+									className="w-full md:w-auto font-semibold bg-primary hover:bg-primary/90 gap-2 shadow-elegant"
+								>
 									Iniciar conversación <ArrowRight className="w-4 h-4" />
 								</Button>
 							</Link>
@@ -303,8 +322,9 @@ export default function Home() {
 								href="https://www.linkedin.com/in/roberto-serrano-diaz-grande"
 								target="_blank"
 								rel="noopener noreferrer"
+								className="w-full md:w-auto"
 							>
-								<Button size="lg" variant="outline">
+								<Button size="lg" variant="outline" className="w-full md:w-auto">
 									LinkedIn
 								</Button>
 							</a>
