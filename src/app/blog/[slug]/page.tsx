@@ -17,6 +17,7 @@ import { SharePost } from './components/SharePost'
 // import Comments from './components/Comments'
 import siteMetadata from '@/data/siteMetadata'
 import { db } from '@/app/lib/db'
+import { ArticleJsonLd, BreadcrumbListJsonLd } from '@/app/components/JsonLd'
 
 async function getPostViews(slug: string): Promise<number> {
 	try {
@@ -38,13 +39,28 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 		}
 	}
 
+	const ogImage = post.image?.url ?? '/static/opengraph-image.png'
+	const postUrl = `${siteMetadata.siteUrl}/blog/${post.slug}`
+
 	return {
-		title: `${post.title} | `,
+		title: post.title,
 		description: post.excerpt,
+		alternates: {
+			canonical: postUrl,
+		},
 		openGraph: {
 			title: post.title,
 			description: post.excerpt,
-			images: [post.image?.url ?? ''],
+			type: 'article',
+			url: postUrl,
+			images: [ogImage],
+			publishedTime: post.date,
+		},
+		twitter: {
+			card: 'summary_large_image',
+			site: siteMetadata.twitterHandle,
+			creator: siteMetadata.twitterHandle,
+			images: [ogImage],
 		},
 	}
 }
@@ -58,8 +74,25 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 		return notFound()
 	}
 
+	const postUrl = `${siteMetadata.siteUrl}/blog/${post.slug}`
+	const ogImage = post.image?.url ?? '/static/opengraph-image.png'
+
 	return (
 		<div className="min-h-screen pt-24 pb-16">
+			<ArticleJsonLd
+				title={post.title}
+				description={post.excerpt}
+				image={ogImage}
+				datePublished={post.date}
+				url={postUrl}
+			/>
+			<BreadcrumbListJsonLd
+				items={[
+					{ name: 'Inicio', item: siteMetadata.siteUrl },
+					{ name: 'Blog', item: `${siteMetadata.siteUrl}/blog` },
+					{ name: post.title, item: postUrl },
+				]}
+			/>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Back Navigation */}
 				<BackNavigation />

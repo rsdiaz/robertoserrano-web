@@ -103,16 +103,16 @@ export default function Home() {
 					>
 						<div className="max-w-2xl">
 							<span className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-								Editorial
+								Blog personal
 							</span>
-							<h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">Últimos Artículos</h2>
+							<h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">También tengo un blog!</h2>
 							<p className="text-muted-foreground mt-3 text-base sm:text-lg">
-								Aprende sobre desarrollo web, DevOps y tecnologías modernas con un enfoque práctico.
+								Escribo sobre desarrollo web, DevOps, IA y tecnologías modernas.
 							</p>
 						</div>
 						<Link href="/blog">
 							<Button variant="outline" className="gap-2 hidden sm:flex">
-								Ver todos <ArrowRight className="w-4 h-4" />
+								Ver todos los artículos <ArrowRight className="w-4 h-4" />
 							</Button>
 						</Link>
 					</motion.div>

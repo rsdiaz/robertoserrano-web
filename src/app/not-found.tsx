@@ -1,5 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/app/components/ui/button'
+
+export const metadata: Metadata = {
+	title: '404 - Página no encontrada',
+	description: 'La página que buscas no existe o fue movida.',
+}
 
 export default function NotFound() {
 	return (

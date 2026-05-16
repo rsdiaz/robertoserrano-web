@@ -2,256 +2,165 @@
 
 import { motion } from 'motion/react'
 import { Button } from './ui/button'
-import { Linkedin } from 'lucide-react'
+import { Linkedin, ArrowRight, Radar } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
-const skills = [
-	{
-		label: 'TypeScript',
-		mobilePosition: { top: '-4%', left: '-10%' },
-		desktopPosition: { top: '-5%', left: '-24%' },
-		delay: 0,
-	},
-	{
-		label: 'NodeJS',
-		mobilePosition: { top: '16%', left: '-14%' },
-		desktopPosition: { top: '16%', left: '-30%' },
-		delay: 0.1,
-	},
-	{
-		label: 'React',
-		mobilePosition: { top: '44%', left: '-12%' },
-		desktopPosition: { top: '46%', left: '-28%' },
-		delay: 0.2,
-	},
-	{
-		label: 'MongoDB',
-		mobilePosition: { bottom: '12%', left: '-8%' },
-		desktopPosition: { bottom: '8%', left: '-22%' },
-		delay: 0.3,
-	},
-	{
-		label: 'Web Apps',
-		mobilePosition: { top: '8%', right: '-10%' },
-		desktopPosition: { top: '8%', right: '-24%' },
-		delay: 0.4,
-	},
-	{
-		label: 'Mobile Apps',
-		mobilePosition: { top: '34%', right: '-14%' },
-		desktopPosition: { top: '34%', right: '-30%' },
-		delay: 0.5,
-	},
-	{
-		label: 'API Services',
-		mobilePosition: { bottom: '12%', right: '-10%' },
-		desktopPosition: { bottom: '25%', right: '-34%' },
-		delay: 0.6,
-	},
-	{
-		label: 'AI Generative',
-		mobilePosition: { bottom: '0%', right: '-8%' },
-		desktopPosition: { bottom: '0%', right: '-24%' },
-		delay: 0.7,
-	},
+const signals = [
+	{ label: 'TypeScript', desktopPosition: { top: '4%', left: '-18%' }, delay: 0 },
+	{ label: 'Node.js', desktopPosition: { top: '24%', left: '-28%' }, delay: 0.1 },
+	{ label: 'React', desktopPosition: { top: '44%', left: '-22%' }, delay: 0.2 },
+	{ label: 'MongoDB', desktopPosition: { bottom: '22%', left: '-18%' }, delay: 0.3 },
+	{ label: 'Web Apps', desktopPosition: { top: '10%', right: '-22%' }, delay: 0.4 },
+	{ label: 'Mobile Apps', desktopPosition: { top: '38%', right: '-28%' }, delay: 0.5 },
+	{ label: 'APIs', desktopPosition: { bottom: '26%', right: '-24%' }, delay: 0.6 },
+	{ label: 'IA Generativa', desktopPosition: { bottom: '6%', right: '-18%' }, delay: 0.7 },
 ]
 
 export default function Hero() {
 	return (
-		<section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-secondary/20 to-background">
-			<div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_oklch(0.45_0.15_285_/_0.05),transparent_50%)]" />
+		<section className="relative overflow-hidden bg-background pb-20 pt-56">
+			<div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_hsl(var(--steam-glow)/0.14),_transparent_45%)]" />
+			<div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,_hsl(var(--steam-cyan)/0.18),_transparent_45%)]" />
+			<div className="absolute inset-0 steam-grid" />
+			<div className="absolute inset-0 steam-noise" />
 
-			<div className="container relative z-10 mt-16 mx-auto max-w-7xl px-4 md:px-6">
-				<div className="flex flex-col items-center justify-center text-center">
-					<motion.span
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5 }}
-						className="rounded-full bg-accent/10 px-3.5 py-1 text-sm font-semibold tracking-wider text-accent md:text-base"
-					>
-						Hello
-					</motion.span>
-
-					<motion.h1
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, delay: 0.1 }}
-						className="mt-2 mb-12 text-2xl font-bold text-foreground md:text-6xl lg:text-7xl"
-					>
-						Soy Roberto Serrano
-						<br />
-						<span className="text-gradient text-xl font-light lg:text-5xl">Software Engineer</span>
-					</motion.h1>
-
-					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{
-							opacity: 1,
-							scale: 1,
-							y: [0, -8, 0],
-						}}
-						transition={{
-							opacity: { duration: 0.6, delay: 0.2 },
-							scale: { duration: 0.6, delay: 0.2 },
-							y: {
-								duration: 4,
-								repeat: Infinity,
-								ease: 'easeInOut',
-							},
-						}}
-						className="relative mt-6 mb-16 h-[280px] w-[280px] md:h-[400px] md:w-[400px]"
-					>
-						<div className="absolute inset-0 rounded-full bg-gradient-to-br from-muted via-card to-secondary/30 backdrop-blur-sm" />
-
-						<div className="absolute inset-0 flex items-center justify-center">
-							<motion.div
-								animate={{
-									scale: [1, 1.08, 1],
-									opacity: [0.2, 0.38, 0.2],
-								}}
-								transition={{
-									duration: 3.5,
-									repeat: Infinity,
-									ease: 'easeInOut',
-								}}
-								className="absolute h-[210px] w-[210px] rounded-full bg-accent/20 blur-3xl md:h-[300px] md:w-[300px]"
-							/>
-						</div>
+			<div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
+				<div className="grid items-center gap-16 md:grid-cols-[1.05fr_0.95fr]">
+					<div className="space-y-8">
+						<motion.div initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+							<span className="steam-label">Bienvenido</span>
+						</motion.div>
 
 						<motion.div
-							animate={{ rotate: 360 }}
-							transition={{
-								duration: 30,
-								repeat: Infinity,
-								ease: 'linear',
-							}}
-							className="absolute inset-[7%] rounded-full border border-accent/15 border-dashed"
-						/>
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.7, delay: 0.1 }}
+						>
+							<h1 className="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+								Soy Roberto Serrano, ingeniero de software
+							</h1>
+							<p className="mt-4 max-w-xl text-base sm:text-lg text-muted-foreground">
+								Construyo software a medida que combinan ingeniería, pasión y compromiso. Mi misión es transformar ideas
+								en soluciones digitales que impulsen el éxito de tu idea
+							</p>
+						</motion.div>
 
-						<div className="absolute inset-0 flex items-center justify-center">
-							<div className="relative flex h-[240px] w-[240px] items-center justify-center md:h-[340px] md:w-[340px]">
-								<motion.div
-									animate={{
-										scale: [1, 1.04, 1],
-										rotate: [0, 3, 0],
-										borderRadius: [
-											'42% 58% 55% 45% / 40% 42% 58% 60%',
-											'58% 42% 48% 52% / 44% 58% 42% 56%',
-											'42% 58% 55% 45% / 40% 42% 58% 60%',
-										],
-									}}
-									transition={{
-										duration: 8,
-										repeat: Infinity,
-										ease: 'easeInOut',
-									}}
-									className="absolute inset-0 bg-gradient-to-br from-accent/20 via-primary/10 to-accent/5 blur-sm"
-								/>
+						<motion.div
+							initial={{ opacity: 0, y: 16 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.6, delay: 0.2 }}
+							className="flex flex-wrap gap-3"
+						>
+							<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+								<Radar className="h-4 w-4 text-accent" />
+								Desarrollo full-stack
+							</div>
+							<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+								<ArrowRight className="h-4 w-4 text-accent" />
+								+15 años de trayectoria
+							</div>
+						</motion.div>
 
-								<div className="absolute inset-6 rounded-full bg-accent/20 blur-2xl" />
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.6, delay: 0.3 }}
+							className="grid gap-4 sm:grid-cols-2"
+						>
+							<div className="steam-panel rounded-2xl p-5">
+								<p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Desarrollo de software</p>
+								<p className="mt-3 text-lg font-semibold text-foreground">Plataformas escalables</p>
+								<p className="mt-2 text-sm text-muted-foreground">
+									Front, backend y DevOps sincronizados para crecer sin sustos.
+								</p>
+							</div>
+							<div className="steam-panel rounded-2xl p-5">
+								<p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">AI Solutions Architect</p>
+								<p className="mt-3 text-lg font-semibold text-foreground">IA con impacto medible</p>
+								<p className="mt-2 text-sm text-muted-foreground">
+									La IA es practica y diferencial pero sin sentido no sirve.
+								</p>
+							</div>
+						</motion.div>
 
-								<div className="relative z-10 h-[210px] w-[210px] overflow-hidden rounded-full border-[3px] border-accent/20 shadow-2xl md:h-[290px] md:w-[290px]">
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.6, delay: 0.4 }}
+							className="flex flex-wrap gap-4"
+						>
+							<Link href="/contacto" className="w-full sm:w-auto">
+								<Button
+									size="lg"
+									className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow"
+								>
+									Iniciar conversación <ArrowRight className="!size-4" />
+								</Button>
+							</Link>
+							<a
+								href="https://www.linkedin.com/in/roberto-serrano-diaz-grande"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="w-full sm:w-auto"
+							>
+								<Button size="lg" variant="outline" className="w-full sm:w-auto border-border/60">
+									<Linkedin className="!size-5" />
+									LinkedIn
+								</Button>
+							</a>
+						</motion.div>
+					</div>
+
+					<div className="relative">
+						<motion.div
+							initial={{ opacity: 0, scale: 0.95 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{ duration: 0.7, delay: 0.15 }}
+							className="relative"
+						>
+							<div className="absolute -inset-6 rounded-[32px] bg-[radial-gradient(circle_at_30%_20%,_hsl(var(--steam-copper)/0.2),_transparent_60%)]" />
+							<div className="steam-frame relative overflow-hidden rounded-[28px] p-4">
+								<div className="absolute inset-0 steam-noise" />
+								<div className="absolute inset-0 steam-scanlines" />
+								<div className="relative overflow-hidden rounded-[22px] border border-border/60">
 									<Image
-										width={200}
-										height={200}
-										src="/static/profile.png"
+										width={460}
+										height={540}
+										src="/static/profile2.png"
 										alt="Foto de perfil de Roberto Serrano"
-										className="h-full w-full object-cover object-center grayscale contrast-110 brightness-105"
+										className="h-[420px] w-full object-cover object-center grayscale contrast-110"
 									/>
 								</div>
+								<div className="mt-4 flex items-center justify-center text-xs uppercase tracking-[0.28em] text-muted-foreground">
+									<span>Open Source Lover 💗</span>
+								</div>
 							</div>
-						</div>
 
-						<div className="md:hidden">
-							{skills.map((skill, index) => (
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 36, repeat: Infinity, ease: 'linear' }}
+								className="absolute -right-6 top-10 h-24 w-24 rounded-full border border-accent/40 border-dashed"
+							/>
+						</motion.div>
+
+						{/* <div className="hidden lg:block">
+							{signals.map(signal => (
 								<motion.div
-									key={`mobile-${index}`}
+									key={signal.label}
 									initial={{ opacity: 0, scale: 0 }}
-									animate={{
-										opacity: 1,
-										scale: 1,
-										y: [0, index % 2 === 0 ? -4 : 4, 0],
-									}}
-									transition={{
-										opacity: {
-											duration: 0.4,
-											delay: 0.5 + skill.delay,
-										},
-										scale: {
-											duration: 0.4,
-											delay: 0.5 + skill.delay,
-											type: 'spring',
-											stiffness: 200,
-										},
-										y: {
-											duration: 3 + index * 0.2,
-											repeat: Infinity,
-											ease: 'easeInOut',
-											delay: index * 0.12,
-										},
-									}}
+									animate={{ opacity: 1, scale: 1 }}
+									transition={{ duration: 0.4, delay: 0.4 + signal.delay }}
 									className="absolute"
-									style={skill.mobilePosition}
+									style={signal.desktopPosition}
 								>
-									<div className="whitespace-nowrap rounded-full border border-border/60 bg-background/80 px-3 py-1.5 shadow-lg backdrop-blur-md">
-										<span className="text-xs font-medium text-foreground/90">{skill.label}</span>
+									<div className="steam-panel rounded-full px-4 py-2 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+										{signal.label}
 									</div>
 								</motion.div>
 							))}
-						</div>
-
-						<div className="hidden md:block">
-							{skills.map((skill, index) => (
-								<motion.div
-									key={`desktop-${index}`}
-									initial={{ opacity: 0, scale: 0 }}
-									animate={{
-										opacity: 1,
-										scale: 1,
-										y: [0, index % 2 === 0 ? -6 : 6, 0],
-									}}
-									transition={{
-										opacity: {
-											duration: 0.4,
-											delay: 0.5 + skill.delay,
-										},
-										scale: {
-											duration: 0.4,
-											delay: 0.5 + skill.delay,
-											type: 'spring',
-											stiffness: 200,
-										},
-										y: {
-											duration: 3.2 + index * 0.2,
-											repeat: Infinity,
-											ease: 'easeInOut',
-											delay: index * 0.15,
-										},
-									}}
-									className="absolute"
-									style={skill.desktopPosition}
-								>
-									<div className="whitespace-nowrap rounded-full border border-border/60 bg-background/80 px-4 py-2 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-										<span className="text-sm font-medium text-foreground/90">{skill.label}</span>
-									</div>
-								</motion.div>
-							))}
-						</div>
-					</motion.div>
-
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, delay: 1.2 }}
-						className="flex gap-4"
-					>
-						<a href="https://www.linkedin.com/in/roberto-serrano-diaz-grande" target="_blank" rel="noopener noreferrer">
-							<Button size="lg" className="font-semibold bg-primary hover:bg-primary/90">
-								<Linkedin className="!size-5" />
-								Contacto
-							</Button>
-						</a>
-					</motion.div>
+						</div> */}
+					</div>
 				</div>
 			</div>
 		</section>

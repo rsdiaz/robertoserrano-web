@@ -7,49 +7,54 @@ All colors MUST be HSL.
 
 @layer base {
 	:root {
-		/* Modern Professional Portfolio Colors */
-		--background: 0 0% 99%;
-		--foreground: 215 25% 15%;
+		/* Retro-futurist Steam palette */
+		--background: 42 32% 98%;
+		--foreground: 215 20% 20%;
 
-		--card: 0 0% 100%;
-		--card-foreground: 215 25% 15%;
+		--card: 42 30% 99%;
+		--card-foreground: 215 22% 18%;
 
-		--popover: 0 0% 100%;
-		--popover-foreground: 215 25% 15%;
+		--popover: 38 28% 98%;
+		--popover-foreground: 215 22% 18%;
 
-		/* Deep professional blue */
-		--primary: 217 91% 35%;
-		--primary-foreground: 0 0% 100%;
+		--primary: 28 80% 42%;
+		--primary-foreground: 36 30% 96%;
 
-		/* Subtle gray */
-		--secondary: 220 14% 96%;
-		--secondary-foreground: 215 25% 15%;
+		--secondary: 40 24% 94%;
+		--secondary-foreground: 215 22% 18%;
 
-		/* Muted backgrounds */
-		--muted: 220 14% 96%;
-		--muted-foreground: 215 13% 47%;
+		--muted: 38 18% 92%;
+		--muted-foreground: 215 14% 46%;
 
-		/* Vibrant accent - electric blue */
-		--accent: 212 100% 50%;
-		--accent-foreground: 0 0% 100%;
+		--accent: 170 64% 32%;
+		--accent-foreground: 36 30% 96%;
 
-		--accent-green: 006363;
+		--destructive: 0 72% 52%;
+		--destructive-foreground: 36 30% 96%;
 
-		--destructive: 0 84% 60%;
-		--destructive-foreground: 0 0% 100%;
+		--border: 34 16% 84%;
+		--input: 34 16% 84%;
+		--ring: 170 64% 32%;
 
-		--border: 220 13% 91%;
-		--input: 220 13% 91%;
-		--ring: 217 91% 35%;
+		--steam-copper: 28 80% 42%;
+		--steam-ember: 20 86% 48%;
+		--steam-cyan: 188 70% 40%;
+		--steam-glow: 170 64% 32%;
+		--steam-graphite: 210 18% 12%;
+		--steam-brass: 38 64% 52%;
+		--steam-oxide: 14 52% 42%;
 
-		--radius: 0.5rem;
+		--radius: 0.4rem;
 
-		/* Portfolio Design System */
-		--gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-		--gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
-		--shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0.1);
-		--shadow-glow: 0 0 30px hsl(var(--accent) / 0.15);
-		--transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		--gradient-primary: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--accent)));
+		--gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--secondary)));
+		--shadow-elegant: 0 8px 26px -10px hsl(var(--primary) / 0.45);
+		--shadow-glow: 0 0 30px hsl(var(--accent) / 0.25);
+		--transition-smooth:
+			color 0.3s cubic-bezier(0.22, 0.7, 0.15, 1), background-color 0.3s cubic-bezier(0.22, 0.7, 0.15, 1),
+			border-color 0.3s cubic-bezier(0.22, 0.7, 0.15, 1), box-shadow 0.35s cubic-bezier(0.22, 0.7, 0.15, 1),
+			transform 0.35s cubic-bezier(0.22, 0.7, 0.15, 1), opacity 0.3s cubic-bezier(0.22, 0.7, 0.15, 1),
+			backdrop-filter 0.45s cubic-bezier(0.22, 0.7, 0.15, 1);
 
 		--sidebar-background: 0 0% 98%;
 
@@ -69,40 +74,46 @@ All colors MUST be HSL.
 	}
 
 	.dark {
-		/* Dark mode - Professional night theme */
-		--background: 223 52% 11%;
-		--foreground: 213 31% 91%;
+		--background: 210 22% 6%;
+		--foreground: 32 16% 94%;
 
-		--card: 215 28% 10%;
-		--card-foreground: 213 31% 91%;
+		--card: 210 22% 8%;
+		--card-foreground: 32 16% 94%;
 
-		--popover: 215 28% 10%;
-		--popover-foreground: 213 31% 91%;
+		--popover: 210 22% 8%;
+		--popover-foreground: 32 16% 94%;
 
-		--primary: 212 100% 50%;
-		--primary-foreground: 215 28% 8%;
+		--primary: 34 88% 58%;
+		--primary-foreground: 210 20% 8%;
 
-		--secondary: 215 25% 15%;
-		--secondary-foreground: 213 31% 91%;
+		--secondary: 210 18% 12%;
+		--secondary-foreground: 32 16% 94%;
 
-		--muted: 215 25% 15%;
-		--muted-foreground: 217 10% 65%;
+		--muted: 210 18% 14%;
+		--muted-foreground: 34 10% 72%;
 
-		--accent: 212 100% 50%;
-		--accent-foreground: 213 31% 91%;
+		--accent: 168 82% 52%;
+		--accent-foreground: 210 20% 8%;
 
-		--destructive: 0 75% 55%;
-		--destructive-foreground: 213 31% 91%;
+		--destructive: 0 78% 58%;
+		--destructive-foreground: 32 16% 94%;
 
-		--border: 215 25% 18%;
-		--input: 215 25% 18%;
-		--ring: 212 100% 50%;
+		--border: 210 18% 18%;
+		--input: 210 18% 18%;
+		--ring: 168 84% 50%;
 
-		/* Dark mode gradients and shadows */
-		--gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-		--gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
-		--shadow-elegant: 0 4px 20px -4px hsl(var(--primary) / 0);
-		--shadow-glow: 0 0 30px hsl(var(--accent) / 0.3);
+		--steam-copper: 34 88% 58%;
+		--steam-ember: 22 90% 62%;
+		--steam-cyan: 190 80% 58%;
+		--steam-glow: 168 82% 52%;
+		--steam-graphite: 210 22% 6%;
+		--steam-brass: 40 72% 68%;
+		--steam-oxide: 12 62% 52%;
+
+		--gradient-primary: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--accent)));
+		--gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--secondary)));
+		--shadow-elegant: 0 10px 30px -12px hsl(var(--primary) / 0.55);
+		--shadow-glow: 0 0 36px hsl(var(--accent) / 0.35);
 
 		--sidebar-background: 240 5.9% 10%;
 		--sidebar-foreground: 240 4.8% 95.9%;
@@ -122,6 +133,108 @@ All colors MUST be HSL.
 
 	body {
 		@apply bg-background text-foreground font-sans antialiased;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+}
+
+.header-premium {
+	transition:
+		background-color 0.42s cubic-bezier(0.22, 0.7, 0.15, 1),
+		box-shadow 0.42s cubic-bezier(0.22, 0.7, 0.15, 1),
+		backdrop-filter 0.52s cubic-bezier(0.22, 0.7, 0.15, 1),
+		transform 0.42s cubic-bezier(0.22, 0.7, 0.15, 1);
+	will-change: background-color, box-shadow, backdrop-filter, transform;
+	animation: header-reveal 560ms cubic-bezier(0.2, 0.65, 0.2, 1) both;
+}
+
+.header-premium-top {
+	backdrop-filter: blur(12px);
+	transform: translateY(0);
+}
+
+.header-premium-scrolled {
+	backdrop-filter: blur(18px);
+	transform: translateY(-2px);
+}
+
+.header-shell {
+	transition:
+		background-color 0.42s cubic-bezier(0.22, 0.7, 0.15, 1),
+		border-color 0.42s cubic-bezier(0.22, 0.7, 0.15, 1),
+		box-shadow 0.42s cubic-bezier(0.22, 0.7, 0.15, 1),
+		backdrop-filter 0.52s cubic-bezier(0.22, 0.7, 0.15, 1),
+		transform 0.42s cubic-bezier(0.22, 0.7, 0.15, 1);
+	will-change: background-color, border-color, box-shadow, backdrop-filter, transform;
+	position: relative;
+	overflow: clip;
+}
+
+.header-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: linear-gradient(
+		95deg,
+		hsl(var(--foreground) / 0.08) 0%,
+		transparent 34%,
+		transparent 66%,
+		hsl(var(--accent) / 0.08) 100%
+	);
+	opacity: 0;
+	transition: opacity 0.45s cubic-bezier(0.22, 0.7, 0.15, 1);
+}
+
+.header-shell-top {
+	background-color: hsl(var(--background) / 0.68);
+	border-color: hsl(var(--border) / 0.56);
+	backdrop-filter: blur(16px);
+	box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.06);
+	transform: translateY(0) scale(1);
+}
+
+.header-shell-scrolled {
+	background-color: hsl(var(--background) / 0.9);
+	border-color: hsl(var(--border) / 0.8);
+	backdrop-filter: blur(24px);
+	box-shadow:
+		0 18px 34px -24px hsl(var(--steam-graphite) / 0.45),
+		inset 0 1px 0 hsl(var(--foreground) / 0.1);
+	transform: translateY(-1px) scale(0.992);
+}
+
+.header-shell-scrolled::before {
+	opacity: 1;
+}
+
+@keyframes header-reveal {
+	from {
+		opacity: 0;
+		transform: translateY(-12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.header-premium,
+	.header-shell,
+	.header-shell::before {
+		animation: none !important;
+		transition: none !important;
+		transform: none !important;
 	}
 }
 
@@ -169,10 +282,8 @@ All colors MUST be HSL.
 	--color-sidebar-border: hsl(var(--sidebar-border));
 	--color-sidebar-ring: hsl(var(--sidebar-ring));
 
-	/* Opcional: fuente por defecto si usas font-sans */
-	--font-sans:
-		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
-		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+	/* Fuente por defecto si usas font-sans */
+	--font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer utilities {
@@ -198,6 +309,83 @@ All colors MUST be HSL.
 	/* Glass effect */
 	.glass {
 		@apply bg-card/80 backdrop-blur-sm border border-border/50;
+	}
+
+	.font-display {
+		font-family: var(--font-display), var(--font-body), sans-serif;
+		letter-spacing: 0.02em;
+	}
+
+	.steam-grid {
+		background-image:
+			linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
+			linear-gradient(90deg, hsl(var(--border) / 0.35) 1px, transparent 1px);
+		background-size:
+			120px 120px,
+			120px 120px;
+		mask-image: radial-gradient(circle at 30% 20%, black, transparent 70%);
+	}
+
+	.steam-scanlines {
+		background-image: repeating-linear-gradient(
+			to bottom,
+			hsl(var(--foreground) / 0.06) 0px,
+			hsl(var(--foreground) / 0.06) 1px,
+			transparent 1px,
+			transparent 4px
+		);
+		mix-blend-mode: soft-light;
+		opacity: 0.45;
+	}
+
+	.steam-noise {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+		opacity: 0.12;
+		mix-blend-mode: soft-light;
+	}
+
+	.steam-panel {
+		background: linear-gradient(140deg, hsl(var(--card)), hsl(var(--secondary)));
+		border: 1px solid hsl(var(--border));
+		box-shadow:
+			0 18px 40px -24px hsl(var(--foreground) / 0.3),
+			inset 0 1px 0 hsl(var(--foreground) / 0.08);
+	}
+
+	.steam-panel-strong {
+		background: linear-gradient(160deg, hsl(var(--secondary)), hsl(var(--background)));
+		border: 1px solid hsl(var(--border));
+		box-shadow:
+			0 24px 50px -30px hsl(var(--primary) / 0.6),
+			inset 0 1px 0 hsl(var(--foreground) / 0.08);
+	}
+
+	.steam-label {
+		background: linear-gradient(120deg, hsl(var(--steam-copper) / 0.2), hsl(var(--steam-ember) / 0.12));
+		border: 1px solid hsl(var(--steam-copper) / 0.4);
+		color: hsl(var(--steam-brass));
+		text-transform: uppercase;
+		letter-spacing: 0.32em;
+		font-size: 11px;
+		font-weight: 600;
+		padding: 8px 16px;
+		border-radius: 999px;
+	}
+
+	.steam-glow {
+		box-shadow: 0 0 28px hsl(var(--steam-glow) / 0.45);
+	}
+
+	.steam-frame {
+		border: 1px solid hsl(var(--steam-copper) / 0.5);
+		background: linear-gradient(140deg, hsl(var(--secondary)), hsl(var(--background)));
+		box-shadow: inset 0 0 0 1px hsl(var(--steam-copper) / 0.12);
+	}
+
+	.steam-divider {
+		height: 1px;
+		width: 100%;
+		background: linear-gradient(90deg, transparent, hsl(var(--steam-copper) / 0.5), transparent);
 	}
 
 	/* Text gradient */
