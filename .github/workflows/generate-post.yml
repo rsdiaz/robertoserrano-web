@@ -1,0 +1,114 @@
+name: Generate Blog Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Tema del post (ej: "Cómo usar Redis con Next.js")'
+        required: true
+        type: string
+      category:
+        description: 'Categoría'
+        required: true
+        type: choice
+        options:
+          - NodeJS
+          - React
+          - NextJS
+          - DevOps
+          - AI
+          - TypeScript
+          - MongoDB
+          - Astro
+      tags:
+        description: 'Tags separados por coma (ej: nodejs,redis,cache)'
+        required: false
+        default: ''
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Generate post with OpenAI
+        id: generate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          node - << 'EOF'
+          import OpenAI from 'openai'
+          import fs from 'fs'
+
+          const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+          const topic = '${{ inputs.topic }}'
+          const category = '${{ inputs.category }}'
+          const tags = '${{ inputs.tags }}' || category.toLowerCase()
+
+          const SYSTEM_PROMPT = `Eres Roberto Serrano, Software Engineer con +15 años de experiencia.
+          Escribes artículos técnicos en español para tu blog personal.
+          Tono: directo, técnico y accesible. Usa emojis en títulos de sección.
+          Incluye siempre código real con comentarios. Mínimo 800 palabras.
+
+          Devuelve SOLO el MDX con este frontmatter exacto:
+          ---
+          title: 'título'
+          excerpt: 'resumen máx 160 chars'
+          date: ${new Date().toISOString().split('T')[0]}
+          category: '${category}'
+          tags: [${tags.split(',').map(t => '"' + t.trim() + '"').join(', ')}]
+          featured: true
+          author: 'Roberto Serrano'
+          image:
+              url: ''
+              alt: 'descripción'
+          ---`
+
+          const res = await client.chat.completions.create({
+            model: 'gpt-4o',
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user', content: `Escribe un artículo técnico sobre: "${topic}"` }
+            ],
+            temperature: 0.7,
+            max_tokens: 4000,
+          })
+
+          const content = res.choices[0].message.content
+          const slug = topic.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '_')
+
+          fs.writeFileSync(`src/data/blog-posts/${slug}.mdx`, content)
+          fs.writeFileSync('/tmp/post_slug', slug)
+          console.log(`Post generado: ${slug}.mdx`)
+          EOF
+
+      - name: Read slug
+        id: slug
+        run: echo "slug=$(cat /tmp/post_slug)" >> $GITHUB_OUTPUT
+
+      - name: Create branch and PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="post/${{ steps.slug.outputs.slug }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add src/data/blog-posts/
+          git commit -m "post: ${{ inputs.topic }}"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "📝 Nuevo post: ${{ inputs.topic }}" \
+            --body "Post generado por IA sobre **${{ inputs.topic }}**. Revisa el contenido y añade la imagen antes de hacer merge." \
+            --base main \
+            --head "$BRANCH" \
+            --label "blog,ai-generated"

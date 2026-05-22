@@ -1,124 +1,50 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { Badge } from '@/app/components/ui/badge'
-import { Button } from '@/app/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
+import { useMemo } from 'react'
 import { allBlogPosts } from 'contentlayer/generated'
-import { Calendar, Clock, Tag, TrendingUp } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { TrendingUp } from 'lucide-react'
 import { motion } from 'motion/react'
 
-export function FeaturedPost() {
+import { PostCard } from './PostCard'
+
+const MAX_FEATURED = 2
+
+type FeaturedPostProps = {
+	viewsBySlug?: Record<string, number>
+}
+
+export function FeaturedPost({ viewsBySlug = {} }: FeaturedPostProps) {
 	const featuredPosts = useMemo(
-		() => [...allBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+		() =>
+			allBlogPosts
+				.filter(post => post.featured === true)
+				.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+				.slice(0, MAX_FEATURED),
 		[],
 	)
-	const [data, setData] = useState<{ slug: string; views: number }[]>([])
 
-	const fetchPostViews = async (slug: string) => {
-		const res = await fetch(`/api/views/${slug}`)
-		if (!res.ok) return { slug, views: 0 }
-		const result = (await res.json()) as { slug: string; views: number }
-		return { slug, views: result.views ?? 0 }
-	}
-
-	useEffect(() => {
-		const loadViews = async () => {
-			const views = await Promise.all(featuredPosts.map(post => fetchPostViews(post.slug)))
-			setData(views)
-		}
-		if (featuredPosts.length) loadViews()
-	}, [featuredPosts])
+	if (featuredPosts.length === 0) return null
 
 	return (
-		<>
-			{featuredPosts.length > 0 && (
-				<motion.section
-					initial={{ opacity: 0, y: 18 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-					className="mb-16"
-				>
-					<div className="mb-8 flex items-center">
-						<TrendingUp className="h-5 w-5 text-accent mr-2" />
-						<h2 className="text-2xl font-bold">Artículos destacados</h2>
-					</div>
+		<motion.section
+			initial={{ opacity: 0, y: 18 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
+			className="mb-16"
+			aria-labelledby="featured-heading"
+		>
+			<div className="mb-8 flex items-center">
+				<TrendingUp className="h-5 w-5 text-accent mr-2" />
+				<h2 id="featured-heading" className="text-2xl font-bold">
+					Artículos destacados
+				</h2>
+			</div>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-						{featuredPosts.slice(0, 2).map((post, index) => (
-							<motion.div
-								key={post.slug}
-								initial={{ opacity: 0, y: 24 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.55, delay: 0.14 + index * 0.08, ease: 'easeOut' }}
-								whileHover={{ y: -6 }}
-							>
-								<Card className="group overflow-hidden border-border/60 bg-card/95 shadow-elegant transition-smooth hover:shadow-glow">
-									<div className="aspect-video bg-muted overflow-hidden">
-										<Image
-											src={post.image?.url}
-											alt={post.image?.alt}
-											width={1000}
-											height={1000}
-											className="w-full h-full object-cover group-hover:scale-105 transition-smooth"
-										/>
-									</div>
-									<CardHeader>
-										<div className="flex justify-between items-start mb-2">
-											<Badge variant="default" className="text-xs">
-												Destacado
-											</Badge>
-											<div className="flex items-center text-sm text-muted-foreground space-x-4">
-												<span className="flex items-center">
-													<Calendar className="h-4 w-4 mr-1" />
-													{new Date(post.date).toLocaleDateString('es-ES', {
-														year: 'numeric',
-														month: 'short',
-														day: 'numeric',
-													})}
-												</span>
-												<span className="flex items-center">
-													<Clock className="h-4 w-4 mr-1" />
-													{post.readingTime.text}
-												</span>
-											</div>
-										</div>
-
-										<CardTitle className="text-xl group-hover:text-accent transition-smooth">
-											<Link href={`/blog/${post.slug}`} className="hover:text-accent transition-smooth">
-												{post.title}
-											</Link>
-										</CardTitle>
-										<CardDescription className="text-base leading-relaxed">{post.excerpt}</CardDescription>
-									</CardHeader>
-
-									<CardContent>
-										<div className="flex flex-wrap gap-2 mb-4">
-											{post?.tags?.slice(0, 3).map(tag => (
-												<Badge key={tag} variant="secondary" className="text-xs">
-													<Tag className="h-3 w-3 mr-1" />
-													{tag}
-												</Badge>
-											))}
-										</div>
-
-										<div className="flex justify-between items-center">
-											<span className="text-sm text-muted-foreground">
-												{data.find(item => item.slug === post.slug)?.views.toLocaleString('es-ES') || 0} visualizaciones
-											</span>
-											<Button variant="outline" size="sm" asChild>
-												<Link href={`/blog/${post.slug}`}>Leer más</Link>
-											</Button>
-										</div>
-									</CardContent>
-								</Card>
-							</motion.div>
-						))}
-					</div>
-				</motion.section>
-			)}
-		</>
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+				{featuredPosts.map((post, index) => (
+					<PostCard key={post.slug} post={post} variant="featured" views={viewsBySlug[post.slug] ?? 0} index={index} />
+				))}
+			</div>
+		</motion.section>
 	)
 }

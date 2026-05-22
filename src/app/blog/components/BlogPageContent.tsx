@@ -1,47 +1,67 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { BookOpen, Calendar, Clock, Filter, Search } from 'lucide-react'
-import { Badge } from '@/app/components/ui/badge'
-import { Button } from '@/app/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
+import { BookOpen, Filter, Search, SearchX } from 'lucide-react'
 import { allBlogPosts } from 'contentlayer/generated'
-import { Input } from '@/app/components/ui/input'
 import { motion } from 'motion/react'
 
-export default function BlogPageContent() {
+import { Button } from '@/app/components/ui/button'
+import { Input } from '@/app/components/ui/input'
+import { PostCard } from './PostCard'
+
+type BlogPageContentProps = {
+	excludeSlugs?: string[]
+}
+
+export default function BlogPageContent({ excludeSlugs = [] }: BlogPageContentProps) {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [selectedCategory, setSelectedCategory] = useState('all')
+
+	const excludeSet = useMemo(() => new Set(excludeSlugs), [excludeSlugs])
+
 	const sortedPosts = useMemo(
-		() => [...allBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
-		[],
+		() =>
+			[...allBlogPosts]
+				.filter(post => !excludeSet.has(post.slug))
+				.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+		[excludeSet],
 	)
 
-	const filteredPosts = sortedPosts.filter(post => {
-		const matchesSearch =
-			post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			post?.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+	const filteredPosts = useMemo(() => {
+		const term = searchTerm.trim().toLowerCase()
+		return sortedPosts.filter(post => {
+			const matchesSearch =
+				term === '' ||
+				post.title.toLowerCase().includes(term) ||
+				post.excerpt.toLowerCase().includes(term) ||
+				post?.tags?.some(tag => tag.toLowerCase().includes(term))
 
-		const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
+			const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory
 
-		return matchesSearch && matchesCategory
-	})
+			return matchesSearch && matchesCategory
+		})
+	}, [sortedPosts, searchTerm, selectedCategory])
 
-	const categories = sortedPosts.reduce(
-		(acc, post) => {
-			const category = post.category || 'General'
-			const existingCategory = acc.find(cat => cat.id === category)
-			if (existingCategory) {
-				existingCategory.count += 1
-			} else {
-				acc.push({ id: category, label: category, count: 1 })
-			}
-			return acc
-		},
-		[{ id: 'all', label: 'Todas', count: sortedPosts.length }] as { id: string; label: string; count: number }[],
+	const categories = useMemo(
+		() =>
+			sortedPosts.reduce(
+				(acc, post) => {
+					const category = post.category || 'General'
+					const existingCategory = acc.find(cat => cat.id === category)
+					if (existingCategory) {
+						existingCategory.count += 1
+					} else {
+						acc.push({ id: category, label: category, count: 1 })
+					}
+					return acc
+				},
+				[{ id: 'all', label: 'Todas', count: sortedPosts.length }] as {
+					id: string
+					label: string
+					count: number
+				}[],
+			),
+		[sortedPosts],
 	)
 
 	return (
@@ -55,113 +75,78 @@ export default function BlogPageContent() {
 			>
 				<div className="lg:w-2/3">
 					<div className="relative">
-						<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+						<label htmlFor="blog-search" className="sr-only">
+							Buscar artículos
+						</label>
+						<Search
+							aria-hidden="true"
+							className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground"
+						/>
 						<Input
+							id="blog-search"
+							type="search"
 							placeholder="Buscar artículos, temas, tecnologías..."
 							value={searchTerm}
 							onChange={e => setSearchTerm(e.target.value)}
 							className="pl-10"
+							aria-label="Buscar artículos, temas, tecnologías"
 						/>
 					</div>
 				</div>
 
-				<div className="lg:w-1/2">
-					<div className="flex gap-2 overflow-x-auto pb-2">
-						{categories.map(category => (
-							<Button
-								key={category.id}
-								variant={selectedCategory === category.id ? 'default' : 'outline'}
-								size="sm"
-								onClick={() => setSelectedCategory(category.id)}
-								className="whitespace-nowrap"
-							>
-								<Filter className="h-4 w-4 mr-2" />
-								{category.label} ({category.count})
-							</Button>
-						))}
-					</div>
-				</div>
+				<nav aria-label="Filtrar por categoría" className="lg:w-1/3">
+					<ul className="flex gap-2 overflow-x-auto pb-2">
+						{categories.map(category => {
+							const isActive = selectedCategory === category.id
+							return (
+								<li key={category.id}>
+									<Button
+										variant={isActive ? 'default' : 'outline'}
+										size="sm"
+										onClick={() => setSelectedCategory(category.id)}
+										className="whitespace-nowrap"
+										aria-pressed={isActive}
+									>
+										<Filter className="h-4 w-4 mr-2" aria-hidden="true" />
+										{category.label} ({category.count})
+									</Button>
+								</li>
+							)
+						})}
+					</ul>
+				</nav>
 			</motion.div>
 
 			{/* All Posts */}
-			<section>
+			<section aria-labelledby="all-posts-heading">
 				<motion.div
 					initial={{ opacity: 0, y: 18 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
 					className="mb-8 flex items-center"
 				>
-					<BookOpen className="h-5 w-5 text-primary mr-2" />
-					<h2 className="text-2xl font-bold">Todos los artículos ({filteredPosts.length})</h2>
+					<BookOpen className="h-5 w-5 text-primary mr-2" aria-hidden="true" />
+					<h2 id="all-posts-heading" className="text-2xl font-bold">
+						Todos los artículos ({filteredPosts.length})
+					</h2>
 				</motion.div>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{filteredPosts.map((post, index) => (
-						<motion.div
-							key={post.slug}
-							initial={{ opacity: 0, y: 24 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.5, delay: 0.18 + index * 0.05, ease: 'easeOut' }}
-							whileHover={{ y: -6 }}
-						>
-							<Card className="group overflow-hidden border-border/60 bg-card/95 shadow-elegant transition-smooth hover:shadow-glow">
-								<div className="aspect-video bg-muted overflow-hidden">
-									<Image
-										src={post.image?.url}
-										alt={post.image?.alt}
-										width={1000}
-										height={1000}
-										className="w-full h-full object-cover group-hover:scale-105 transition-smooth"
-									/>
-								</div>
-								<CardHeader>
-									<div className="flex justify-between items-start mb-2">
-										<Badge variant="outline" className="text-xs capitalize">
-											{post.category || 'General'}
-										</Badge>
-										<div className="flex items-center text-xs text-muted-foreground">
-											<Clock className="h-3 w-3 mr-1" />
-											{post.readingTime.text}
-										</div>
-									</div>
-
-									<CardTitle className="text-lg group-hover:text-accent transition-smooth line-clamp-2">
-										<Link href={`/blog/${post.slug}`} className="hover:text-accent transition-smooth">
-											{post.title}
-										</Link>
-									</CardTitle>
-									<CardDescription className="text-sm leading-relaxed line-clamp-3">{post.excerpt}</CardDescription>
-								</CardHeader>
-
-								<CardContent>
-									<div className="flex flex-wrap gap-1 mb-4">
-										{post?.tags?.slice(0, 2).map(tag => (
-											<Badge key={tag} variant="secondary" className="text-xs">
-												{tag}
-											</Badge>
-										))}
-										{(post?.tags?.length ?? 0) > 2 && (
-											<Badge variant="secondary" className="text-xs">
-												+{(post?.tags?.length ?? 0) - 2}
-											</Badge>
-										)}
-									</div>
-
-									<div className="flex justify-between items-center text-xs text-muted-foreground">
-										<span className="flex items-center">
-											<Calendar className="h-3 w-3 mr-1" />
-											{new Date(post.date).toLocaleDateString('es-ES', {
-												year: 'numeric',
-												month: 'short',
-											})}
-										</span>
-										{/* <span>{post.views.toLocaleString()} views</span> */}
-									</div>
-								</CardContent>
-							</Card>
-						</motion.div>
-					))}
-				</div>
+				{filteredPosts.length === 0 ? (
+					<div
+						role="status"
+						className="flex flex-col items-center justify-center gap-3 py-16 text-center text-muted-foreground"
+					>
+						<SearchX className="h-10 w-10" aria-hidden="true" />
+						<p className="text-lg font-medium">No hay artículos que coincidan con tu búsqueda.</p>
+						<p className="text-sm">Prueba con otros términos o cambia de categoría.</p>
+					</div>
+				) : (
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						{filteredPosts.map((post, index) => (
+							<PostCard key={post.slug} post={post} variant="default" index={index} />
+						))}
+					</div>
+				)}
 			</section>
 		</>
 	)
