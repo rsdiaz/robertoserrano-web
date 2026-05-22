@@ -395,6 +395,158 @@ All colors MUST be HSL.
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
 	}
+
+	/* Animated decorative blob (slow drift) */
+	.blog-blob {
+		animation: blog-blob-drift 22s ease-in-out infinite alternate;
+		will-change: transform, opacity;
+	}
+
+	.blog-blob-2 {
+		animation: blog-blob-drift-2 28s ease-in-out infinite alternate;
+		will-change: transform, opacity;
+	}
+
+	@keyframes blog-blob-drift {
+		0% {
+			transform: translate3d(0, 0, 0) scale(1);
+			opacity: 0.85;
+		}
+		50% {
+			transform: translate3d(2%, 1.5%, 0) scale(1.06);
+			opacity: 1;
+		}
+		100% {
+			transform: translate3d(-1.5%, -2%, 0) scale(0.96);
+			opacity: 0.75;
+		}
+	}
+
+	@keyframes blog-blob-drift-2 {
+		0% {
+			transform: translate3d(0, 0, 0) scale(1);
+			opacity: 0.7;
+		}
+		50% {
+			transform: translate3d(-2.5%, 2%, 0) scale(1.08);
+			opacity: 1;
+		}
+		100% {
+			transform: translate3d(1.5%, -1.5%, 0) scale(0.94);
+			opacity: 0.65;
+		}
+	}
+
+	/* Animated conic border for cards on hover */
+	.card-conic-border {
+		position: relative;
+		isolation: isolate;
+	}
+
+	.card-conic-border::before {
+		content: '';
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		padding: 1px;
+		background: conic-gradient(
+			from var(--angle, 0deg),
+			hsl(var(--accent) / 0.6),
+			hsl(var(--primary) / 0.45),
+			transparent 40%,
+			transparent 60%,
+			hsl(var(--accent) / 0.6)
+		);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		opacity: 0;
+		transition: opacity 0.45s ease;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.card-conic-border:hover::before,
+	.card-conic-border:focus-within::before {
+		opacity: 1;
+		animation: conic-spin 4s linear infinite;
+	}
+
+	@property --angle {
+		syntax: '<angle>';
+		initial-value: 0deg;
+		inherits: false;
+	}
+
+	@keyframes conic-spin {
+		to {
+			--angle: 360deg;
+		}
+	}
+
+	/* Reading time pill floating on image */
+	.reading-pill {
+		background: hsl(var(--background) / 0.78);
+		backdrop-filter: blur(8px);
+		border: 1px solid hsl(var(--border) / 0.6);
+	}
+
+	/* Category color helpers (used inline by JS via data-cat) */
+	.cat-pill-frontend {
+		background: hsl(var(--accent) / 0.14);
+		color: hsl(var(--accent));
+		border-color: hsl(var(--accent) / 0.35);
+	}
+	.cat-pill-backend {
+		background: hsl(var(--primary) / 0.14);
+		color: hsl(var(--primary));
+		border-color: hsl(var(--primary) / 0.35);
+	}
+	.cat-pill-devops {
+		background: hsl(var(--steam-cyan) / 0.14);
+		color: hsl(var(--steam-cyan));
+		border-color: hsl(var(--steam-cyan) / 0.35);
+	}
+	.cat-pill-default {
+		background: hsl(var(--muted) / 0.6);
+		color: hsl(var(--muted-foreground));
+		border-color: hsl(var(--border));
+	}
+
+	/* Hover image tint */
+	.image-tint {
+		filter: saturate(0.92) brightness(0.96);
+		transition:
+			filter 0.45s cubic-bezier(0.22, 0.7, 0.15, 1),
+			transform 0.45s cubic-bezier(0.22, 0.7, 0.15, 1);
+	}
+
+	.group:hover .image-tint {
+		filter: saturate(1.08) brightness(1.02);
+	}
+
+	/* Scroll progress bar */
+	.scroll-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		transform-origin: 0 50%;
+		background: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--primary)));
+		z-index: 60;
+		pointer-events: none;
+	}
+
+	/* Sticky filter bar shell */
+	.filter-bar-sticky {
+		background: hsl(var(--background) / 0.72);
+		backdrop-filter: blur(14px);
+		border: 1px solid hsl(var(--border) / 0.6);
+		box-shadow: 0 12px 30px -22px hsl(var(--steam-graphite) / 0.45);
+	}
 }
 
 @utility shadow-glow {

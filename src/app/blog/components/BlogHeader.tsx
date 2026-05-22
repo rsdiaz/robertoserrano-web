@@ -1,8 +1,19 @@
 'use client'
 
 import { motion } from 'motion/react'
+import { FileText, FolderOpen, Sparkles } from 'lucide-react'
 
-export default function BlogHeader() {
+type BlogHeaderProps = {
+	totalPosts: number
+	totalCategories: number
+	latestDate?: string | null
+}
+
+export default function BlogHeader({ totalPosts, totalCategories, latestDate }: BlogHeaderProps) {
+	const latest = latestDate
+		? new Date(latestDate).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+		: null
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
@@ -10,14 +21,9 @@ export default function BlogHeader() {
 			transition={{ duration: 0.55, ease: 'easeOut' }}
 			className="mb-12 text-center"
 		>
-			<motion.span
-				initial={{ opacity: 0, y: 18 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.45, delay: 0.05, ease: 'easeOut' }}
-				className="inline-flex rounded-full border border-accent/20 bg-accent/8 px-3.5 py-1 text-sm font-semibold tracking-wide text-accent"
-			>
-				Artículos
-			</motion.span>
+			<motion.div initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+				<span className="steam-label">Bienvenido</span>
+			</motion.div>
 
 			<motion.h1
 				initial={{ opacity: 0, y: 24 }}
@@ -37,6 +43,41 @@ export default function BlogHeader() {
 				Mi rincón digital para hablar de lo que me mueve: software, innovación y cómo escribir mejor código (sin perder
 				la cabeza en el intento).
 			</motion.p>
+
+			{/* Stat row */}
+			<motion.dl
+				initial={{ opacity: 0, y: 16 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.55, delay: 0.3, ease: 'easeOut' }}
+				className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4"
+			>
+				<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+					<FileText className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+					<dt className="sr-only">Artículos publicados</dt>
+					<dd>
+						<span className="font-semibold text-foreground">{totalPosts}</span>{' '}
+						<span className="text-muted-foreground">artículos</span>
+					</dd>
+				</div>
+				<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+					<FolderOpen className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+					<dt className="sr-only">Categorías</dt>
+					<dd>
+						<span className="font-semibold text-foreground">{totalCategories}</span>{' '}
+						<span className="text-muted-foreground">categorías</span>
+					</dd>
+				</div>
+				{latest && (
+					<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+						<Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+						<dt className="sr-only">Última publicación</dt>
+						<dd>
+							<span className="text-muted-foreground">último:</span>{' '}
+							<span className="font-semibold text-foreground">{latest}</span>
+						</dd>
+					</div>
+				)}
+			</motion.dl>
 		</motion.div>
 	)
 }
