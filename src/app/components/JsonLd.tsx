@@ -67,6 +67,41 @@ export function ArticleJsonLd({
 	return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
 
+export function ContactPageJsonLd({ url, email }: { url: string; email: string }) {
+	const schema = {
+		'@context': 'https://schema.org',
+		'@type': 'ContactPage',
+		url,
+		name: 'Contacto · Roberto Serrano',
+		description: 'Contacta con Roberto Serrano para proyectos, consultoría, desarrollo o mentoría.',
+		mainEntity: {
+			'@type': 'Person',
+			name: 'Roberto Serrano Díaz-Grande',
+			email,
+			url: siteMetadata.siteUrl,
+		},
+	}
+
+	return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+export function FAQPageJsonLd({ items }: { items: { question: string; answer: string }[] }) {
+	const schema = {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: items.map(({ question, answer }) => ({
+			'@type': 'Question',
+			name: question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: answer,
+			},
+		})),
+	}
+
+	return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
 export function BreadcrumbListJsonLd({ items }: { items: { name: string; item: string }[] }) {
 	const schema = {
 		'@context': 'https://schema.org',

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { allBlogPosts } from 'contentlayer/generated'
 
-import BlogHeader from './components/BlogHeader'
+import BlogHeader from './components/BlogHero'
 import BlogPageContent from './components/BlogPageContent'
 import { FeaturedPost } from './components/FeaturedPost'
 import { ScrollProgress } from './components/ScrollProgress'

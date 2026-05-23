@@ -8,6 +8,8 @@ const siteMetadata = {
 	profileDescription:
 		'Ingeniero de Software especializado en crear aplicaciones útiles que resuelven problemas reales. Con más de 15 años de experiencia en desarrollo full-stack y tecnologías modernas.',
 	twitterHandle: '@RovBeat',
+	contactEmail: 'info@robertoserrano.pro',
+	location: 'Tarragona, España',
 	socialLinks: {
 		github: 'https://github.com/rsdiaz',
 		linkedin: 'https://www.linkedin.com/in/roberto-serrano-diaz-grande',

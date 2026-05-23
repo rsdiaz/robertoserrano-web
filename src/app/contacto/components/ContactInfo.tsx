@@ -1,30 +1,9 @@
-import { motion } from 'motion/react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card'
-import { Clock, MapPin } from 'lucide-react'
+'use client'
 
-const contactInfo = [
-	/* 	{
-		icon: Mail,
-		label: 'Email',
-		value: 'roberto@serrano.dev',
-		href: 'mailto:roberto@serrano.dev',
-		description: 'Para consultas profesionales y colaboraciones',
-	}, */
-	{
-		icon: MapPin,
-		label: 'Ubicación',
-		value: 'Tarragona, España',
-		href: null,
-		description: 'Disponible para trabajo remoto y presencial',
-	},
-	{
-		icon: Clock,
-		label: 'Horario',
-		value: 'Lun - Vie, 8:00 - 20:00 CET',
-		href: null,
-		description: 'Respondo mensajes dentro de 24 horas',
-	},
-]
+import { motion } from 'motion/react'
+import { Clock, Mail, MapPin } from 'lucide-react'
+import siteMetadata from '@/data/siteMetadata'
+import AvailabilityBadge from './AvailabilityBadge'
 
 export default function ContactInfo() {
 	return (
@@ -32,37 +11,63 @@ export default function ContactInfo() {
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.45, ease: 'easeOut' }}
+			className="steam-panel relative overflow-hidden rounded-2xl bg-card/95 p-6 shadow-elegant transition-all duration-300 hover:-translate-y-1 hover:shadow-glow"
 		>
-			<Card className="border-border/60 bg-card/95 shadow-elegant transition-all duration-300 hover:-translate-y-1 hover:shadow-glow">
-				<CardHeader>
-					<CardTitle className="text-xl">Información de contacto</CardTitle>
-				</CardHeader>
-				<CardContent className="space-y-4">
-					{contactInfo.map((info, index) => (
-						<div
-							key={index}
-							className="group rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-border/60 hover:bg-secondary/50"
-						>
-							<div className="flex items-start space-x-3">
-								<div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-									<info.icon className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110" />
-								</div>
-								<div className="flex-1">
-									<div className="font-medium">{info.label}</div>
-									{info.href ? (
-										<a href={info.href} className="text-accent hover:underline transition-smooth">
-											{info.value}
-										</a>
-									) : (
-										<div className="text-foreground">{info.value}</div>
-									)}
-									<p className="text-sm text-muted-foreground">{info.description}</p>
-								</div>
+			<h3 className="text-xl font-bold">Información de contacto</h3>
+
+			<ul className="mt-5 space-y-4">
+				<li className="group rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-border/60 hover:bg-secondary/40">
+					<div className="flex items-start gap-3">
+						<div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+							<Mail
+								className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110"
+								aria-hidden="true"
+							/>
+						</div>
+						<div className="flex-1">
+							<div className="font-medium">Email</div>
+							<a href={`mailto:${siteMetadata.contactEmail}`} className="text-accent transition-smooth hover:underline">
+								{siteMetadata.contactEmail}
+							</a>
+							<p className="text-sm text-muted-foreground">Consultas profesionales y colaboraciones</p>
+						</div>
+					</div>
+				</li>
+
+				<li className="group rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-border/60 hover:bg-secondary/40">
+					<div className="flex items-start gap-3">
+						<div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+							<MapPin
+								className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110"
+								aria-hidden="true"
+							/>
+						</div>
+						<div className="flex-1">
+							<div className="font-medium">Ubicación</div>
+							<div className="text-foreground">{siteMetadata.location}</div>
+							<p className="text-sm text-muted-foreground">Trabajo remoto y presencial</p>
+						</div>
+					</div>
+				</li>
+
+				<li className="group rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-border/60 hover:bg-secondary/40">
+					<div className="flex items-start gap-3">
+						<div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
+							<Clock
+								className="h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110"
+								aria-hidden="true"
+							/>
+						</div>
+						<div className="flex-1">
+							<div className="font-medium">Horario</div>
+							<div className="text-foreground">Lun – Vie · 8:00 – 20:00 CET</div>
+							<div className="mt-1">
+								<AvailabilityBadge />
 							</div>
 						</div>
-					))}
-				</CardContent>
-			</Card>
+					</div>
+				</li>
+			</ul>
 		</motion.div>
 	)
 }

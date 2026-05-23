@@ -1,13 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-
-type ContactPayload = {
-	name?: string
-	email?: string
-	subject?: string
-	message?: string
-	website?: string
-}
+import { contactFormSchema, CONTACT_CATEGORY_LABELS } from '@/app/lib/contact-schema'
 
 type RateLimitEntry = {
 	count: number
@@ -29,16 +22,6 @@ function escapeHtml(value: string): string {
 		.replaceAll('>', '&gt;')
 		.replaceAll('"', '&quot;')
 		.replaceAll("'", '&#39;')
-}
-
-function validatePayload(payload: ContactPayload): string | null {
-	if (!payload.name?.trim()) return 'El nombre es obligatorio.'
-	if (!payload.email?.trim()) return 'El email es obligatorio.'
-	if (!payload.subject?.trim()) return 'El asunto es obligatorio.'
-	if (!payload.message?.trim()) return 'El mensaje es obligatorio.'
-	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return 'El email no es válido.'
-	if (payload.message.trim().length < 10) return 'El mensaje debe tener al menos 10 caracteres.'
-	return null
 }
 
 function getClientIp(req: Request): string {
@@ -80,11 +63,11 @@ function checkRateLimit(ip: string): boolean {
 
 export async function POST(req: Request) {
 	try {
-		const payload = (await req.json()) as ContactPayload
+		const rawPayload = (await req.json()) as Record<string, unknown>
 		const clientIp = getClientIp(req)
 
 		// Honeypot: si el bot rellena este campo oculto, devolvemos éxito silencioso.
-		if (payload.website?.trim()) {
+		if (typeof rawPayload.website === 'string' && rawPayload.website.trim().length > 0) {
 			return NextResponse.json({ ok: true })
 		}
 
@@ -95,11 +78,14 @@ export async function POST(req: Request) {
 			)
 		}
 
-		const validationError = validatePayload(payload)
+		const parsed = contactFormSchema.safeParse(rawPayload)
 
-		if (validationError) {
-			return NextResponse.json({ ok: false, message: validationError }, { status: 400 })
+		if (!parsed.success) {
+			const firstError = parsed.error.issues[0]?.message ?? 'Los datos enviados no son válidos.'
+			return NextResponse.json({ ok: false, message: firstError }, { status: 400 })
 		}
+
+		const { name, email, subject, category, message } = parsed.data
 
 		const apiKey = process.env.RESEND_API_KEY
 		const toEmail = process.env.CONTACT_TO_EMAIL || process.env.RESEND_TO_EMAIL
@@ -120,22 +106,20 @@ export async function POST(req: Request) {
 		}
 
 		const resend = new Resend(apiKey)
-
-		const name = payload.name!.trim()
-		const email = payload.email!.trim()
-		const subject = payload.subject!.trim()
-		const message = payload.message!.trim()
+		const categoryLabel = category ? CONTACT_CATEGORY_LABELS[category] : 'General'
+		const subjectPrefix = `[Contacto Web][${categoryLabel}]`
 
 		const result = await resend.emails.send({
 			from: fromEmail,
 			to: [toEmail],
 			replyTo: email,
-			subject: `[Contacto Web] ${subject}`,
-			text: `Nuevo mensaje de contacto\n\nNombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`,
+			subject: `${subjectPrefix} ${subject}`,
+			text: `Nuevo mensaje de contacto\n\nNombre: ${name}\nEmail: ${email}\nCategoría: ${categoryLabel}\n\nMensaje:\n${message}`,
 			html: `
 				<h2>Nuevo mensaje de contacto</h2>
 				<p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
 				<p><strong>Email:</strong> ${escapeHtml(email)}</p>
+				<p><strong>Categoría:</strong> ${escapeHtml(categoryLabel)}</p>
 				<p><strong>Asunto:</strong> ${escapeHtml(subject)}</p>
 				<hr />
 				<p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
@@ -151,10 +135,11 @@ export async function POST(req: Request) {
 			from: fromEmail,
 			to: [email],
 			subject: `Recibí tu mensaje: ${subject}`,
-			text: `Hola ${name},\n\nGracias por escribirme. He recibido tu mensaje y te responderé lo antes posible.\n\nResumen de tu consulta:\n- Asunto: ${subject}\n- Mensaje: ${message}\n\nUn saludo,\nRoberto Serrano`,
+			text: `Hola ${name},\n\nGracias por escribirme. He recibido tu mensaje y te responderé lo antes posible.\n\nResumen de tu consulta:\n- Categoría: ${categoryLabel}\n- Asunto: ${subject}\n- Mensaje: ${message}\n\nUn saludo,\nRoberto Serrano`,
 			html: `
 				<h2>¡Gracias por tu mensaje, ${escapeHtml(name)}!</h2>
 				<p>He recibido tu consulta y te responderé lo antes posible.</p>
+				<p><strong>Categoría:</strong> ${escapeHtml(categoryLabel)}</p>
 				<p><strong>Asunto:</strong> ${escapeHtml(subject)}</p>
 				<p><strong>Resumen:</strong></p>
 				<p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
