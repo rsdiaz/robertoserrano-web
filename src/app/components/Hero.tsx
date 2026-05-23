@@ -37,8 +37,8 @@ export default function Hero() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.7, delay: 0.1 }}
 						>
-							<h1 className="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-								Soy Roberto Serrano, ingeniero de software
+							<h1 className="font-semibold text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+								Soy <span className="text-gradient">Roberto Serrano</span>, ingeniero de software
 							</h1>
 							<p className="mt-4 max-w-xl text-base sm:text-lg text-muted-foreground">
 								Construyo software a medida que combinan ingeniería, pasión y compromiso. Mi misión es transformar ideas
@@ -52,11 +52,11 @@ export default function Hero() {
 							transition={{ duration: 0.6, delay: 0.2 }}
 							className="flex flex-wrap gap-3"
 						>
-							<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+							<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
 								<Radar className="h-4 w-4 text-accent" />
 								Desarrollo full-stack
 							</div>
-							<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs uppercase tracking-[0.28em] text-muted-foreground">
+							<div className="steam-panel flex items-center gap-3 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
 								<ArrowRight className="h-4 w-4 text-accent" />
 								+15 años de trayectoria
 							</div>
@@ -69,14 +69,18 @@ export default function Hero() {
 							className="grid gap-4 sm:grid-cols-2"
 						>
 							<div className="steam-panel rounded-2xl p-5">
-								<p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Desarrollo de software</p>
+								<p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">
+									Desarrollo de software
+								</p>
 								<p className="mt-3 text-lg font-semibold text-foreground">Plataformas escalables</p>
 								<p className="mt-2 text-sm text-muted-foreground">
 									Front, backend y DevOps sincronizados para crecer sin sustos.
 								</p>
 							</div>
 							<div className="steam-panel rounded-2xl p-5">
-								<p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">AI Solutions Architect</p>
+								<p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">
+									AI Solutions Architect
+								</p>
 								<p className="mt-3 text-lg font-semibold text-foreground">IA con impacto medible</p>
 								<p className="mt-2 text-sm text-muted-foreground">
 									La IA es practica y diferencial pero sin sentido no sirve.
@@ -132,8 +136,8 @@ export default function Hero() {
 										className="h-[420px] w-full object-cover object-center grayscale contrast-110"
 									/>
 								</div>
-								<div className="mt-4 flex items-center justify-center text-xs uppercase tracking-[0.28em] text-muted-foreground">
-									<span>Open Source Lover 💗</span>
+								<div className="mt-4 flex items-center justify-center text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+									<span>GNU/Linux Lover 💗</span>
 								</div>
 							</div>
 
