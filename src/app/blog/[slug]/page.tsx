@@ -1,33 +1,20 @@
 import '@/app/css/prims.css'
-import { Badge } from '@/app/components/ui/badge'
-import { Button } from '@/app/components/ui/button'
-import { Card, CardContent } from '@/app/components/ui/card'
-import { Separator } from '@/app/components/ui/separator'
 import { allBlogPosts } from 'contentlayer/generated'
-import { Bookmark, Calendar, Clock, Heart, Tag } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import BackNavigation from './components/BackNavigation'
 import PostSidebar from './components/PostSidebar'
-import ViewCounter from './components/ViewCounter'
-import { SharePost } from './components/SharePost'
-// import Comments from './components/Comments'
+import PostHero from './components/PostHero'
+import PostActions from './components/PostActions'
+import AuthorCard from './components/AuthorCard'
+import PostNavigation from './components/PostNavigation'
+import RelatedPosts from './components/RelatedPosts'
+import TagsList from './components/TagsList'
 import siteMetadata from '@/data/siteMetadata'
-import { db } from '@/app/lib/db'
+import { getStatsForSlug } from '@/app/lib/views'
+import { ScrollProgress } from '@/app/blog/components/ScrollProgress'
 import { ArticleJsonLd, BreadcrumbListJsonLd } from '@/app/components/JsonLd'
-
-async function getPostViews(slug: string): Promise<number> {
-	try {
-		const database = await db()
-		const post = await database.collection('blog_stats').findOne({ slug }, { projection: { _id: 0, views: 1 } })
-		return post?.views ?? 0
-	} catch {
-		return 0
-	}
-}
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	const { slug } = await props.params
@@ -68,161 +55,128 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
 	const { slug } = await props.params
 	const post = allBlogPosts.find(p => p.slug === slug)
-	const initialViews = await getPostViews(slug)
 
 	if (!post) {
 		return notFound()
 	}
 
+	const { views: initialViews, likes: initialLikes } = await getStatsForSlug(slug)
+
 	const postUrl = `${siteMetadata.siteUrl}/blog/${post.slug}`
 	const ogImage = post.image?.url ?? '/static/opengraph-image.png'
+	const category = post.category && post.category.trim() ? post.category : 'General'
+	const author = post.author && post.author.trim() ? post.author : 'Roberto Serrano Díaz-Grande'
+
+	// Prev / Next by date desc
+	const sortedByDate = [...allBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+	const idx = sortedByDate.findIndex(p => p.slug === slug)
+	const next = idx > 0 ? sortedByDate[idx - 1] : null
+	const prev = idx >= 0 && idx < sortedByDate.length - 1 ? sortedByDate[idx + 1] : null
+
+	// Related by category (excluding current), fallback to most recent
+	const related = sortedByDate
+		.filter(p => p.slug !== slug && (p.category ?? 'General').toLowerCase() === category.toLowerCase())
+		.slice(0, 3)
+	const relatedFinal = related.length > 0 ? related : sortedByDate.filter(p => p.slug !== slug).slice(0, 3)
 
 	return (
-		<div className="min-h-screen pt-24 pb-16">
-			<ArticleJsonLd
-				title={post.title}
-				description={post.excerpt}
-				image={ogImage}
-				datePublished={post.date}
-				url={postUrl}
-			/>
-			<BreadcrumbListJsonLd
-				items={[
-					{ name: 'Inicio', item: siteMetadata.siteUrl },
-					{ name: 'Blog', item: `${siteMetadata.siteUrl}/blog` },
-					{ name: post.title, item: postUrl },
-				]}
-			/>
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				{/* Back Navigation */}
-				<BackNavigation />
+		<>
+			<ScrollProgress />
+			<div className="relative min-h-screen overflow-x-clip bg-gradient-to-b from-background via-secondary/20 to-background pt-32 sm:pt-36 lg:pt-44 pb-20">
+				<div
+					className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,_hsl(var(--accent)/0.12),_transparent_45%)] blog-blob"
+					aria-hidden="true"
+				/>
+				<div
+					className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_28%,_hsl(var(--primary)/0.10),_transparent_46%)] blog-blob-2"
+					aria-hidden="true"
+				/>
+				<div
+					className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_85%,_hsl(var(--accent)/0.05),_transparent_45%)]"
+					aria-hidden="true"
+				/>
 
-				<div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-					{/* Main Content */}
-					<article className="lg:col-span-3">
-						{/* Hero Image */}
-						<div className="aspect-video mb-8 rounded-lg overflow-hidden shadow-elegant">
-							{post?.image?.url && (
-								<Image
-									src={post.image?.url}
-									alt={post.image?.alt}
-									width={1000}
-									height={1000}
-									className="w-full h-full object-cover"
-									priority={true}
+				<ArticleJsonLd
+					title={post.title}
+					description={post.excerpt}
+					image={ogImage}
+					datePublished={post.date}
+					url={postUrl}
+				/>
+				<BreadcrumbListJsonLd
+					items={[
+						{ name: 'Inicio', item: siteMetadata.siteUrl },
+						{ name: 'Blog', item: `${siteMetadata.siteUrl}/blog` },
+						{
+							name: category,
+							item: `${siteMetadata.siteUrl}/blog?category=${encodeURIComponent(category.toLowerCase())}`,
+						},
+						{ name: post.title, item: postUrl },
+					]}
+				/>
+
+				<div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+					<BackNavigation />
+
+					<div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
+						{/* Main */}
+						<article data-post-article aria-labelledby="post-title" className="min-w-0">
+							<PostHero
+								slug={slug}
+								title={post.title}
+								excerpt={post.excerpt}
+								category={category}
+								date={post.date}
+								readingTime={post.readingTime.text}
+								initialViews={initialViews}
+								image={post.image}
+								author={author}
+							/>
+
+							{/* Actions bar */}
+							<div className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card/40 p-4 backdrop-blur-sm">
+								<p className="text-xs text-muted-foreground">
+									¿Te resulta útil? Déjame saber con un like o guárdalo para luego.
+								</p>
+								<PostActions
+									slug={slug}
+									title={post.title}
+									baseUrl={siteMetadata.siteUrl}
+									initialLikes={initialLikes}
 								/>
-							)}
-						</div>
-						{/* Article Header */}
-						<header className="mb-8">
-							<div className="flex flex-wrap items-center gap-4 mb-4">
-								<Badge variant="default" className="capitalize">
-									{post?.category}
-								</Badge>
-								<div className="flex items-center text-sm text-muted-foreground space-x-4">
-									<span className="flex items-center">
-										<Calendar className="h-4 w-4 mr-1" />
-										{post?.date
-											? new Date(post.date).toLocaleDateString('es-ES', {
-													year: 'numeric',
-													month: 'short',
-													day: 'numeric',
-												})
-											: ''}
-									</span>
-									<span className="flex items-center">
-										<Clock className="h-4 w-4 mr-1" />
-										{post?.readingTime.text}
-									</span>
-									<span className="flex items-center">
-										<ViewCounter slug={slug} initialViews={initialViews} />
-									</span>
-								</div>
 							</div>
 
-							<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">{post?.title}</h1>
-
-							<p className="text-xl text-muted-foreground leading-relaxed mb-6">{post?.excerpt}</p>
-
-							<div className="flex items-center justify-between">
-								<div className="flex items-center space-x-3">
-									<div className="w-10 h-10 rounded-full flex items-center justify-center">
-										<Image
-											src="/static/profile.jpg"
-											width="100"
-											height="100"
-											alt="Roberto Serrano Díaz-Grande"
-											className="rounded-full"
-										/>
-									</div>
-									<div>
-										<p className="font-medium">{post?.author}</p>
-										<p className="text-sm text-muted-foreground">Ingeniero de Software</p>
-									</div>
-								</div>
-
-								<div className="flex items-center space-x-2">
-									<Button variant="outline" size="sm">
-										<Heart className="h-4 w-4 mr-2" />
-										Me gusta
-									</Button>
-									<Button variant="outline" size="sm">
-										<Bookmark className="h-4 w-4 mr-2" />
-										Guardar
-									</Button>
-									<SharePost title={post?.title ?? ''} slug={slug} baseUrl={siteMetadata.siteUrl} />
-								</div>
+							{/* Article body */}
+							<div className="prose prose-lg prose-post max-w-none dark:prose-invert">
+								<MDXLayoutRenderer code={post.body.code} />
 							</div>
-						</header>
-						<Separator className="mb-8" />
-						{/* Article Content */}
-						<div className="prose prose-lg max-w-none dark:prose-invert">
-							<MDXLayoutRenderer code={post?.body.code ?? ''} />
-						</div>
 
-						{/* Tags */}
-						<div className="mt-12 pt-8 border-t border-border">
-							<h3 className="text-lg font-semibold mb-4">Etiquetas</h3>
-							<div className="flex flex-wrap gap-2">
-								{post?.tags?.map(tag => (
-									<Badge key={tag} variant="secondary" className="text-sm">
-										<Tag className="h-3 w-3 mr-1" />
-										{tag}
-									</Badge>
-								))}
+							<TagsList tags={post.tags ?? []} />
+
+							{/* Bottom actions repeat */}
+							<div className="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card/40 p-4">
+								<p className="text-xs text-muted-foreground">¿Te ha gustado? Compártelo.</p>
+								<PostActions
+									slug={slug}
+									title={post.title}
+									baseUrl={siteMetadata.siteUrl}
+									initialLikes={initialLikes}
+								/>
 							</div>
-						</div>
 
-						<Card className="mt-12 shadow-elegant">
-							<CardContent className="pt-6">
-								<div className="flex items-start space-x-4">
-									<div className="w-16 h-16 flex rounded-full items-center justify-center flex-shrink-0">
-										<Image
-											src="/static/profile.jpg"
-											width="1000"
-											height="1000"
-											alt="Roberto Serrano Diaz-Grande"
-											className="rounded-full"
-										/>
-									</div>
-									<div className="flex-1">
-										<h4 className="text-xl font-bold mb-2">{post?.author}</h4>
-										<p className="text-muted-foreground mb-4">{siteMetadata.profileDescription}</p>
-										<Button variant="outline" size="sm" asChild>
-											<Link href="/about">Ver perfil completo</Link>
-										</Button>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					</article>
+							<div className="mt-12">
+								<AuthorCard author={author} />
+							</div>
 
-					{/* Sidebar */}
-					<PostSidebar post={post} />
+							<PostNavigation prev={prev} next={next} />
+
+							<RelatedPosts posts={relatedFinal} />
+						</article>
+
+						<PostSidebar post={post} />
+					</div>
 				</div>
-				{/* Comments Section */}
-				{/* <Comments /> */}
 			</div>
-		</div>
+		</>
 	)
 }

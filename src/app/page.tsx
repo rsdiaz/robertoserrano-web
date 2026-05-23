@@ -10,6 +10,7 @@ import Hero from './components/Hero'
 import { getLatestPosts } from '@/app/lib/blog-posts'
 import { allProjects } from 'contentlayer/generated'
 import Image from 'next/image'
+import { categoryPillClass } from './lib/blog-format'
 
 const features = [
 	{
@@ -132,7 +133,7 @@ export default function Home() {
 									viewport={{ once: true }}
 								>
 									<Link href={`/blog/${post.slug}`}>
-										<Card className="group h-full border-border/50 hover:border-accent/30 hover:shadow-elegant transition-all duration-300 cursor-pointer overflow-hidden">
+										<Card className="group steam-panel h-full border-border/50 hover:border-accent/30 hover:shadow-elegant transition-all duration-300 cursor-pointer overflow-hidden">
 											<div className="flex h-full">
 												{/* Imagen */}
 												<div className="relative w-[45%] flex-shrink-0 overflow-hidden">
@@ -147,12 +148,6 @@ export default function Home() {
 														<div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-muted flex items-center justify-center">
 															<Code2 className="w-10 h-10 text-accent/40" />
 														</div>
-													)}
-													{/* Category badge */}
-													{post.category && (
-														<span className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm text-foreground text-[10px] font-semibold uppercase tracking-[0.2em] px-2.5 py-1 rounded-full border border-border/50">
-															{post.category}
-														</span>
 													)}
 												</div>
 

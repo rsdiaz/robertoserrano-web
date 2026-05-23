@@ -556,3 +556,133 @@ All colors MUST be HSL.
 @utility shadow-elegant {
 	box-shadow: var(--shadow-elegant);
 }
+
+/* ==========================================================================
+   .prose-post — Tipografía custom para el cuerpo del artículo (MDX)
+   ========================================================================== */
+.prose-post {
+	scroll-padding-top: 8rem;
+}
+
+.prose-post :where(h1, h2, h3, h4) {
+	scroll-margin-top: 8rem;
+	letter-spacing: -0.01em;
+}
+
+.prose-post :where(h2) {
+	position: relative;
+	margin-top: 2.5em;
+	padding-bottom: 0.3em;
+	border-bottom: 1px solid hsl(var(--border) / 0.6);
+}
+
+.prose-post :where(h2)::before {
+	content: '';
+	position: absolute;
+	left: -1rem;
+	top: 0.55em;
+	width: 3px;
+	height: 1em;
+	border-radius: 3px;
+	background: linear-gradient(180deg, hsl(var(--accent)), hsl(var(--primary)));
+	opacity: 0.85;
+}
+
+.prose-post :where(h3) {
+	margin-top: 2em;
+}
+
+.prose-post :where(a):not(.anchor) {
+	color: hsl(var(--accent));
+	text-decoration: none;
+	background-image: linear-gradient(hsl(var(--accent) / 0.4), hsl(var(--accent) / 0.4));
+	background-size: 100% 1px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition: background-size 0.25s ease;
+}
+
+.prose-post :where(a):not(.anchor):hover {
+	background-size: 100% 2px;
+}
+
+.prose-post :where(blockquote) {
+	border-left: none;
+	position: relative;
+	padding: 1rem 1.25rem 1rem 1.5rem;
+	background: hsl(var(--accent) / 0.06);
+	border-radius: 0.75rem;
+	font-style: normal;
+	color: hsl(var(--foreground));
+	box-shadow: inset 3px 0 0 hsl(var(--accent));
+}
+
+.prose-post :where(blockquote) p::before,
+.prose-post :where(blockquote) p::after {
+	content: '';
+}
+
+.prose-post :where(code):not(pre code) {
+	background: hsl(var(--muted) / 0.7);
+	color: hsl(var(--accent));
+	padding: 0.15em 0.4em;
+	border-radius: 0.35rem;
+	font-size: 0.9em;
+	font-weight: 500;
+	border: 1px solid hsl(var(--border) / 0.6);
+}
+
+.prose-post :where(code):not(pre code)::before,
+.prose-post :where(code):not(pre code)::after {
+	content: '';
+}
+
+.prose-post :where(pre) {
+	border-radius: 0.85rem;
+	border: 1px solid hsl(var(--border) / 0.6);
+	box-shadow: 0 12px 30px -22px hsl(var(--steam-graphite) / 0.45);
+}
+
+.prose-post :where(img) {
+	border-radius: 0.85rem;
+	box-shadow: var(--shadow-elegant);
+	border: 1px solid hsl(var(--border) / 0.6);
+}
+
+.prose-post :where(hr) {
+	border: none;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+	margin: 2.5em 0;
+}
+
+.prose-post :where(kbd) {
+	background: hsl(var(--muted));
+	border: 1px solid hsl(var(--border));
+	border-bottom-width: 2px;
+	border-radius: 0.35rem;
+	padding: 0.1em 0.45em;
+	font-size: 0.85em;
+	font-family: inherit;
+}
+
+.prose-post :where(mark) {
+	background: hsl(var(--accent) / 0.18);
+	color: inherit;
+	padding: 0.05em 0.25em;
+	border-radius: 0.25rem;
+}
+
+.prose-post :where(ul > li)::marker {
+	color: hsl(var(--accent));
+}
+
+.prose-post :where(table) {
+	border-radius: 0.75rem;
+	overflow: hidden;
+	border: 1px solid hsl(var(--border) / 0.6);
+}
+
+.prose-post :where(thead) {
+	background: hsl(var(--muted) / 0.5);
+}

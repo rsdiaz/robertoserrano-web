@@ -29,7 +29,7 @@ export default function BlogHeader({ totalPosts, totalCategories, latestDate }: 
 				initial={{ opacity: 0, y: 24 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.55, delay: 0.12, ease: 'easeOut' }}
-				className="mt-4 mb-6 text-4xl font-bold sm:text-5xl"
+				className="mt-16 mb-6 text-4xl font-bold sm:text-5xl"
 			>
 				Mi <span className="text-gradient">Blog</span>
 			</motion.h1>
