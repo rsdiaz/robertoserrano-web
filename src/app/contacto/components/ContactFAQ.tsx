@@ -1,4 +1,6 @@
 import { FAQPageJsonLd } from '@/app/components/JsonLd'
+import { Button } from '@/app/components/ui/button'
+import { ArrowDown, CrossIcon, MessageCircleQuestion } from 'lucide-react'
 
 export const FAQ_ITEMS = [
 	{
@@ -56,12 +58,40 @@ export default function ContactFAQ() {
 								className="mt-1 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-border/70 text-accent transition-transform duration-300 group-open:rotate-45"
 								aria-hidden="true"
 							>
-								+
+								<CrossIcon className="h-3 w-3" />
 							</span>
 						</summary>
 						<p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">{item.answer}</p>
 					</details>
 				))}
+			</div>
+
+			<div className="mx-auto mt-10 max-w-4xl">
+				<div className="card-conic-border relative overflow-hidden rounded-2xl bg-card/95 p-6 shadow-elegant sm:p-8">
+					<div
+						className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,_hsl(var(--accent)/0.12),_transparent_50%)]"
+						aria-hidden="true"
+					/>
+					<div className="relative flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
+						<div className="flex items-start gap-4">
+							<div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-accent/10">
+								<MessageCircleQuestion className="h-6 w-6 text-accent" aria-hidden="true" />
+							</div>
+							<div>
+								<h3 className="text-lg font-bold sm:text-xl">¿No encontraste respuesta?</h3>
+								<p className="mt-1 text-sm text-muted-foreground sm:text-base">
+									Escríbeme directamente y te respondo en menos de 24 horas.
+								</p>
+							</div>
+						</div>
+						<Button asChild size="lg" className="w-full shrink-0 shadow-glow sm:w-auto">
+							<a href="#contact-form">
+								Escríbeme ahora
+								<ArrowDown className="ml-2 h-4 w-4" aria-hidden="true" />
+							</a>
+						</Button>
+					</div>
+				</div>
 			</div>
 		</section>
 	)

@@ -17,7 +17,7 @@ export default function AuthorCard({ author }: Props) {
 			/>
 			<div className="relative flex flex-col items-start gap-5 sm:flex-row sm:items-center">
 				<Image
-					src="/static/profile.jpg"
+					src="/static/profile2.png"
 					width={80}
 					height={80}
 					alt={author}
