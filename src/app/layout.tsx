@@ -6,7 +6,7 @@ import Header from './components/Header'
 import siteMetadata from '@/data/siteMetadata'
 // import { Toast } from '@radix-ui/react-toast'
 import { Toaster } from './components/ui/toaster'
-import { PersonJsonLd, WebSiteJsonLd } from './components/JsonLd'
+import { PersonJsonLd, ProfessionalServiceJsonLd, WebSiteJsonLd } from './components/JsonLd'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteMetadata.siteUrl),
@@ -48,6 +48,7 @@ export default function RootLayout({
 				<ThemeProvider attribute="class">
 					<PersonJsonLd />
 					<WebSiteJsonLd />
+					<ProfessionalServiceJsonLd />
 					<Toaster />
 					<div className="min-h-screen flex flex-col">
 						<Header />

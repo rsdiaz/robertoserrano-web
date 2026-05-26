@@ -1,12 +1,12 @@
 const siteMetadata = {
 	portfolioTitle: 'Roberto Serrano',
-	title: 'Roberto Serrano Díaz-Grande | Software Engineer',
+	title: 'Desarrollo Web en Tarragona + IA y Automatizaciones | Roberto Serrano',
 	description:
-		'Bienvenido a mi sitio web personal donde comparto artículos sobre desarrollo web, programación y tecnología.',
+		'Desarrollo web a medida en Tarragona con IA y automatizaciones para empresas. Soluciones escalables, enfoque técnico y resultados medibles. Hablemos de tu proyecto.',
 	siteUrl: process.env.NODE_ENV === 'production' ? 'https://robertoserrano.pro' : 'http://localhost:3000',
 	socialBanner: '/static/opengraph-image.png',
 	profileDescription:
-		'Ingeniero de Software especializado en crear aplicaciones útiles que resuelven problemas reales. Con más de 15 años de experiencia en desarrollo full-stack y tecnologías modernas.',
+		'Ingeniero de software especializado en desarrollo web, IA y automatizaciones para empresas en Tarragona y España. Con más de 15 años de experiencia creando soluciones útiles, escalables y orientadas a resultados.',
 	twitterHandle: '@RovBeat',
 	contactEmail: 'info@robertoserrano.pro',
 	location: 'Tarragona, España',

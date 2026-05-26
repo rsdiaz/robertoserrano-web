@@ -30,6 +30,30 @@ export function WebSiteJsonLd() {
 	return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 }
 
+export function ProfessionalServiceJsonLd() {
+	const schema = {
+		'@context': 'https://schema.org',
+		'@type': 'ProfessionalService',
+		name: 'Roberto Serrano',
+		url: `${siteMetadata.siteUrl}/`,
+		inLanguage: 'es',
+		areaServed: [
+			{
+				'@type': 'City',
+				name: 'Tarragona',
+			},
+			{
+				'@type': 'Country',
+				name: 'España',
+			},
+		],
+		serviceType: ['Desarrollo web a medida', 'Automatizaciones de procesos', 'Soluciones de inteligencia artificial'],
+		sameAs: [siteMetadata.socialLinks.github, siteMetadata.socialLinks.linkedin, siteMetadata.socialLinks.twitter],
+	}
+
+	return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
 export function ArticleJsonLd({
 	title,
 	description,
