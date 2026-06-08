@@ -99,7 +99,7 @@ export default function Hero() {
 									size="lg"
 									className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow"
 								>
-									Iniciar conversación <ArrowRight className="!size-4" />
+									Pide una propuesta en 24h <ArrowRight className="!size-4" />
 								</Button>
 							</Link>
 							<a

@@ -11,6 +11,25 @@ import { getLatestPosts } from '@/app/lib/blog-posts'
 import { allProjects } from 'contentlayer/generated'
 import Image from 'next/image'
 import { categoryPillClass } from './lib/blog-format'
+import { FAQPageJsonLd } from './components/JsonLd'
+
+const localFaqItems = [
+	{
+		question: '¿Trabajas solo en Tarragona?',
+		answer:
+			'Trabajo con clientes de Tarragona y de toda España, pero estoy especialmente enfocado en proyectos locales donde puedo colaborar de forma cercana y continua.',
+	},
+	{
+		question: '¿Qué tipo de automatizaciones puedes implementar?',
+		answer:
+			'Diseño automatizaciones para reducir tareas manuales en ventas, operaciones y soporte, conectando herramientas mediante APIs, flujos y procesos personalizados.',
+	},
+	{
+		question: '¿Cómo integras IA en un proyecto real?',
+		answer:
+			'Primero identifico un caso de uso con impacto medible y después implemento una solución de IA que se integra en tus sistemas y procesos sin comprometer rendimiento ni mantenimiento.',
+	},
+]
 
 const features = [
 	{
@@ -38,8 +57,66 @@ export default function Home() {
 
 	return (
 		<div className="min-h-screen">
+			<FAQPageJsonLd items={localFaqItems} />
 			{/* Hero Section */}
 			<Hero />
+
+			{/* Local Services SEO Section */}
+			<section className="relative overflow-hidden py-20 border-y border-border/50 bg-secondary/15">
+				<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,_hsl(var(--accent)/0.12),_transparent_45%)]" />
+				<div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.6 }}
+						viewport={{ once: true }}
+						className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]"
+					>
+						<div>
+							<span className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+								Servicios en Tarragona
+							</span>
+							<h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">
+								Soluciones de IA en Tarragona para empresas que quieren escalar
+							</h2>
+							<p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-3xl">
+								Creo software a medida para negocio real: webs y plataformas de alto rendimiento, automatizaciones de
+								procesos e IA aplicada para ahorrar tiempo, mejorar operaciones y aumentar conversión.
+							</p>
+							<div className="mt-6 flex flex-wrap gap-3 text-sm text-muted-foreground">
+								<Link
+									href="/contacto"
+									className="underline decoration-accent/40 underline-offset-4 hover:text-foreground"
+								>
+									Desarrollo web en Tarragona
+								</Link>
+								<Link
+									href="/contacto"
+									className="underline decoration-accent/40 underline-offset-4 hover:text-foreground"
+								>
+									Automatizaciones para empresas
+								</Link>
+								<Link
+									href="/contacto"
+									className="underline decoration-accent/40 underline-offset-4 hover:text-foreground"
+								>
+									Consultoría IA aplicada
+								</Link>
+							</div>
+						</div>
+
+						<div className="steam-panel rounded-2xl p-6 space-y-4 border border-border/60">
+							<h3 className="text-xl font-semibold">Preguntas frecuentes</h3>
+							{localFaqItems.map(item => (
+								<div key={item.question} className="space-y-1">
+									<h4 className="font-medium">{item.question}</h4>
+									<p className="text-sm text-muted-foreground">{item.answer}</p>
+								</div>
+							))}
+						</div>
+					</motion.div>
+				</div>
+			</section>
 
 			{/* Features Section */}
 			{/* 			<section className="py-24 bg-muted/30 border-t border-b border-border">
@@ -310,7 +387,7 @@ export default function Home() {
 									size="lg"
 									className="w-full md:w-auto font-semibold bg-primary hover:bg-primary/90 gap-2 shadow-elegant"
 								>
-									Iniciar conversación <ArrowRight className="w-4 h-4" />
+									Pide una propuesta en 24h <ArrowRight className="w-4 h-4" />
 								</Button>
 							</Link>
 							<a
