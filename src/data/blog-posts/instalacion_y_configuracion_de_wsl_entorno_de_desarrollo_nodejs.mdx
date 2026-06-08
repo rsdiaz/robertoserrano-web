@@ -1,0 +1,129 @@
+---
+title: 'Instalación y configuración de WSL + entorno de desarrollo NodeJS'
+excerpt: 'Descubre cómo configurar WSL en Windows y crear un entorno de desarrollo NodeJS eficiente y optimizado.'
+date: 2026-06-08
+category: 'DevOps'
+tags: ['wsl', 'nodejs', 'windows', 'entorno-desarrollo']
+featured: true
+author: 'Roberto Serrano'
+image:
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1780602251/logo-ms-social_urhotl.jpg'
+  alt: 'Instalación de WSL y NodeJS en Windows'
+---
+
+## 🤔 ¿Por qué usar WSL para el desarrollo con NodeJS?
+
+WSL (Windows Subsystem for Linux) permite ejecutar un entorno Linux en Windows sin la sobrecarga de una máquina virtual completa. Esto ofrece una serie de beneficios: puedes utilizar herramientas y scripts de Linux directamente en tu PC con Windows, lo cual es ideal para desarrolladores que trabajan en entornos de servidores Linux. Además, WSL facilita la gestión de dependencias y paquetes que son nativos de Linux, pero difíciles de manejar en Windows.
+
+## 🚀 Instalación de WSL
+
+### Habilitar WSL
+
+Antes de comenzar, asegúrate de que tu sistema operativo es Windows 10 (versión 2004 o superior) o Windows 11. Abre PowerShell como administrador y ejecuta el siguiente comando para habilitar WSL:
+
+```bash
+wsl --install
+```
+
+Este comando instalará la última versión de WSL y la distribución de Linux predeterminada. Puede que necesites reiniciar tu computadora para completar la instalación.
+
+### Configurar la distribución de Linux
+
+Una vez instalado WSL, elige tu distribución de Linux preferida. Por ejemplo, puedes instalar Ubuntu con el siguiente comando:
+
+```bash
+wsl --install -d Ubuntu
+```
+
+Este comando descargará e instalará Ubuntu desde la Microsoft Store.
+
+## 💡 Configuración del entorno de desarrollo NodeJS
+
+### Instalación de NodeJS
+
+Ahora que tienes WSL y Ubuntu instalados, es hora de instalar NodeJS. Primero, abre tu terminal de Ubuntu y actualiza los paquetes:
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+Luego, instala NodeJS y npm (Node Package Manager) ejecutando:
+
+```bash
+sudo apt install nodejs npm
+```
+
+Verifica que la instalación fue exitosa comprobando las versiones instaladas:
+
+```bash
+node -v
+npm -v
+```
+
+### Configuración de NVM (Node Version Manager)
+
+Para una mayor flexibilidad en la gestión de versiones de NodeJS, es recomendable utilizar NVM. Instálalo con los siguientes comandos:
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+```
+
+Luego, carga NVM en tu sesión actual:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+```
+
+Ahora puedes instalar la versión más reciente de NodeJS utilizando NVM:
+
+```bash
+nvm install node
+```
+
+Y establecerla como la versión por defecto:
+
+```bash
+nvm use node
+```
+
+## ⚡ Optimización de tu entorno de desarrollo
+
+### Configuración de Visual Studio Code
+
+Visual Studio Code se integra perfectamente con WSL, permitiéndote editar archivos directamente en tu entorno Linux. Instala la extensión "Remote - WSL" desde el marketplace de VS Code.
+
+### Mejoras en el rendimiento
+
+Para mejorar el rendimiento de WSL, puedes modificar la configuración de recursos. Crea un archivo `.wslconfig` en tu directorio de usuario de Windows (`C:\Users\TuUsuario`) con el siguiente contenido:
+
+```ini
+[wsl2]
+memory=4GB   # Asigna hasta 4 GB de RAM
+processors=2 # Usa 2 núcleos de CPU
+```
+
+### Configuración de permisos
+
+Para evitar problemas de permisos al instalar globalmente paquetes de npm, utiliza la siguiente configuración:
+
+```bash
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+```
+
+Agrega el nuevo directorio a tu PATH modificando el archivo `~/.profile`:
+
+```bash
+export PATH=~/.npm-global/bin:$PATH
+```
+
+Aplica los cambios con:
+
+```bash
+source ~/.profile
+```
+
+## 🛠️ Conclusión
+
+Configurar WSL para el desarrollo con NodeJS en Windows proporciona un entorno eficiente y flexible que combina lo mejor de ambos mundos: la familiaridad de Windows y la potencia de Linux. Con esta guía, puedes empezar a desarrollar aplicaciones NodeJS de manera más optimizada y con menos fricciones. ¡Ahora es tu turno de poner manos a la obra y crear algo increíble!
