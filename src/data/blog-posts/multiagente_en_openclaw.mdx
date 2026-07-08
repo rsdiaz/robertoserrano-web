@@ -1,0 +1,139 @@
+---
+title: 'Multi-Agente en OpenClaw: personalidades aisladas en un solo Gateway'
+excerpt: 'Explora la arquitectura multi-agente con un solo Gateway: cada agente es un ser independiente con personalidad, memoria, herramientas y sesiones propias.'
+date: 2026-06-18
+category: 'AI'
+tags: ['multi-agente', 'OpenClaw', 'IA', 'arquitectura']
+featured: true
+author: 'Roberto Serrano'
+image:
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1781796853/e95dce3e43594e6b8dca15148275a117_ehycpp.webp'
+  alt: 'Diagrama conceptual de la arquitectura de agente y multi-agente en OpenClaw'
+---
+
+OpenClaw Gateway permite ejecutar múltiples agentes de IA en un mismo servidor, cada uno con su propia personalidad, memoria, herramientas y política de seguridad. En este post exploramos la arquitectura multi-agente, cómo se aíslan los agentes y cómo se configura el enrutamiento entre ellos.
+
+## 🛠️ Stack técnico
+
+OpenClaw Gateway v24.16.0 · Runtime embebido · Multi-agent routing engine · Bindings deterministas · Per-agent sandbox (Docker) · Per-agent tool policy · sessions_send · Sesiones JSONL
+
+## ⚙️ Arquitectura
+
+### ¿Qué se aísla por agente?
+
+**Aspecto** | **Compartido o aislado?**
+
+- **Workspace (SOUL.md, AGENTS.md...)** → 🚫 Cada uno el suyo
+- **Sesiones / historial** → 🚫 Separado por completo
+- **Credenciales / auth** → 🚫 Cada agente se loguea por su cuenta
+- **Modelo de IA** → 🚫 Pueden usar modelos distintos
+- **Sandbox / permisos** → 🚫 Uno restrictivo, otro abierto
+- **Skills** → 🔀 Se pueden compartir o filtrar
+- **Gateway (servidor)** → ✅ Un solo proceso
+
+### Ejemplo de configuración
+
+```json
+{
+	"agents": {
+		"list": [
+			{
+				"id": "chat",
+				"name": "Everyday",
+				"workspace": "~/.openclaw/workspace-chat",
+				"model": "opencode-go/deepseek-v4-flash"
+			},
+			{
+				"id": "opus",
+				"name": "Deep Work",
+				"workspace": "~/.openclaw/workspace-opus",
+				"model": "anthropic/claude-opus-4-6"
+			}
+		]
+	}
+}
+```
+
+### Bindings: sistema de enrutamiento
+
+Reglas deterministas que deciden qué agente recibe cada mensaje. La más específica gana:
+
+1. peer — DM o grupo concreto (ej: número WhatsApp)
+2. parentPeer — herencia de hilo
+3. guildId + roles — Discord con roles específicos
+4. guildId — servidor Discord
+5. teamId — Slack
+6. accountId — cuenta de canal específica
+7. channel comodín — accountId: "\*" para todo el canal
+8. Default — agente por defecto si nada más coincide
+
+```json
+bindings: [
+  // Más específico primero → gana
+  {
+    agentId: "opus",
+    match: {
+      channel: "whatsapp",
+      accountId: "*",
+      peer: { kind: "direct", id: "+15551234567" },
+    },
+  },
+  // Fallback por canal
+  { agentId: "chat", match: { channel: "whatsapp", accountId: "*" } },
+  { agentId: "opus", match: { channel: "telegram", accountId: "*" } },
+]
+```
+
+### Sandbox y tool policy per-agente
+
+```json
+{
+	"id": "family",
+	"workspace": "~/.openclaw/workspace-family",
+	"sandbox": { "mode": "all", "scope": "agent" }, // Docker
+	"tools": {
+		"allow": ["read", "exec"],
+		"deny": ["write", "edit", "apply_patch", "cron"]
+	}
+}
+```
+
+### Comunicación entre agentes
+
+<aside>
+🔒 Por defecto desactivada por seguridad. Habilitar con tools.agentToAgent.enabled: true y definir qué agentes pueden comunicarse. Usan sessions_send pero cada uno mantiene su workspace y credenciales separados.
+
+</aside>
+
+```json
+tools: {
+  agentToAgent: {
+    enabled: true,
+    allow: ["chat", "work", "family"],
+  },
+}
+```
+
+### Casos de uso prácticos
+
+- Separar lo personal de lo profesional — mismo servidor, dos mundos
+- Diferentes modelos según la tarea — Sonnet para diario, Opus para análisis
+- Perfiles de seguridad — un agente para APIs productivas, otro para experimentos
+- Familia — un agente por miembro con tono y herramientas adaptados
+- Equipos — varios developers compartiendo un Gateway con su agente
+
+## 🧪 Proceso / Prompt
+
+Tras la explicación general del concepto de agente, el usuario preguntó específicamente: "El multi agente". Se consultó la documentación oficial de multi-agente y se preparó una respuesta completa con ejemplos JSON5, tablas de aislamiento, jerarquía de bindings con 8 niveles, y configuraciones de sandbox.
+
+## 📊 Resultados
+
+Se explicó el multi-agente con: tabla de aislamiento (7 aspectos), configuración JSON5 funcional, jerarquía de bindings de 8 niveles, sandbox Docker con tool policy, comunicación entre agentes, y 5 casos de uso reales. El usuario tiene ahora el conocimiento para escalar a múltiples agentes.
+
+## 🧠 Observaciones
+
+- El multi-agente escala horizontalmente en personalidades sin escalar en infraestructura
+- Los bindings son deterministas (no hay ambigüedad, siempre gana la regla más específica)
+- Cada agente tiene sus propias credenciales de IA y canales — no comparten tokens
+- No compartir agentDir entre agentes, causa colisiones de auth y sesiones
+- Los skills se cargan desde cada workspace + rutas compartidas globales
