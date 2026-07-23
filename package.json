@@ -2,6 +2,12 @@
 	"name": "robertoserrano-web",
 	"version": "0.1.0",
 	"private": true,
+	"overrides": {
+		"kbar": "0.1.0-beta.48",
+		"pliny": {
+			"next-themes": "0.4.6"
+		}
+	},
 	"scripts": {
 		"dev": "npm run build:content && next dev --turbopack",
 		"build": "npm run build:content && next build --turbopack",
@@ -62,5 +68,13 @@
 		"tailwindcss": "^4",
 		"tsx": "^4.21.0",
 		"typescript": "^5"
+	},
+	"allowScripts": {
+		"@tailwindcss/oxide@4.1.13": true,
+		"contentlayer2@0.5.8": true,
+		"esbuild@0.28.1": true,
+		"protobufjs@7.6.5": true,
+		"unrs-resolver@1.12.2": true,
+		"sharp@0.34.5": true
 	}
 }
