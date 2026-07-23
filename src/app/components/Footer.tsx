@@ -24,10 +24,13 @@ const socialLinks = [
 	},
 ]
 
-const quickLinks = [
+const mainPages = [
 	{ name: 'Home', href: '/' },
 	{ name: 'Sobre mí', href: '/sobre-mi' },
 	{ name: 'Blog', href: '/blog' },
+]
+
+const services = [
 	{ name: 'Desarrollo Web', href: '/desarrollo-web' },
 	{ name: 'Automatizaciones', href: '/automatizaciones-para-empresas' },
 	{ name: 'Consultoría IA', href: '/consultoria-ia' },
@@ -58,7 +61,7 @@ const Footer = () => {
 			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_100%_100%,_hsl(var(--accent)/0.05),_transparent_50%)]" />
 
 			<div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-16">
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
+				<div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16">
 					<div className="space-y-5">
 						<Link href="/" className="group inline-flex items-center gap-3">
 							<motion.div
@@ -99,7 +102,26 @@ const Footer = () => {
 					<div className="space-y-5">
 						<h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent">Navegación</h3>
 						<ul className="space-y-3">
-							{quickLinks.map(link => (
+							{mainPages.map(link => (
+								<li key={link.name}>
+									<Link
+										href={link.href}
+										className="group relative inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+									>
+										<span className="relative">
+											{link.name}
+											<span className="absolute left-0 -bottom-0.5 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+										</span>
+									</Link>
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<div className="space-y-5">
+						<h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent">Servicios</h3>
+						<ul className="space-y-3">
+							{services.map(link => (
 								<li key={link.name}>
 									<Link
 										href={link.href}
