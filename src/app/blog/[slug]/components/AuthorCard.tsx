@@ -17,7 +17,7 @@ export default function AuthorCard({ author }: Props) {
 			/>
 			<div className="relative flex flex-col items-start gap-5 sm:flex-row sm:items-center">
 				<Image
-					src="/static/profile2.png"
+					src="/static/profile2.webp"
 					width={80}
 					height={80}
 					alt={author}
@@ -25,7 +25,9 @@ export default function AuthorCard({ author }: Props) {
 				/>
 				<div className="flex-1">
 					<p className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-1">Escrito por</p>
-					<h4 className="text-xl font-bold tracking-tight">{author}</h4>
+					<Link href="/sobre-mi">
+						<h4 className="text-xl font-bold tracking-tight hover:text-accent transition-colors">{author}</h4>
+					</Link>
 					<p className="mt-2 text-sm text-muted-foreground leading-relaxed">{siteMetadata.profileDescription}</p>
 					<div className="mt-4 flex flex-wrap items-center gap-2">
 						<Button variant="default" size="sm" asChild>

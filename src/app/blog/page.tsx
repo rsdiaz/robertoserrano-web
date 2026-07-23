@@ -1,21 +1,40 @@
 import { Metadata } from 'next'
 import { allBlogPosts } from 'contentlayer/generated'
+import siteMetadata from '@/data/siteMetadata'
 
 import BlogHeader from './components/BlogHero'
 import BlogPageContent from './components/BlogPageContent'
 import { FeaturedPost } from './components/FeaturedPost'
 import { ScrollProgress } from './components/ScrollProgress'
-import { generatedPageMetadata } from '../lib/seo'
 import { getViewsForSlugs } from '../lib/views'
 
-export const metadata: Metadata = generatedPageMetadata({
+const blogUrl = `${siteMetadata.siteUrl}/blog`
+
+export const metadata: Metadata = {
 	title: 'Blog',
-})
+	description:
+		'Artículos sobre desarrollo web, DevOps, IA y tecnologías modernas. Tutoriales, guías y reflexiones técnicas.',
+	alternates: { canonical: blogUrl },
+	openGraph: {
+		title: 'Blog · Roberto Serrano',
+		description: 'Artículos sobre desarrollo web, DevOps, IA y tecnologías modernas.',
+		url: blogUrl,
+		type: 'website',
+		images: [`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'Blog · Roberto Serrano',
+		description: 'Artículos sobre desarrollo web, DevOps, IA y tecnologías modernas.',
+		images: [`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`],
+	},
+}
 
 const MAX_FEATURED = 2
 
 export default async function BlogPage() {
-	const sortedByDate = [...allBlogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+	const publishedPosts = [...allBlogPosts].filter(p => !p.draft)
+	const sortedByDate = publishedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
 	const featuredSlugs = sortedByDate
 		.filter(post => post.featured === true)
@@ -24,7 +43,7 @@ export default async function BlogPage() {
 
 	const viewsBySlug = await getViewsForSlugs(featuredSlugs)
 
-	const categoriesSet = new Set(allBlogPosts.map(p => (p.category && p.category.trim() ? p.category : 'General')))
+	const categoriesSet = new Set(publishedPosts.map(p => (p.category && p.category.trim() ? p.category : 'General')))
 
 	const latestDate = sortedByDate[0]?.date ?? null
 
@@ -45,7 +64,7 @@ export default async function BlogPage() {
 					aria-hidden="true"
 				/>
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-					<BlogHeader totalPosts={allBlogPosts.length} totalCategories={categoriesSet.size} latestDate={latestDate} />
+					<BlogHeader totalPosts={publishedPosts.length} totalCategories={categoriesSet.size} latestDate={latestDate} />
 					<FeaturedPost viewsBySlug={viewsBySlug} />
 					<BlogPageContent excludeSlugs={featuredSlugs} />
 				</div>

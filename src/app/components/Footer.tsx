@@ -26,6 +26,7 @@ const socialLinks = [
 
 const quickLinks = [
 	{ name: 'Home', href: '/' },
+	{ name: 'Sobre mí', href: '/sobre-mi' },
 	{ name: 'Blog', href: '/blog' },
 	{ name: 'Desarrollo Web', href: '/desarrollo-web' },
 	{ name: 'Automatizaciones', href: '/automatizaciones-para-empresas' },

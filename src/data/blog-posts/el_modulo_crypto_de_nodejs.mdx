@@ -11,17 +11,20 @@ image:
   alt: 'Seguridad y criptografía en Node.js'
 ---
 
-## 🤔 ¿Por qué usar Crypto en Node.js?
+## ¿Por qué usar Crypto en Node.js?
+
 
 La seguridad es una preocupación primordial en el desarrollo de aplicaciones backend. Con el aumento de las amenazas cibernéticas, asegurar la información sensible es más crítico que nunca. Aquí es donde el módulo `crypto` de Node.js se convierte en una herramienta esencial. Este módulo proporciona criptografía avanzada que permite encriptar datos, crear hashes y generar claves seguras, asegurando que la información esté protegida contra accesos no autorizados.
 
-## 🚀 Introducción al Módulo Crypto
+## Introducción al Módulo Crypto
+
 
 Node.js, con su enfoque en aplicaciones de servidor, incluye el módulo `crypto` para manejar funciones criptográficas. Este módulo es parte del núcleo de Node.js y ofrece una variedad de métodos para cifrar y descifrar datos, así como generar hashes y firmas digitales.
 
 El `crypto` de Node.js utiliza OpenSSL, lo que garantiza que las operaciones criptográficas sean eficientes y seguras. Esta integración permite a los desarrolladores implementar seguridad robusta sin necesidad de bibliotecas externas.
 
-## 🛠️ Funciones Clave del Módulo Crypto
+## Funciones Clave del Módulo Crypto
+
 
 ### Cifrado y Descifrado
 
@@ -95,13 +98,15 @@ verify.end()
 console.log('Firma válida:', verify.verify(publicKey, signature, 'hex'))
 ```
 
-## 💡 Buenas Prácticas al Usar Crypto
+## Buenas Prácticas al Usar Crypto
+
 
 - **Mantén seguras las claves:** Nunca expongas tus claves de cifrado en el código fuente ni las almacenes en lugares no seguros.
 - **Actualiza regularmente:** OpenSSL y otros componentes de seguridad se actualizan frecuentemente para resolver vulnerabilidades. Asegúrate de usar la última versión de Node.js para beneficiarte de estas mejoras.
 - **Conoce tus algoritmos:** No todos los algoritmos son iguales. Investiga y elige el que mejor se adapte a tus necesidades de seguridad.
 - **Evita algoritmos obsoletos:** Algunos algoritmos como MD5 o SHA1 ya no son considerados seguros. Usa alternativas más robustas como SHA256 o SHA512.
 
-## ⚡ Conclusión
+## Conclusión
+
 
 El módulo `crypto` de Node.js es una herramienta poderosa que debe estar en el arsenal de cualquier desarrollador backend. Comprender cómo cifrar datos, generar hashes y crear firmas digitales es esencial para la construcción de aplicaciones seguras. Con las técnicas y ejemplos presentados aquí, puedes comenzar a implementar prácticas de seguridad sólidas en tus aplicaciones Node.js.

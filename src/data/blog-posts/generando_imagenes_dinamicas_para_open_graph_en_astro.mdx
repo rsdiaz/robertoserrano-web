@@ -13,13 +13,16 @@ image:
 
 ## ¿Qué es Open Graph?
 
+
 Open Graph es un protocolo que permite a las páginas web convertirse en objetos ricos en redes sociales. Especificando metadatos en tu HTML, puedes controlar cómo se ven tus enlaces cuando se comparten.
 
 ## Preparando tu Proyecto de Astro
 
+
 Asegúrate de que tu proyecto Astro está configurado y listo para implementar. Si es nuevo en Astro, aquí tienes una [guía rápida](https://astro.build/).
 
 ## Instalación de @vercel/og
+
 
 [@vercel/og](https://www.npmjs.com/package/@vercel/og) es un servicio que permite generar imágenes OG dinámicas. Puedes instalarlo con tu gestor de paquetes favorito:
 
@@ -31,6 +34,7 @@ yarn add @vercel/og
 ```
 
 ## Creación del endpoint en Astro
+
 
 Una vez instalado, vamos a crear el endpoint en Astro, en mi caso he creado el fichero /pages/blog/[slug]/og.png.ts
 
@@ -170,11 +174,13 @@ export async function GET({ params }: Props) {
 
 ## Probando el resultado
 
+
 Para probar el endpoint tan solo añadimos a la url de nuestro post /og.png. En mi caso este a sido el resultado:
 
 ![generando_imagenes_open_graph_en_astro](https://robertoserrano.pro/blog/generando_imagenes_dinamicas_para_open_graph_en_astro/og.png)
 
 ## Añadir los OG tags en el HTML
+
 
 Podemos crear un componente Astro para esto:
 
@@ -236,6 +242,7 @@ import Metatags from '../components/Metatags.astro';
 ```
 
 ## Conclusion
+
 
 Para mi es fundamental automatizar tareas a la hora de crear posts y esta herramienta me ayuda a generar las imágenes OG de mis publicaciones automáticamente.
 

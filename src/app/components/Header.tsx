@@ -10,6 +10,31 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 import siteMetadata from '@/data/siteMetadata'
 
+type NavItem =
+	| { type: 'link'; name: string; href: string }
+	| { type: 'dropdown'; name: string; children: { name: string; href: string }[] }
+
+const navItems: NavItem[] = [
+	{ type: 'link', name: 'Home', href: '/' },
+	{ type: 'link', name: 'Blog', href: '/blog' },
+	{
+		type: 'dropdown',
+		name: 'Servicios',
+		children: [
+			{ name: 'Desarrollo Web', href: '/desarrollo-web' },
+			{ name: 'Automatizaciones', href: '/automatizaciones-para-empresas' },
+			{ name: 'Consultoría IA', href: '/consultoria-ia' },
+		],
+	},
+	{ type: 'link', name: 'Sobre mí', href: '/sobre-mi' },
+	{ type: 'link', name: 'Contacto', href: '/contacto' },
+]
+
+const dropdownItem = navItems.find(it => it.type === 'dropdown') as
+	{ type: 'dropdown'; name: string; children: { name: string; href: string }[] } | undefined
+
+const servicePaths = dropdownItem ? dropdownItem.children.map(c => c.href) : []
+
 function ThemeToggle({ theme, setTheme }: { theme: string | undefined; setTheme: (v: string) => void }) {
 	return (
 		<Button
@@ -45,13 +70,17 @@ function ThemeToggle({ theme, setTheme }: { theme: string | undefined; setTheme:
 	)
 }
 
-const serviceLinks = [
-	{ name: 'Desarrollo Web', href: '/desarrollo-web' },
-	{ name: 'Automatizaciones', href: '/automatizaciones-para-empresas' },
-	{ name: 'Consultoría IA', href: '/consultoria-ia' },
-]
+function activeDotClass(active: boolean) {
+	return `absolute -left-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent/80 shadow-[0_0_12px_hsl(var(--accent)/0.5)] transition-all duration-300 ${
+		active ? 'opacity-100 scale-100' : 'opacity-0 scale-75 group-hover:opacity-80'
+	}`
+}
 
-const servicePaths = serviceLinks.map(l => l.href)
+function navLinkClass(active: boolean) {
+	return `group relative inline-flex items-center h-10 px-1 font-medium transition-smooth ${
+		active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+	}`
+}
 
 export default function Header() {
 	const [mounted, setMounted] = useState(false)
@@ -100,11 +129,6 @@ export default function Header() {
 		return () => document.removeEventListener('mousedown', handleClickOutside)
 	}, [servicesOpen])
 
-	const navigation = [
-		{ name: 'Home', href: '/' },
-		{ name: 'Blog', href: '/blog' },
-	]
-
 	const isActive = (href: string) => {
 		if (href === '/' && pathname === '/') return true
 		if (href !== '/' && pathname.startsWith(href)) return true
@@ -134,97 +158,79 @@ export default function Header() {
 							<span className="font-display text-lg font-semibold text-foreground">{siteMetadata.portfolioTitle}</span>
 						</Link>
 
+						{/* Desktop nav */}
 						<div className="hidden md:flex items-center justify-center">
 							<ul className="flex items-center gap-6">
-								{navigation.map(item => (
-									<li key={item.name}>
-										<Link
-											href={item.href}
-											className={`group relative inline-flex items-center h-10 px-1 font-medium transition-smooth ${
-												isActive(item.href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-											}`}
-										>
-											{item.name}
-											<span
-												className={`absolute -left-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent/80 shadow-[0_0_12px_hsl(var(--accent)/0.5)] transition-all duration-300 ${
-													isActive(item.href) ? 'opacity-100 scale-100' : 'opacity-0 scale-75 group-hover:opacity-80'
-												}`}
-											/>
-										</Link>
-									</li>
-								))}
-								<li
-									ref={dropdownRef}
-									className="relative"
-									onMouseEnter={() => setServicesOpen(true)}
-									onMouseLeave={() => setServicesOpen(false)}
-								>
-									<button
-										onClick={() => setServicesOpen(!servicesOpen)}
-										className={`group relative inline-flex items-center h-10 px-1 font-medium transition-smooth ${
-											isServiceActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-										}`}
-									>
-										Servicios
-										<ChevronDown
-											className={`ml-1 h-4 w-4 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`}
-										/>
-										<span
-											className={`absolute -left-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent/80 shadow-[0_0_12px_hsl(var(--accent)/0.5)] transition-all duration-300 ${
-												isServiceActive ? 'opacity-100 scale-100' : 'opacity-0 scale-75 group-hover:opacity-80'
-											}`}
-										/>
-									</button>
-									<AnimatePresence>
-										{servicesOpen && (
-											<motion.div
-												initial={{ opacity: 0, y: -6, scale: 0.96 }}
-												animate={{ opacity: 1, y: 0, scale: 1 }}
-												exit={{ opacity: 0, y: -6, scale: 0.96 }}
-												transition={{ duration: 0.2, ease: 'easeOut' }}
-												className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
+								{navItems.map(item => {
+									if (item.type === 'dropdown') {
+										return (
+											<li
+												key={item.name}
+												ref={dropdownRef}
+												className="relative"
+												onMouseEnter={() => setServicesOpen(true)}
+												onMouseLeave={() => setServicesOpen(false)}
 											>
-												<div className="steam-panel rounded-xl py-2 px-1 shadow-elegant min-w-[220px]">
-													{serviceLinks.map(link => (
-														<Link
-															key={link.name}
-															href={link.href}
-															onClick={() => setServicesOpen(false)}
-															className={`block rounded-lg px-4 py-2.5 text-sm font-medium transition-smooth ${
-																isActive(link.href)
-																	? 'text-accent bg-accent/10'
-																	: 'text-muted-foreground hover:text-foreground hover:bg-secondary/60'
-															}`}
+												<button
+													onClick={() => setServicesOpen(!servicesOpen)}
+													className={navLinkClass(isServiceActive)}
+												>
+													{item.name}
+													<ChevronDown
+														className={`ml-1 h-4 w-4 transition-transform duration-200 ${
+															servicesOpen ? 'rotate-180' : ''
+														}`}
+													/>
+													<span className={activeDotClass(isServiceActive)} />
+												</button>
+												<AnimatePresence>
+													{servicesOpen && (
+														<motion.div
+															initial={{ opacity: 0, y: -6, scale: 0.96 }}
+															animate={{ opacity: 1, y: 0, scale: 1 }}
+															exit={{ opacity: 0, y: -6, scale: 0.96 }}
+															transition={{ duration: 0.2, ease: 'easeOut' }}
+															className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
 														>
-															{link.name}
-														</Link>
-													))}
-												</div>
-											</motion.div>
-										)}
-									</AnimatePresence>
-								</li>
-								<li>
-									<Link
-										href="/contacto"
-										className={`group relative inline-flex items-center h-10 px-1 font-medium transition-smooth ${
-											isActive('/contacto') ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-										}`}
-									>
-										Contacto
-										<span
-											className={`absolute -left-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent/80 shadow-[0_0_12px_hsl(var(--accent)/0.5)] transition-all duration-300 ${
-												isActive('/contacto') ? 'opacity-100 scale-100' : 'opacity-0 scale-75 group-hover:opacity-80'
-											}`}
-										/>
-									</Link>
-								</li>
+															<div className="steam-panel rounded-xl py-2 px-1 shadow-elegant min-w-[220px]">
+																{item.children.map(child => (
+																	<Link
+																		key={child.name}
+																		href={child.href}
+																		onClick={() => setServicesOpen(false)}
+																		className={`block rounded-lg px-4 py-2.5 text-sm font-medium transition-smooth ${
+																			isActive(child.href)
+																				? 'text-accent bg-accent/10'
+																				: 'text-muted-foreground hover:text-foreground hover:bg-secondary/60'
+																		}`}
+																	>
+																		{child.name}
+																	</Link>
+																))}
+															</div>
+														</motion.div>
+													)}
+												</AnimatePresence>
+											</li>
+										)
+									}
+
+									return (
+										<li key={item.href}>
+											<Link href={item.href} className={navLinkClass(isActive(item.href))}>
+												{item.name}
+												<span className={activeDotClass(isActive(item.href))} />
+											</Link>
+										</li>
+									)
+								})}
 							</ul>
 						</div>
 
 						<div className="flex items-center space-x-4 md:justify-self-end">
 							<ThemeToggle theme={theme} setTheme={setTheme} />
 
+							{/* Mobile nav */}
 							<Sheet>
 								<SheetTrigger asChild className="md:hidden">
 									<Button variant="ghost" size="sm" className="w-9 h-9 p-0">
@@ -233,69 +239,68 @@ export default function Header() {
 								</SheetTrigger>
 								<SheetContent side="right" className="w-80">
 									<div className="flex flex-col space-y-4 mt-8">
-										{navigation.map(item => (
-											<SheetClose asChild key={item.name}>
-												<Link
-													href={item.href}
-													className={`text-lg font-medium uppercase tracking-[0.2em] transition-smooth hover:text-accent ${
-														isActive(item.href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-													}`}
-												>
-													{item.name}
-												</Link>
-											</SheetClose>
-										))}
-										<div>
-											<button
-												onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-												className={`flex w-full items-center justify-between text-lg font-medium uppercase tracking-[0.2em] transition-smooth hover:text-accent ${
-													isServiceActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-												}`}
-											>
-												Servicios
-												<ChevronDown
-													className={`h-4 w-4 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`}
-												/>
-											</button>
-											<AnimatePresence>
-												{mobileServicesOpen && (
-													<motion.div
-														initial={{ height: 0, opacity: 0 }}
-														animate={{ height: 'auto', opacity: 1 }}
-														exit={{ height: 0, opacity: 0 }}
-														transition={{ duration: 0.2, ease: 'easeOut' }}
-														className="overflow-hidden"
+										{navItems.map(item => {
+											if (item.type === 'dropdown') {
+												return (
+													<div key={item.name}>
+														<button
+															onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+															className={`flex w-full items-center justify-between text-lg font-medium uppercase tracking-[0.2em] transition-smooth hover:text-accent ${
+																isServiceActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+															}`}
+														>
+															{item.name}
+															<ChevronDown
+																className={`h-4 w-4 transition-transform duration-200 ${
+																	mobileServicesOpen ? 'rotate-180' : ''
+																}`}
+															/>
+														</button>
+														<AnimatePresence>
+															{mobileServicesOpen && (
+																<motion.div
+																	initial={{ height: 0, opacity: 0 }}
+																	animate={{ height: 'auto', opacity: 1 }}
+																	exit={{ height: 0, opacity: 0 }}
+																	transition={{ duration: 0.2, ease: 'easeOut' }}
+																	className="overflow-hidden"
+																>
+																	<div className="mt-3 ml-4 flex flex-col space-y-2 border-l-2 border-border/60 pl-4">
+																		{item.children.map(child => (
+																			<SheetClose asChild key={child.name}>
+																				<Link
+																					href={child.href}
+																					className={`text-base font-medium transition-smooth hover:text-accent ${
+																						isActive(child.href)
+																							? 'text-accent'
+																							: 'text-muted-foreground hover:text-foreground'
+																					}`}
+																				>
+																					{child.name}
+																				</Link>
+																			</SheetClose>
+																		))}
+																	</div>
+																</motion.div>
+															)}
+														</AnimatePresence>
+													</div>
+												)
+											}
+
+											return (
+												<SheetClose asChild key={item.href}>
+													<Link
+														href={item.href}
+														className={`text-lg font-medium uppercase tracking-[0.2em] transition-smooth hover:text-accent ${
+															isActive(item.href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+														}`}
 													>
-														<div className="mt-3 ml-4 flex flex-col space-y-2 border-l-2 border-border/60 pl-4">
-															{serviceLinks.map(link => (
-																<SheetClose asChild key={link.name}>
-																	<Link
-																		href={link.href}
-																		className={`text-base font-medium transition-smooth hover:text-accent ${
-																			isActive(link.href)
-																				? 'text-accent'
-																				: 'text-muted-foreground hover:text-foreground'
-																		}`}
-																	>
-																		{link.name}
-																	</Link>
-																</SheetClose>
-															))}
-														</div>
-													</motion.div>
-												)}
-											</AnimatePresence>
-										</div>
-										<SheetClose asChild>
-											<Link
-												href="/contacto"
-												className={`text-lg font-medium uppercase tracking-[0.2em] transition-smooth hover:text-accent ${
-													isActive('/contacto') ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-												}`}
-											>
-												Contacto
-											</Link>
-										</SheetClose>
+														{item.name}
+													</Link>
+												</SheetClose>
+											)
+										})}
 									</div>
 								</SheetContent>
 							</Sheet>

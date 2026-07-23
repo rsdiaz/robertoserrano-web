@@ -48,7 +48,7 @@ export default function BlogPageContent({ excludeSlugs = [] }: BlogPageContentPr
 	const sortedPosts = useMemo(
 		() =>
 			[...allBlogPosts]
-				.filter(post => !excludeSet.has(post.slug))
+				.filter(post => !excludeSet.has(post.slug) && !post.draft)
 				.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
 		[excludeSet],
 	)

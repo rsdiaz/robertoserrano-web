@@ -13,11 +13,13 @@ image:
 
 OpenClaw es una plataforma de agentes de IA que permite construir sistemas autónomos con identidad, memoria y herramientas. Este artículo explora qué es un agente, cómo funciona su ciclo de vida, y cómo la arquitectura multi-agente permite escalar múltiples personalidades en un mismo servidor.
 
-## 🤖 1. ¿Qué es un Agente?
+## 1. ¿Qué es un Agente?
+
 
 El agente es el cerebro que recibe tu mensaje, lo procesa con un modelo de IA, ejecuta herramientas y te responde. No es solo un chatbot: es una unidad completa con identidad propia. Cada agente tiene su propio workspace, memoria persistente y un conjunto de skills que determinan lo que puede hacer.
 
-## 🧬 2. Anatomía de un Agente
+## 2. Anatomía de un Agente
+
 
 Cada agente se compone de seis elementos fundamentales:
 
@@ -28,7 +30,8 @@ Cada agente se compone de seis elementos fundamentales:
 - **Tool policy** — Define qué acciones puede ejecutar: read, exec, write, cron
 - **Session store** — Historial de cada conversación almacenado en JSONL
 
-## 🔄 3. El Ciclo del Agente (Tool Loop)
+## 3. El Ciclo del Agente (Tool Loop)
+
 
 ```text
 Tú me hablas → Modelo procesa → ¿Necesito herramienta?
@@ -41,11 +44,13 @@ Tú me hablas → Modelo procesa → ¿Necesito herramienta?
 
 Cada vez que envías un mensaje, el agente pasa por este ciclo. Si necesita una herramienta (script, API, comando), la llama, procesa el resultado y sigue iterando hasta tener la respuesta completa. Las herramientas pueden ser desde leer un archivo hasta ejecutar un comando en el sistema.
 
-## ⚡ 4. Agente vs Sesión
+## 4. Agente vs Sesión
+
 
 El agente es el cerebro. La sesión es la conversación. Un mismo agente puede tener múltiples sesiones: chat directo, cron programado, heartbeat, sub-agentes. Todas comparten el workspace y la memoria, pero tienen historiales independientes. Esto permite que un agente atienda varias conversaciones simultáneas sin mezclar contextos.
 
-## ⚙️ 5. Componentes del Runtime
+## 5. Componentes del Runtime
+
 
 El runtime de OpenClaw está compuesto por cuatro subsistemas que trabajan juntos:
 
@@ -54,7 +59,8 @@ El runtime de OpenClaw está compuesto por cuatro subsistemas que trabajan junto
 - **Compaction** — Comprime el historial de la conversación para evitar desbordar el límite de contexto
 - **Provider abstraction** — Desacopla el agente del proveedor de IA: da igual usar OpenAI, Anthropic o DeepSeek, la experiencia es la misma
 
-## 🏗️ 6. Arquitectura Multi-Agente
+## 6. Arquitectura Multi-Agente
+
 
 OpenClaw permite ejecutar múltiples agentes en un solo servidor, cada uno con su propia identidad, workspace y memoria. A esto se le llama arquitectura multi-agente.
 
@@ -62,6 +68,7 @@ Cada agente corre en un runtime independiente vinculado a una cuenta específica
 
 Por seguridad, la comunicación entre agentes está desactivada por defecto. Cada agente es una burbuja aislada que no puede leer el workspace ni la memoria de otro a menos que se configure explícitamente. Este aislamiento permite tener, por ejemplo, un agente personal y un agente laboral en la misma máquina sin riesgo de fuga de información.
 
-## 💡 7. Conclusiones
+## 7. Conclusiones
+
 
 Un agente en OpenClaw no es un chatbot, es un sistema completo con identidad, memoria y herramientas. La distinción entre agente (cerebro) y sesión (conversación) es fundamental para entender la arquitectura. El multi-agente proporciona aislamiento real entre personalidades sin requerir infraestructura adicional, y la comunicación entre agentes permanece desactivada por defecto como medida de seguridad.

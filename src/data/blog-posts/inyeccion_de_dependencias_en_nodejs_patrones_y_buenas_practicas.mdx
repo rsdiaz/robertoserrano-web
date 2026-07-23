@@ -11,7 +11,8 @@ image:
   alt: 'concepto de inyección de dependencias en Node.js'
 ---
 
-## 🤔 ¿Por qué usar inyección de dependencias?
+## ¿Por qué usar inyección de dependencias?
+
 
 La inyección de dependencias (DI) es un patrón de diseño que promueve la creación de código más limpio, modular y fácil de mantener. En el desarrollo de aplicaciones Node.js, especialmente cuando se trabaja con TypeScript, DI puede ser una herramienta poderosa para adherirse a principios de diseño de software como SOLID.
 
@@ -21,7 +22,8 @@ La inyección de dependencias (DI) es un patrón de diseño que promueve la crea
 - **Pruebas más sencillas**: Al poder inyectar dependencias simuladas (mocks), las pruebas unitarias se vuelven más manejables.
 - **Mejor mantenimiento**: Al reducir las dependencias implícitas, el código es más fácil de entender y mantener.
 
-## 🚀 Implementación básica de DI en Node.js
+## Implementación básica de DI en Node.js
+
 
 Aunque Node.js no incluye un contenedor de DI nativo, hay bibliotecas como `InversifyJS` que nos ayudan a implementar este patrón de manera efectiva. A continuación, veremos cómo empezar.
 
@@ -119,7 +121,8 @@ const app = container.resolve(App)
 app.run()
 ```
 
-## 💡 Buenas prácticas al usar DI
+## Buenas prácticas al usar DI
+
 
 ### 1. Mantén tus interfaces simples
 
@@ -137,6 +140,7 @@ Siempre que sea posible, utiliza la inyección de constructor. Esto garantiza qu
 
 Si bien los singletons pueden ser útiles, abusar de ellos puede llevar a una arquitectura menos flexible y más difícil de probar.
 
-## ⚡ Conclusión
+## Conclusión
+
 
 La inyección de dependencias es una técnica poderosa que puede transformar la forma en que estructuramos nuestras aplicaciones Node.js. Al seguir las buenas prácticas y patrones adecuados, podemos crear sistemas que no solo son más fáciles de mantener y escalar, sino que también son más robustos y fáciles de probar. Si aún no has integrado DI en tu flujo de trabajo, te animo a que lo intentes. ¡Podrías estar a solo un paso de mejorar significativamente tu código! 🚀

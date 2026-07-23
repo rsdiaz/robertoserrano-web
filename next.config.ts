@@ -8,6 +8,21 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig: NextConfig = {
 	/* config options here */
 	output: 'standalone',
+	async redirects() {
+		return [
+			{
+				source: '/:path*{/}',
+				has: [
+					{
+						type: 'host',
+						value: 'www.robertoserrano.pro',
+					},
+				],
+				destination: 'https://robertoserrano.pro/:path*',
+				permanent: true,
+			},
+		]
+	},
 	images: {
 		remotePatterns: [
 			{

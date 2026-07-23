@@ -219,6 +219,7 @@ export default function Home() {
 															src={post.image.url}
 															alt={post.image.alt ?? post.title}
 															fill
+															sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 30vw"
 															className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
 														/>
 													) : (

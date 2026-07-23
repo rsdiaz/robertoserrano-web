@@ -18,7 +18,7 @@ import { ArticleJsonLd, BreadcrumbListJsonLd } from '@/app/components/JsonLd'
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	const { slug } = await props.params
-	const post = allBlogPosts.find(p => p.slug === slug)
+	const post = allBlogPosts.find(p => p.slug === slug && !p.draft)
 
 	if (!post) {
 		return {
@@ -42,6 +42,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 			url: postUrl,
 			images: [ogImage],
 			publishedTime: post.date,
+			modifiedTime: post.date,
 		},
 		twitter: {
 			card: 'summary_large_image',
@@ -54,7 +55,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 
 export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
 	const { slug } = await props.params
-	const post = allBlogPosts.find(p => p.slug === slug)
+	const post = allBlogPosts.find(p => p.slug === slug && !p.draft)
 
 	if (!post) {
 		return notFound()

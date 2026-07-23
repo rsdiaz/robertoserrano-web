@@ -11,7 +11,8 @@ image:
   alt: 'Ilustración de React Server Components en Next.js'
 ---
 
-## 🤔 ¿Qué son los React Server Components?
+## ¿Qué son los React Server Components?
+
 
 Los **React Server Components** (RSC) son una nueva característica introducida para permitir que parte de la lógica de React se ejecute en el servidor en lugar del cliente. Esto tiene un impacto significativo en el rendimiento, ya que reduce la cantidad de JavaScript que se envía al cliente y permite cargar datos y ejecutar lógica de forma más eficiente.
 
@@ -21,7 +22,8 @@ Los **React Server Components** (RSC) son una nueva característica introducida 
 2. **Mejor experiencia de usuario**: Menos JavaScript enviado al cliente significa tiempos de carga más rápidos.
 3. **Simplificación del código**: Separa la lógica de UI del cliente de la lógica que puede ejecutarse en el servidor.
 
-## 🚀 Integración de React Server Components en Next.js 15
+## Integración de React Server Components en Next.js 15
+
 
 Next.js 15 viene con soporte integrado para React Server Components, lo que facilita su adopción. Vamos a ver cómo podemos empezar a usarlos.
 
@@ -38,7 +40,8 @@ yarn add next@latest react@latest react-dom@latest
 
 Next.js 15 no requiere configuración especial para habilitar React Server Components. Simplemente crea tus componentes como de costumbre, pero con un enfoque en qué lógica debería ejecutarse en el servidor.
 
-## 💡 Creando React Server Components
+## Creando React Server Components
+
 
 ### Paso 1: Definir un componente del servidor
 
@@ -87,7 +90,8 @@ export default function Home() {
 }
 ```
 
-## ⚡ Consideraciones importantes
+## Consideraciones importantes
+
 
 ### Separación de responsabilidades
 
@@ -97,7 +101,8 @@ Asegúrate de separar correctamente el código que debe ejecutarse en el servido
 
 Los componentes del servidor y del cliente pueden comunicarse a través de props. Sin embargo, recuerda que los componentes del servidor no pueden manejar eventos del cliente (como `onClick`), ya que se ejecutan antes de que el HTML llegue al cliente.
 
-## 🛠️ Herramientas y técnicas adicionales
+## Herramientas y técnicas adicionales
+
 
 ### Uso de Suspense para RSC
 
@@ -119,6 +124,7 @@ export default function Home() {
 }
 ```
 
-## 💪 Conclusiones
+## Conclusiones
+
 
 Integrar React Server Components en Next.js 15 ofrece una mejora significativa en el rendimiento y la experiencia del usuario al permitir que parte de la lógica de la aplicación se ejecute en el servidor. Con una comprensión clara de las ventajas y consideraciones, puedes empezar a aprovechar esta poderosa característica en tus proyectos actuales.

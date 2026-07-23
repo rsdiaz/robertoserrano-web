@@ -13,7 +13,8 @@ image:
 
 La inyección de dependencias es una técnica muy útil cuando un proyecto JavaScript empieza a crecer y deja de ser trivial. Si trabajas con servicios, adaptadores, repositorios o integraciones externas en Node.js, introducir DI desde el principio te ayuda a reducir acoplamiento y a probar cada pieza de forma aislada.
 
-## 🤔 ¿Por qué usar inyección de dependencias en JavaScript y Node.js?
+## ¿Por qué usar inyección de dependencias en JavaScript y Node.js?
+
 
 La inyección de dependencias (DI) es un patrón de diseño que nos permite escribir código más limpio, modular y fácil de probar. En aplicaciones NodeJS, donde la modularidad y la capacidad de mantenimiento son cruciales, DI puede ser una herramienta poderosa.
 
@@ -23,7 +24,8 @@ La inyección de dependencias (DI) es un patrón de diseño que nos permite escr
 2. **Testabilidad**: Facilita la creación de pruebas unitarias al permitir la inyección de mocks o stubs.
 3. **Mantenimiento**: Facilita la gestión de dependencias y mejora la legibilidad del código.
 
-## 🚀 Implementación básica de inyección de dependencias
+## Implementación básica de inyección de dependencias
+
 
 Aunque NodeJS no tiene un sistema de inyección de dependencias incorporado como otros lenguajes (por ejemplo, Spring en Java), podemos implementar DI utilizando librerías como `inversify`, `awilix`, o simplemente usando el patrón de diseño manualmente.
 
@@ -94,7 +96,8 @@ const user = userServiceInstance.createUser('Roberto')
 console.log(user)
 ```
 
-## 🛠️ Usando librerías de inyección de dependencias
+## Usando librerías de inyección de dependencias
+
 
 Para simplificar el trabajo y evitar reinventar la rueda, podemos usar librerías como `inversify` o `awilix`. Estas librerías proporcionan características avanzadas que facilitan la DI en aplicaciones NodeJS.
 
@@ -150,7 +153,8 @@ const user = userServiceInstance.createUser('Roberto')
 console.log(user)
 ```
 
-## 💡 Conclusión
+## Conclusión
+
 
 La inyección de dependencias permite un código más limpio, modular y fácil de mantener en NodeJS. Aunque podemos implementarlo manualmente, el uso de librerías como Awilix simplifica el proceso, proporcionando un entorno robusto para manejar dependencias complejas. Esto no solo mejora la estructura del código, sino que también facilita las pruebas y el mantenimiento a largo plazo.
 

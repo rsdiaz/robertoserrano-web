@@ -131,7 +131,7 @@ export default function Hero() {
 									<Image
 										width={460}
 										height={540}
-										src="/static/profile2.png"
+										src="/static/profile2.webp"
 										alt="Foto de perfil de Roberto Serrano"
 										className="h-[420px] w-full object-cover object-center grayscale contrast-110"
 									/>

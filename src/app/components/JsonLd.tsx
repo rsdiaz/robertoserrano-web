@@ -11,7 +11,7 @@ export function PersonJsonLd() {
 		description: siteMetadata.profileDescription,
 		url: siteMetadata.siteUrl,
 		sameAs: [siteMetadata.socialLinks.github, siteMetadata.socialLinks.linkedin, siteMetadata.socialLinks.twitter],
-		image: `${siteMetadata.siteUrl}/static/profile.png`,
+		image: `${siteMetadata.siteUrl}/static/profile.webp`,
 	}
 
 	return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -35,7 +35,7 @@ export function ProfessionalServiceJsonLd() {
 		'@context': 'https://schema.org',
 		'@type': 'ProfessionalService',
 		name: 'Roberto Serrano',
-		url: `${siteMetadata.siteUrl}/`,
+		url: siteMetadata.siteUrl,
 		inLanguage: 'es',
 		areaServed: [
 			{
@@ -47,6 +47,12 @@ export function ProfessionalServiceJsonLd() {
 				name: 'España',
 			},
 		],
+		address: {
+			'@type': 'PostalAddress',
+			addressLocality: 'Tarragona',
+			addressCountry: 'ES',
+		},
+		email: siteMetadata.contactEmail,
 		serviceType: ['Desarrollo web a medida', 'Automatizaciones de procesos', 'Soluciones de inteligencia artificial'],
 		sameAs: [siteMetadata.socialLinks.github, siteMetadata.socialLinks.linkedin, siteMetadata.socialLinks.twitter],
 	}
@@ -59,24 +65,28 @@ export function ArticleJsonLd({
 	description,
 	image,
 	datePublished,
+	dateModified,
 	url,
 }: {
 	title: string
 	description: string
 	image?: string
 	datePublished: string
+	dateModified?: string
 	url: string
 }) {
 	const schema = {
 		'@context': 'https://schema.org',
-		'@type': 'Article',
+		'@type': 'BlogPosting',
 		headline: title,
 		description,
 		...(image && { image }),
 		datePublished,
+		...(dateModified && { dateModified }),
 		author: {
 			'@type': 'Person',
 			name: 'Roberto Serrano Díaz-Grande',
+			url: siteMetadata.siteUrl,
 		},
 		publisher: {
 			'@type': 'Person',
