@@ -85,19 +85,19 @@ export default function Home() {
 							</p>
 							<div className="mt-6 flex flex-wrap gap-3 text-sm text-muted-foreground">
 								<Link
-									href="/contacto"
+									href="/desarrollo-web"
 									className="underline decoration-accent/40 underline-offset-4 hover:text-foreground"
 								>
 									Desarrollo web en Tarragona
 								</Link>
 								<Link
-									href="/contacto"
+									href="/automatizaciones-para-empresas"
 									className="underline decoration-accent/40 underline-offset-4 hover:text-foreground"
 								>
 									Automatizaciones para empresas
 								</Link>
 								<Link
-									href="/contacto"
+									href="/consultoria-ia"
 									className="underline decoration-accent/40 underline-offset-4 hover:text-foreground"
 								>
 									Consultoría IA aplicada

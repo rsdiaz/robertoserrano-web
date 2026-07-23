@@ -21,6 +21,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'monthly',
 			priority: 0.7,
 		},
+		{
+			url: `${baseUrl}/consultoria-ia`,
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/desarrollo-web`,
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/automatizaciones-para-empresas`,
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
 	]
 
 	const postRoutes: MetadataRoute.Sitemap = allBlogPosts
