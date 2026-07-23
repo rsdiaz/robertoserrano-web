@@ -108,10 +108,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 					items={[
 						{ name: 'Inicio', item: siteMetadata.siteUrl },
 						{ name: 'Blog', item: `${siteMetadata.siteUrl}/blog` },
-						{
-							name: category,
-							item: `${siteMetadata.siteUrl}/blog?category=${encodeURIComponent(category.toLowerCase())}`,
-						},
 						{ name: post.title, item: postUrl },
 					]}
 				/>

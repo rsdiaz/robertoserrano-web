@@ -31,7 +31,6 @@ export default function PostHero({
 	author,
 }: Props) {
 	const cat = category && category.trim() ? category : 'General'
-	const catSlug = cat.toLowerCase()
 	const absDate = formatAbsoluteDate(date)
 	const relDate = formatRelativeDate(date)
 
@@ -50,13 +49,6 @@ export default function PostHero({
 				<ChevronRight className="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
 				<Link href="/blog" className="hover:text-foreground transition-smooth">
 					Blog
-				</Link>
-				<ChevronRight className="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
-				<Link
-					href={`/blog?category=${encodeURIComponent(catSlug)}`}
-					className="capitalize hover:text-foreground transition-smooth"
-				>
-					{cat}
 				</Link>
 			</nav>
 

@@ -159,9 +159,14 @@ const Footer = () => {
 
 				<div className="mt-12 pt-8 border-t border-border/40">
 					<div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-6">
-						<p className="text-xs text-muted-foreground/70 font-medium">© {currentYear} Roberto Serrano</p>
-						<span className="hidden sm:inline text-muted-foreground/30">·</span>
-						<p className="text-xs text-muted-foreground/70 flex items-center gap-1.5">Construido con 💗</p>
+						<p className="text-xs text-muted-foreground/70 font-medium">&copy; {currentYear} Roberto Serrano</p>
+						<span className="hidden sm:inline text-muted-foreground/30">&middot;</span>
+						<Link
+							href="/privacidad"
+							className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors"
+						>
+							Privacidad
+						</Link>
 					</div>
 				</div>
 			</div>

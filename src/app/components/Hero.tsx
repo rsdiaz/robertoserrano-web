@@ -134,6 +134,7 @@ export default function Hero() {
 										src="/static/profile2.webp"
 										alt="Foto de perfil de Roberto Serrano"
 										className="h-[420px] w-full object-cover object-center grayscale contrast-110"
+										priority
 									/>
 								</div>
 								<div className="mt-4 flex items-center justify-center text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">

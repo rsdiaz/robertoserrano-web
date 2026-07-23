@@ -1,6 +1,6 @@
 const siteMetadata = {
 	portfolioTitle: 'Roberto Serrano',
-	title: 'Desarrollo Web en Tarragona + IA y Automatizaciones | Roberto Serrano',
+	title: 'Roberto Serrano — Desarrollo web, IA y automatizaciones en Tarragona',
 	description:
 		'Desarrollo web a medida en Tarragona con IA y automatizaciones para empresas. Soluciones escalables, enfoque técnico y resultados medibles. Hablemos de tu proyecto.',
 	siteUrl: process.env.NODE_ENV === 'production' ? 'https://robertoserrano.pro' : 'http://localhost:3000',

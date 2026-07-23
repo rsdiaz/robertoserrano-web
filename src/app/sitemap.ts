@@ -27,6 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.7,
 		},
 		{
+			url: `${baseUrl}/privacidad`,
+			lastModified: now,
+			changeFrequency: 'yearly',
+			priority: 0.3,
+		},
+		{
 			url: `${baseUrl}/sobre-mi`,
 			lastModified: now,
 			changeFrequency: 'monthly',
