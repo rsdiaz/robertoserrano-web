@@ -1,0 +1,161 @@
+---
+title: 'Cómo integrar OpenCode con GitHub Actions'
+excerpt: 'Guía práctica para conectar OpenCode con tu repositorio de GitHub y automatizar tareas de desarrollo directamente desde issues y pull requests.'
+date: 2026-07-24
+category: 'DevOps'
+tags: ['opencode', 'github-actions', 'ci-cd', 'devops', 'automation']
+featured: true
+author: 'Roberto Serrano'
+image:
+  url: 'https://res.cloudinary.com/rserrano/image/upload/v1777833584/0_ta83-6jPKrUa0mxA_aqwrh0.png'
+  alt: 'Ilustración de OpenCode integrado con GitHub Actions'
+---
+
+## ¿Por qué integrar OpenCode con GitHub?
+
+Si ya usas OpenCode como asistente de código en tu terminal, el siguiente paso natural es llevarlo directamente a tu flujo de trabajo en GitHub. Con la integración de OpenCode y GitHub Actions, puedes automatizar tareas como el triage de issues, la generación de código, la revisión de pull requests y mucho más, todo desde los comentarios de tu repositorio.
+
+La clave está en que OpenCode se ejecuta dentro de los runners de GitHub Actions, lo que significa que no necesitas infraestructura adicional ni exponer tu código a servicios externos.
+
+## Cómo funciona
+
+La integración se basa en un workflow de GitHub Actions que se dispara cuando alguien menciona `/opencode` o `/oc` en un comentario de un issue o pull request. OpenCode recibe el contexto, procesa la solicitud y responde directamente en el hilo.
+
+### Eventos soportados
+
+| Evento | ¿Qué lo activa? |
+|--------|----------------|
+| `issue_comment` | Comentario en issue o PR con `/oc` o `/opencode` |
+| `pull_request_review_comment` | Comentario en líneas específicas del código en un PR |
+| `issues` | Issue abierto o editado (requiere prompt personalizado) |
+| `pull_request` | PR abierto, sincronizado o reabierto (útil para reviews automáticas) |
+| `schedule` | Tareas programadas con cron |
+| `workflow_dispatch` | Ejecución manual desde la UI de GitHub |
+
+## Instalación paso a paso
+
+### 1. Instalar la GitHub App
+
+Ve a [github.com/apps/opencode-agent](https://github.com/apps/opencode-agent) e instala la aplicación en tu repositorio u organización. Esto le da a OpenCode los permisos necesarios para leer issues, comentar y crear PRs.
+
+### 2. Crear el workflow
+
+Añade el siguiente archivo en `.github/workflows/opencode.yml`:
+
+```yaml
+name: OpenCode
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  opencode:
+    if: |
+      contains(github.event.comment.body, '/oc') ||
+      contains(github.event.comment.body, '/opencode')
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Run OpenCode
+        uses: anomalyco/opencode/github@latest
+        env:
+          ANTHROPIC_API_KEY: *** secrets.ANTHROPIC_API_KEY }}
+        with:
+          model: anthropic/claude-sonnet-4-20250514
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### 3. Configurar secrets
+
+En **Settings → Secrets and variables → Actions**, añade las API keys necesarias para el modelo que hayas elegido (Anthropic, OpenAI, OpenCode GO, etc.).
+
+## Usos prácticos
+
+### Explicar un issue
+
+Simplemente comenta en cualquier issue:
+
+```
+/opencode explain this issue
+```
+
+OpenCode leerá todo el hilo, incluyendo comentarios anteriores, y te dará una explicación clara del problema.
+
+### Fix automático desde un issue
+
+```
+/opencode fix this
+```
+
+OpenCode analizará el issue, creará una rama, implementará los cambios necesarios y abrirá un pull request con la solución.
+
+### Modificar código en un PR
+
+En la pestaña "Files" de un pull request, comenta en una línea específica:
+
+```
+/oc add error handling here
+```
+
+OpenCode detectará automáticamente el archivo, las líneas afectadas y el contexto del diff para implementar el cambio solicitado.
+
+### Review automática de PRs
+
+Puedes configurar OpenCode para que revise automáticamente todos los PRs que se abran:
+
+```yaml
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: anomalyco/opencode/github@latest
+        env:
+          ANTHROPIC_API_KEY: *** secrets.ANTHROPIC_API_KEY }}
+        with:
+          model: anthropic/claude-sonnet-4-5
+          prompt: |
+            Revisa este pull request:
+            - Busca problemas de calidad de código
+            - Identifica posibles bugs
+            - Sugiere mejoras
+```
+
+## Buenas prácticas
+
+1. **Usa prompts personalizados** para adaptar el comportamiento de OpenCode a las necesidades específicas de tu proyecto. Puedes definir criterios de revisión, estándares de código o áreas de enfoque.
+
+2. **Combínalo con el modelo adecuado**. Para tareas de análisis y explicación, modelos como Claude o Qwen funcionan muy bien. Para generación de código, modelos como DeepSeek V4 Pro ofrecen excelentes resultados.
+
+3. **Aprovecha las tareas programadas**. Puedes configurar workflows cron para revisiones periódicas del código, detección de TODOs olvidados o actualizaciones de dependencias.
+
+4. **Protege tus secrets**. Las API keys se almacenan en GitHub Secrets y nunca quedan expuestas en el código del repositorio, incluso si el repo es público.
+
+## Conclusión
+
+La integración de OpenCode con GitHub Actions transforma tu repositorio en un asistente de desarrollo activo. Desde explicar issues complejos hasta implementar fixes y revisar PRs, OpenCode se convierte en un miembro más de tu equipo que está siempre disponible cuando lo necesitas.
+
+Lo mejor de todo es que no requiere infraestructura adicional: se ejecuta en los runners de GitHub Actions, tus secrets están protegidos y el flujo de trabajo es tan natural como escribir un comentario.
