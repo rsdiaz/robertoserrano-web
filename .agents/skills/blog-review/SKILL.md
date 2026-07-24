@@ -26,7 +26,7 @@ Si no se especificó ninguno, lista todos los posts disponibles y pregunta cuál
 | `image.url` | No vacío, apunta a `res.cloudinary.com`    | Marcar como pendiente si está vacío    |
 | `image.alt` | Describe la imagen en español              | Reescribir si es genérica o vacía      |
 
-**Categorías válidas:** `DevOps` | `AI` | `Frontend` | `Backend` | `NodeJS` | `React` | `NextJS` | `TypeScript` | `MongoDB` | `Astro`
+**Categorías válidas:** `DevOps` | `AI` | `Frontend` | `Backend` | `NodeJS` | `React` | `NextJS` | `TypeScript` | `MongoDB` | `Astro` | `Desarrollo`
 
 ### Estructura del contenido
 
