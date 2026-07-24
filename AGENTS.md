@@ -44,7 +44,6 @@ Required env (loaded by Next from `.env.local`, or passed at runtime in Docker):
 
 Skills live in `.agents/skills/` (tracked by `skills-lock.json`). Repo-specific ones worth knowing:
 
-- **`blog-generate`** — Full workflow: runs `npm run post:generate`, auto-fixes common issues, then `build:content`. Use when asked to create/write a new post.
 - **`blog-review`** — Checklist-driven review of an existing `.mdx`: frontmatter, structure, SEO, encoding, then `build:content`. Use when asked to review/fix/improve a post.
 - **`commit-writer`** — Drafts Conventional Commit messages from the diff. Has a `validate_commit_message.py` validator under the skill's `scripts/`.
 
